@@ -1,32 +1,36 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>CIT82: Hello World</title>
   </head>
   <body onload="docOnLoad()">
-    <h1>Jared Nelson - <span id="spanColor" style="color:#AA0000;">Hello World</span></h1><input type="button" value="color" onclick="changeColor()" />
+    <h1>Jared Nelson - <span id="spanColor" style="color:#AA0000;">Hello World</span></h1>
+    <br />
   </body>
   <script>
-    let colorH=0;
+    let colorI=1;
     function docOnLoad()
     {
-      changeColor();
+        changeColor();
     }
     function changeColor()
     {
+      let text="Hello World";
       let objColorId = document.getElementById("spanColor");
-      objColorId.innerHTML=generateRainbowText("Hello World");
-      colorH++;
+      objColorId.innerHTML=generateRainbowText(text);
+      colorI++;
+      if (colorI>text.length) colorI=1;
+      setTimeout("changeColor()", 100);
     }
     function generateRainbowText(text) {
       let outText="";
-      let colorI=colorH;
       for (let i = 0; i < text.length; i++) {
-        let hue=(360 * i / text.length);
-        colorI++;
-        if (colorI>text.length) colorI=0;
+        let hue=(360 * (i + colorI) / text.length);
+        if (hue>359) hue=hue-360;
         let charText = "<span style=\"color:hsl("+ hue + ",80%,50%);\">";
         outText+=charText+text[i]+"</span>";
       }
+      //document.getElementById("output").value="colorI: "+colorI+"\r\n"+outText;
       return outText;
     }
   </script>
