@@ -3,7 +3,7 @@
     <title>CIT82: Hello World</title>
   </head>
   <body onload="docOnLoad()">
-    <h1>Jared Nelson - <span id="spanColor" style="color:#AA0000;">Hello World</span></h1>
+    <h1>Jared Nelson - <span id="spanColor" style="color:#AA0000;">Hello World</span></h1><input type="button" value="color" onclick="changeColor()" />
   </body>
   <script>
     let colorH=0;
@@ -15,7 +15,7 @@
     {
       let objColorId = document.getElementById("spanColor");
       objColorId.innerHTML=generateRainbowText("Hello World");
-      alert(generateRainbowText("Hello World"));
+      colorH++;
     }
     function generateRainbowText(text) {
       let outText="";
