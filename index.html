@@ -15,11 +15,12 @@
     {
       let objColorId = document.getElementById("spanColor");
       objColorID.innerHTML=generateRainbowText("Hello World");
+      alert(generateRainbowText("Hello World"));
     }
     function generateRainbowText(text) {
       let outText="";
       for (let i = 0; i < text.length; i++) {
-        let charText = "<span style=\"color:hsl("+(360 * i / text.length) + ",80%,50%)\">";
+        let charText = "<span style=\"color:hsl("+(360 * i / text.length) + ",80%,50%);\">";
         outText+=charText+text[i]+"</span>";
       }
     }
