@@ -19,8 +19,12 @@
     }
     function generateRainbowText(text) {
       let outText="";
+      let colorI=colorH;
       for (let i = 0; i < text.length; i++) {
-        let charText = "<span style=\"color:hsl("+(360 * i / text.length) + ",80%,50%);\">";
+        let hue=(360 * i / text.length);
+        colorI++;
+        if (colorI>text.length) colorI=0;
+        let charText = "<span style=\"color:hsl("+ hue + ",80%,50%);\">";
         outText+=charText+text[i]+"</span>";
       }
       return outText;
