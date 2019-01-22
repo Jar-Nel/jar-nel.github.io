@@ -2,9 +2,26 @@
   <head>
     <title>CIT82: Hello World</title>
   </head>
-  <body>
-    <h1>Jared Nelson - Hello World</h1>
+  <body onload="docOnLoad()">
+    <h1>Jared Nelson - <span id="spanColor" style="color:#AA0000;">Hello World</span></h1>
   </body>
   <script>
+    let colorH=0;
+    function docOnLoad()
+    {
+      changeColor();
+    }
+    function changeColor()
+    {
+      let objColorId = document.getElementById("spanColor");
+      objColorID.innerHTML=generateRainbowText("Hello World");
+    }
+    function generateRainbowText(text) {
+      let outText="";
+      for (let i = 0; i < text.length; i++) {
+        let charText = "<span style=\"color:hsl("+(360 * i / text.length) + ",80%,50%)\">";
+        outText+=charText+text[i]+"</span>";
+      }
+    }
   </script>
 </html>
