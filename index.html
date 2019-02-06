@@ -1,37 +1,72 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>CIT82: Hello World</title>
-  </head>
-  <body onload="docOnLoad()">
-    <h1>Jared Nelson - <span id="spanColor" style="color:#AA0000;">Hello World</span></h1>
-    <br />
-  </body>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Eczar|Gentium+Basic" rel="stylesheet">
+  <title>CIT82: Hello World</title>
+</head>
+
+<body onload="docOnLoad()">
+  <div class="container">
+    <div class="siteintro">
+      <div class="nameHeader"><h1>HELLO</h1>my name is</div>
+      <div class="nameContent">
+          <h1><span id="spanColor" style="color:#000000;">Jared Nelson</span></h1><br />
+      </div>
+    </div>
+    <div class="subIntro">Welcome to my page of dev learning.</div>
+    <div class="topics">
+      <h2>I'm currently learning about:</h2>
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+      </ul>
+    </div>
+    <div class="topics-sidebar">
+      <img src="img/sample.jpg" />
+    </div>
+    <!--Reset after float-->
+    <div class="clr">&nbsp;</div>
+  </div>
   <script>
-    let colorI=1;
-    function docOnLoad()
-    {
-        changeColor();
-    }
-    function changeColor()
-    {
-      let text="Hello World";
+    let colorI = 1;
+    function docOnLoad() {
       let objColorId = document.getElementById("spanColor");
-      objColorId.innerHTML=generateRainbowText(text);
+      objColorId.innerHTML = generateRainbowText("Jared Nelson");
+      //generateRainbowText("Jared Nelson");
+      setTimeout("changeColor()", 100);
+    }
+    function changeColor() {
+      let text = "Jared Nelson";
+      let objColorId = document.getElementById("spanColor");
+      let childNodes = objColorId.childNodes;
+      for (let i = 0; i < childNodes.length; i++) {
+        let hue = (360 * (i + colorI) / text.length);
+        if (hue > 359) hue = hue - 360;
+        childNodes[i].style = `color:hsl(${hue},80%,50%);`
+      }
       colorI++;
-      if (colorI>text.length) colorI=1;
+      if (colorI > text.length) colorI = 1;
       setTimeout("changeColor()", 100);
     }
     function generateRainbowText(text) {
-      let outText="";
+      let outText = "";
       for (let i = 0; i < text.length; i++) {
-        let hue=(360 * (i + colorI) / text.length);
-        if (hue>359) hue=hue-360;
-        let charText = "<span style=\"color:hsl("+ hue + ",80%,50%);\">";
-        outText+=charText+text[i]+"</span>";
+        let hue = (360 * (i + colorI) / text.length);
+        if (hue > 359) hue = hue - 360;
+        let charText = "<span id=\"sc_" + i.toString() + "\" style=\"color:hsl(" + hue + ",80%,50%);\">";
+        outText += charText + text[i] + "</span>";
       }
       //document.getElementById("output").value="colorI: "+colorI+"\r\n"+outText;
       return outText;
     }
   </script>
+</body>
+
 </html>
