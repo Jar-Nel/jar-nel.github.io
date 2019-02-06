@@ -83,8 +83,9 @@ body{
 }
 
 .topics li {
-    padding-bottom: .2em;
+    padding-bottom: .3em;
     list-style-image: url('../img/check10.png');
+    font-size: 20px;
 }
 
 .topics-sidebar{
