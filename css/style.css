@@ -8,13 +8,24 @@ body{
     clear: both; /*clears floats above div */
 }
 
-.container{
+.sitecontainer{
     width:80%;
     max-width: 900px;
     margin:auto;    
     background: #fff;
     padding-top:10px;
 }
+
+.sitebg-primary
+{
+    background: #2222AA;
+}
+
+.sitebg-white
+{
+    background: #fff;
+}
+
 .siteintro{
     background: #2222AA;
     border: 3px solid #ccc;
