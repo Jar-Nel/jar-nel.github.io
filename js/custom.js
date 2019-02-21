@@ -91,6 +91,7 @@ function includeHTML() {
 
 const LoadContent = (hash) => {
   if (!hash) hash = window.location.hash;
+  if (hash.length<1) hash='home.html';
   hash = hash.replace('#', '');
   window.location.hash=`#${hash}`;
   let pageContent = document.getElementById('pageContent');
