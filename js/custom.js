@@ -90,10 +90,13 @@ function includeHTML() {
 }
 
 const LoadContent = (hash) => {
+  document.getElementById('pageContent').style.display = 'none'
+
   if (!hash) hash = window.location.hash;
-  if (hash.length<1) hash='home.html';
+  if (hash.length < 1) hash = 'home.html';
   hash = hash.replace('#', '');
-  window.location.hash=`#${hash}`;
+  window.location.hash = `#${hash}`;
+
   let pageContent = document.getElementById('pageContent');
   let breadCrumb = document.getElementById('breadcrumb');
   let navbarItems = document.getElementById('navbarItems');
@@ -103,28 +106,35 @@ const LoadContent = (hash) => {
     if (!navObj) pageContent.innerHTML = "Unable to load content.  Unknown hash";
     else {
       //Title
-      document.title=`JPD:${navObj.title}`;
+      document.title = `JPD:${navObj.title}`;
       //Breadcrumb
       breadCrumb.innerHTML = '';
       navObj.breadcrumb.forEach(element => {
-        breadCrumb.innerHTML+=element;
+        breadCrumb.innerHTML += element;
       });
       //NavBar
-      navbarItems.innerHTML='';
+      navbarItems.innerHTML = '';
       navObj.navbaritems.forEach(element => {
-        navbarItems.innerHTML+=element;
+        navbarItems.innerHTML += element;
       });
       //Content
       LoadContentPage(navObj.page).then((response) => {
-        if (response)
+        if (response) {
           pageContent.innerHTML = response;
-        else pageContent.innerHTML = "Content page not found";
+          document.getElementById('pageContent').style.display = 'block';
+        }
+        else {
+          pageContent.innerHTML = "Content page not found";
+          document.getElementById('pageContent').style.display = 'block';
+        }
       }).catch((e) => {
         pageContent.innerHTML = "Content page not found";
+        document.getElementById('pageContent').style.display = 'block';
       });
     }
   }).catch((e) => {
-    pageContent.innerHTML = "Unable to load content json " +  e.message;
+    pageContent.innerHTML = "Unable to load content json " + e.message;
+    document.getElementById('pageContent').style.display = 'block';
   });
   //freaking jQuery calls. 
   $('.navbar-collapse').collapse('hide');

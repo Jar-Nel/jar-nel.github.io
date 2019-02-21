@@ -38,7 +38,13 @@
       </ol>
     </div>
   <div class="container" id="pageContent">
-
+    <p>If you're seeing this you have scripting disabled or you are using an unsupported browser.</p>
+    <p>This site requires JavaScript and only works with:
+      <ul>
+        <li>Edge</li>
+        <li>Chrome and other blink-based browsers</li>
+        <li>Firefox and other Quantum-based browsers</li>
+      </ul> </p>
   </div>
 
   <script src="js/jquery-3.3.1.min.js"></script>
@@ -46,7 +52,10 @@
   <script src="js/tooltip.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/custom.js"></script>
-  <script>//includeHTML();</script>
+  <script>
+    document.getElementById('pageContent').style.display='none';
+    setTimeout("document.getElementById('pageContent').style.display='block';", 1000);
+  </script>
 </body>
 
 </html>
