@@ -105,11 +105,13 @@ const LoadContent = (hash) => {
 
   let pageContent = document.getElementById('pageContent');
   let breadCrumb = document.getElementById('breadcrumb');
-  let navbarItems = document.getElementById('navbarItems');
   let navObj = undefined;
   LoadNavJson().then((response) => {
     navObj = response.find((element) => { return element.hash === hash });
-    if (!navObj) pageContent.innerHTML = "Unable to load content.  Unknown hash";
+    if (!navObj) {
+      pageContent.innerHTML = "Unable to load content.  Unknown hash.<br /><img src='img/derpshrug.png' style='width:400px' />";
+      document.getElementById('pageContent').style.display = 'block';
+    }
     else {
       //Title
       document.title = `JPoD:${navObj.title}`;
@@ -147,16 +149,16 @@ const LoadContent = (hash) => {
           }
         }
         else {
-          pageContent.innerHTML = "Content page not found";
+          pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px' />";
           document.getElementById('pageContent').style.display = 'block';
         }
       }).catch((e) => {
-        pageContent.innerHTML = "Content page not found";
+        pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px' />";
         document.getElementById('pageContent').style.display = 'block';
       });
     }
   }).catch((e) => {
-    pageContent.innerHTML = "Unable to load content json " + e.message;
+    pageContent.innerHTML = "Unable to load content json.<br />" + e.message + "<br /><img src='img/derpshrug.png' style='width:400px' />";
     document.getElementById('pageContent').style.display = 'block';
   });
   //freaking jQuery calls. 
