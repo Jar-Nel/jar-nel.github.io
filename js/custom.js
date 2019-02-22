@@ -97,6 +97,12 @@ const LoadContent = (hash) => {
   hash = hash.replace('#', '');
   window.location.hash = `#${hash}`;
 
+  let optString = '';
+  if (hash.indexOf('~') > 0) {
+    optString = hash.split('~')[1];
+    hash = hash.split('~')[0];
+  }
+
   let pageContent = document.getElementById('pageContent');
   let breadCrumb = document.getElementById('breadcrumb');
   let navbarItems = document.getElementById('navbarItems');
@@ -106,22 +112,50 @@ const LoadContent = (hash) => {
     if (!navObj) pageContent.innerHTML = "Unable to load content.  Unknown hash";
     else {
       //Title
-      document.title = `JPD:${navObj.title}`;
+      document.title = `JPoD:${navObj.title}`;
       //Breadcrumb
       breadCrumb.innerHTML = '';
       navObj.breadcrumb.forEach(element => {
         breadCrumb.innerHTML += element;
       });
       //NavBar
-      navbarItems.innerHTML = '';
-      navObj.navbaritems.forEach(element => {
-        navbarItems.innerHTML += element;
-      });
+      //navbarItems.innerHTML = '';
+      /*navObj.navbaritems.forEach(element => {
+        if (element[1])
+        {
+          let navbarObj=document.getElementById(element[0]);
+          if (navbarObj){
+            if (element[1]==='active')
+              navbarObj.style.color='#444';
+            else
+              navbarObj.style.color='#fff';
+          }
+        }
+
+          //if (document.getElementById)
+        //if (element[1]==='active') $(element[0]).addClass('active'); else $(element[0]).removeClass('active');
+      });*/
       //Content
       LoadContentPage(navObj.page).then((response) => {
         if (response) {
           pageContent.innerHTML = response;
           document.getElementById('pageContent').style.display = 'block';
+          if (hash.toLowerCase() === 'toc.html') {
+            switch (optString.toLowerCase()) {
+              case 's1':
+                $('#collapse1').collapse('show');
+                break;
+              case 's2':
+                $('#collapse2').collapse('show');
+                break;
+              case 's3':
+                $('#collapse3').collapse('show');
+                break;
+              case 's4':
+                $('#collapse4').collapse('show');
+                break;
+            }
+          }
         }
         else {
           pageContent.innerHTML = "Content page not found";
@@ -138,6 +172,7 @@ const LoadContent = (hash) => {
   });
   //freaking jQuery calls. 
   $('.navbar-collapse').collapse('hide');
+  $('.collapse').collapse('show');
 }
 
 const LoadNavJson = async () => {
@@ -149,3 +184,15 @@ const LoadContentPage = async (page) => {
   let response = await fetch(page);
   return await response.text();
 }
+
+$(document).ready(function () {
+
+  $('.collapse').on('shown.bs.collapse', function () {
+    $(this).parent().addClass('active');
+  });
+
+  $('.collapse').on('hidden.bs.collapse', function () {
+    $(this).parent().removeClass('active');
+  });
+
+});

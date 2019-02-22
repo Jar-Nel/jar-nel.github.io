@@ -7,8 +7,9 @@
             "<li class=\"breadcrumb-item active\">Home</li>"
         ],
         "navbaritems" : [
-            "<li class=\"nav-item active\"><a class=\"nav-link\" href=\"#home.html\" onclick=\"\">Home <span class=\"sr-only\">(current)</span></a></li>",
-            "<li class=\"nav-item\"><a class=\"nav-link\" href=\"#about.html\" onclick=\"LoadContent('about.html')\">About</a></li>"
+            ["#navHome", "active"],
+            ["#navContents", ""],
+            ["#navAbout", ""]
         ]
     },
     {
@@ -21,7 +22,22 @@
         ],
         "navbaritems" : [
             "<li class=\"nav-item\"><a class=\"nav-link\" href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
+            "<li class=\"nav-item\"><a class=\"nav-link\" href=\"#toc.html\" onclick=\"LoadContent('toc.html')\">Contents</a></li>",
             "<li class=\"nav-item active\"><a class=\"nav-link\" href=\"#about.html\" onclick=\"LoadContent('about.html')\">About <span class=\"sr-only\">(current)</span></a></li>"
+        ]
+    },
+    {
+        "hash": "toc.html",
+        "page": "content/toc.html",
+        "title": "Contents",
+        "breadcrumb": [
+            "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
+            "<li class=\"breadcrumb-item active\">Contents</li>"
+        ],
+        "navbaritems" : [
+            ["#navHome", ""],
+            ["#navContents", "active"],
+            ["#navAbout", ""]
         ]
     }
 ]
