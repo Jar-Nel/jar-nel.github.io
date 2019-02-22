@@ -23,7 +23,7 @@
 
       <div class="navbar-collapse collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto" id="navbarItems">
-          <li id="navHome" class="nav-item active">
+          <li id="navHome" class="nav-item">
             <a class="nav-link" href="#home.html" onclick="LoadContent('home.html')">Home <span class="sr-only">(current)</span></a>
           </li>
           <li id="navContents" class="nav-item dropdown">
@@ -34,14 +34,14 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#toc.html" onclick="LoadContent('toc.html')">Contents</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#toc.html~s1">&nbsp;&nbsp;Current Topics</a>
-              <a class="dropdown-item" href="#toc.html~s2">&nbsp;&nbsp;Lectures</a>
-              <a class="dropdown-item" href="#toc.html~s3">&nbsp;&nbsp;Hands On</a>
-              <a class="dropdown-item" href="#toc.html~s4">&nbsp;&nbsp;Bonus Content</a>
+              <a class="dropdown-item" href="#toc.html~s1" onclick="LoadContent('toc.html~s1')">&nbsp;&nbsp;Current Topics</a>
+              <a class="dropdown-item" href="#toc.html~s2" onclick="LoadContent('toc.html~s2')">&nbsp;&nbsp;Lectures</a>
+              <a class="dropdown-item" href="#toc.html~s3" onclick="LoadContent('toc.html~s3')">&nbsp;&nbsp;Hands On</a>
+              <a class="dropdown-item" href="#toc.html~s4" onclick="LoadContent('toc.html~s4')">&nbsp;&nbsp;Bonus Content</a>
             </div>
           </li>
           <li id="navAbout" class="nav-item">
-            <a class="nav-link" href="#about.html" onclick="">About</a>
+            <a class="nav-link" href="#about.html" onclick="LoadContent('about.html')">About</a>
           </li>
         </ul>
       </div>

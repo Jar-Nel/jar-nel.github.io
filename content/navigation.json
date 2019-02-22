@@ -6,11 +6,7 @@
         "breadcrumb": [
             "<li class=\"breadcrumb-item active\">Home</li>"
         ],
-        "navbaritems" : [
-            ["#navHome", "active"],
-            ["#navContents", ""],
-            ["#navAbout", ""]
-        ]
+        "activeNavbaritems" : ["#navHome"]
     },
     {
         "hash": "about.html",
@@ -20,11 +16,7 @@
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
             "<li class=\"breadcrumb-item active\">About</li>"
         ],
-        "navbaritems" : [
-            "<li class=\"nav-item\"><a class=\"nav-link\" href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
-            "<li class=\"nav-item\"><a class=\"nav-link\" href=\"#toc.html\" onclick=\"LoadContent('toc.html')\">Contents</a></li>",
-            "<li class=\"nav-item active\"><a class=\"nav-link\" href=\"#about.html\" onclick=\"LoadContent('about.html')\">About <span class=\"sr-only\">(current)</span></a></li>"
-        ]
+        "activeNavbaritems" : ["#navAbout"]
     },
     {
         "hash": "toc.html",
@@ -34,10 +26,6 @@
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
             "<li class=\"breadcrumb-item active\">Contents</li>"
         ],
-        "navbaritems" : [
-            ["#navHome", ""],
-            ["#navContents", "active"],
-            ["#navAbout", ""]
-        ]
+        "activeNavbaritems" : ["#navContents"]
     }
 ]

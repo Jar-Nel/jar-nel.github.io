@@ -120,21 +120,10 @@ const LoadContent = (hash) => {
       });
       //NavBar
       //navbarItems.innerHTML = '';
-      /*navObj.navbaritems.forEach(element => {
-        if (element[1])
-        {
-          let navbarObj=document.getElementById(element[0]);
-          if (navbarObj){
-            if (element[1]==='active')
-              navbarObj.style.color='#444';
-            else
-              navbarObj.style.color='#fff';
-          }
-        }
-
-          //if (document.getElementById)
-        //if (element[1]==='active') $(element[0]).addClass('active'); else $(element[0]).removeClass('active');
-      });*/
+      $('.nav-item').removeClass('active');
+      navObj.activeNavbaritems.forEach(element => {
+        $(element).addClass('active'); 
+      });
       //Content
       LoadContentPage(navObj.page).then((response) => {
         if (response) {
@@ -171,8 +160,9 @@ const LoadContent = (hash) => {
     document.getElementById('pageContent').style.display = 'block';
   });
   //freaking jQuery calls. 
-  $('.navbar-collapse').collapse('hide');
-  $('.collapse').collapse('show');
+  //$('.navbar-collapse').collapse('hide');
+  $('#navbarColor01').collapse('hide');
+  //$('.collapse').collapse('show');
 }
 
 const LoadNavJson = async () => {
