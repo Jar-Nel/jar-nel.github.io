@@ -89,6 +89,10 @@ function includeHTML() {
   }
 }
 
+//this is to support the color changing
+let colorI = 1;
+
+//This is the page load function
 const LoadContent = (hash) => {
   document.getElementById('pageContent').style.display = 'none'
 
@@ -147,6 +151,13 @@ const LoadContent = (hash) => {
                 break;
             }
           }
+          if (document.getElementById('spanColor')){
+            //Start the color change
+            objColorId=document.getElementById('spanColor');
+            objColorId.innerHTML = generateRainbowText("Hello, world!");
+            setTimeout("changeColor()", 100);
+      
+          }
         }
         else {
           pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px' />";
@@ -177,7 +188,33 @@ const LoadContentPage = async (page) => {
   return await response.text();
 }
 
-$(document).ready(function () {
+function changeColor() {
+  let text = "Jared Nelson";
+  let objColorId = document.getElementById("spanColor");
+  let childNodes = objColorId.childNodes;
+  for (let i = 0; i < childNodes.length; i++) {
+    let hue = (360 * (i + colorI) / text.length);
+    if (hue > 359) hue = hue - 360;
+    childNodes[text.length-i].style = `color:hsl(${hue},80%,50%);`
+  }
+  colorI++;
+  if (colorI > text.length) colorI = 1;
+  setTimeout("changeColor()", 150);
+}
+function generateRainbowText(text) {
+  let outText = "";
+  for (let i = 0; i < text.length; i++) {
+    let hue = (360 * (i + colorI) / text.length);
+    if (hue > 359) hue = hue - 360;
+    let charText = "<span id=\"sc_" + i.toString() + "\" style=\"color:hsl(" + hue + ",80%,50%);\">";
+    outText += charText + text[i] + "</span>";
+  }
+  //document.getElementById("output").value="colorI: "+colorI+"\r\n"+outText;
+  return outText;
+}
+
+
+/*$(document).ready(function () {
 
   $('.collapse').on('shown.bs.collapse', function () {
     $(this).parent().addClass('active');
@@ -187,4 +224,4 @@ $(document).ready(function () {
     $(this).parent().removeClass('active');
   });
 
-});
+});*/
