@@ -91,6 +91,7 @@ function includeHTML() {
 
 //this is to support the color changing
 let colorI = 1;
+let animateColor = '';//setInterval(changeColor, 150)'';
 
 //This is the page load function
 const LoadContent = (hash) => {
@@ -156,8 +157,9 @@ const LoadContent = (hash) => {
             //Start the color change
             objColorId = document.getElementById('spanColor');
             objColorId.innerHTML = generateRainbowText("Hello, world!");
-            setTimeout("changeColor()", 150);
-
+            //setTimeout("changeColor()", 150);
+            clearInterval(animateColor);
+            animateColor = setInterval(changeColor, 150);
           }
         }
         else {
@@ -190,7 +192,29 @@ const LoadContentPage = async (page) => {
 }
 
 function changeColor() {
-  let text = "Jared Nelson";
+  try {
+    let text = "Hello, world!";
+    let objColorId = document.getElementById("spanColor");
+    if (objColorId) {
+      let childNodes = objColorId.childNodes;
+      for (let i = 0; i < childNodes.length; i++) {
+        let hue = (360 * (i + colorI) / text.length);
+        if (hue > 359) hue = hue - 360;
+        childNodes[(text.length - 1) - i].style = `color:hsl(${hue},80%,50%);`
+      }
+      colorI++;
+      if (colorI > text.length) colorI = 1;
+    }
+    else clearInterval(animateColor);
+  }
+  catch (e) {
+    console.log(e.message);
+    clearInterval(animateColor);
+  }
+}
+
+function changeColor2() {
+  let text = "Hello, World";
   let objColorId = document.getElementById("spanColor");
   if (objColorId) {
     let childNodes = objColorId.childNodes;
@@ -204,6 +228,7 @@ function changeColor() {
     setTimeout("changeColor()", 150);
   }
 }
+
 function generateRainbowText(text) {
   let outText = "";
   for (let i = 0; i < text.length; i++) {
@@ -229,9 +254,10 @@ const clickTheme = (oldTheme) => {
 }
 
 const changeTheme = (theme) => {
+  console.log(window.innerHeight);
   //Change theme
   linkTags = document.getElementsByName('cssLink'); //.forEach(linkTag => {
-  for (let i=0; i<linkTags.length; i++){
+  for (let i = 0; i < linkTags.length; i++) {
     if (linkTags[i].title === theme) linkTags[i].disabled = false;
     else linkTags[i].disabled = true;
   }
@@ -244,28 +270,55 @@ const changeTheme = (theme) => {
 
 const animateDark = () => {
   divOverlay = document.getElementById('divOverlay');
-  divOverlay.style.opacity=1.0;
-  divOverlay.style.boxShadow="0px 0px 0px 50000px #000";
+  divOverlay.style.opacity = 1.0;
+  divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
   divOverlay.style.display = "block";
+  
+  let diameter=100;
+  if (window.innerWidth>800) diameter=200;
+  divOverlay.style.minWidth=`${diameter}px`;
+  divOverlay.style.minHeight=`${diameter}px`;
+
+  let bounceHeight=window.innerHeight-diameter;
+  let bounceWidth=window.innerWidth-diameter;
+  setInterval(frame, 3);
+  let post=0;
+  let posl=0;
+  let x= (Math.random()*6)-3;
+  let y= (Math.random()*6)-3;
+function frame() {
+    //console.log(window.innerHeight, post, posl);
+    if ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl<0)) {
+      x= (Math.random()*6)-3;
+      y= (Math.random()*6)-3;
+      console.log(post, posl, x, y);
+      //clearInterval(id);
+    } 
+      post=post+y;
+      posl=posl+x;
+      divOverlay.style.top = `${post}px`;
+      divOverlay.style.left = `${posl}px`;
+    
+  }
   //fadeDiv('divOverlay', 1.0);
 }
 
 const animateLight = () => {
   divOverlay = document.getElementById('divOverlay');
-  divOverlay.style.boxShadow="0px 0px 0px 50000px #FFF";
+  divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
   divOverlay.style.display = "block";
   fadeDiv('divOverlay', 1.0);
 }
 
 const fadeDiv = (divObjID, opacit) => {
-  divObj=document.getElementById(divObjID);
-  opacit=opacit-0.1;
+  divObj = document.getElementById(divObjID);
+  opacit = opacit - 0.1;
   divObj.style.opacity = opacit;
   //console.log(opacit);
-  if (opacit>0.1) {
-    setTimeout(`fadeDiv('${divObjID}', ${opacit})`, 50);
+  if (opacit > 0.1) {
+    setTimeout(`fadeDiv('${divObjID}', ${opacit})`, 70);
   }
-  else divObj.style.display="none";
+  else divObj.style.display = "none";
 }
 /*$(document).ready(function () {
 
