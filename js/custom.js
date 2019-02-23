@@ -288,14 +288,16 @@ const animateDark = () => {
   let y= (Math.random()*6)-3;
 function frame() {
     //console.log(window.innerHeight, post, posl);
-    if ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl<0)) {
+    while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl<0)) {
       x= (Math.random()*6)-3;
       y= (Math.random()*6)-3;
       console.log(post, posl, x, y);
+      post=Math.round(post+y);
+      posl=Math.round(posl+x);
       //clearInterval(id);
     } 
-      post=post+y;
-      posl=posl+x;
+      post=Math.round(post+y);
+      posl=Math.round(posl+x);
       divOverlay.style.top = `${post}px`;
       divOverlay.style.left = `${posl}px`;
     
