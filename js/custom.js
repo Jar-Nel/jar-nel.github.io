@@ -219,11 +219,11 @@ function generateRainbowText(text) {
 const clickTheme = (oldTheme) => {
   if (oldTheme === "dark") {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: light`);
-    //animateLight();
+    animateLight();
     changeTheme("light");
   } else {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: dark`);
-    //animateDark();
+    animateDark();
     changeTheme("dark");
   }
 }
@@ -232,7 +232,6 @@ const changeTheme = (theme) => {
   //Change theme
   linkTags = document.getElementsByName('cssLink'); //.forEach(linkTag => {
   for (let i=0; i<linkTags.length; i++){
-    //alert(`${linkTag.title}, ${theme}`);
     if (linkTags[i].title === theme) linkTags[i].disabled = false;
     else linkTags[i].disabled = true;
   }
