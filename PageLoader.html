@@ -5,14 +5,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link name="cssLink" title="dark" rel="dark stylesheet" type="text/css" href="css/bootstrap_dark.min.css">
+  <link name="cssLink" title="light" rel="light stylesheet" type="text/css" href="css/bootstrap_light.min.css" disabled>
   <!--link rel="stylesheet" type="text/css" href="css/custom.min.css"-->
 
   <title>Jared's Page of Dev</title>
+  <style>
+    #divOverlay {
+      position: fixed;
+      /*  opacity: 0.5;*/
+      box-shadow: 0px 0px 0px 50000px #000;
+      content: "fdsffs ";
+      border-radius: 50%;
+      min-width: 90px;
+      min-height: 90px;
+      border: 1px solid red;
+      top: 30%;
+      left: 30%;
+      display:none;
+    }
+    #divOverlay2 {
+      position: fixed; 
+      margin: 0; 
+      top:0; 
+      z-index: 200; 
+      min-height: 100%; 
+      min-width: 100%; 
+      width:100%; 
+      height:100%; 
+      color: #000; 
+      background: #000; 
+      display:none;
+    }
+    #divOverlay3 {
+      position: fixed; 
+      margin: 0; 
+      top:0; 
+      z-index: 200; 
+      min-height: 100%; 
+      min-width: 100%; 
+      width:100%; 
+      height:100%; 
+      color: #000; 
+      background: #000; 
+      display:none;
+    }
+  </style>
 </head>
 
-<body onload="LoadContent()">
-  <div class="fixed-top sticky-top" style="position: fixed;">
+<body onload="LoadContent()" style="height: 100%;">
+  <div id="divOverlay">
+    &nbsp;</div>
+  <div class="fixed-top sticky-top" style="position: fixed; z-index: 100">
     <!--NavBar-->
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
       <a class="navbar-brand" href="#">Jared's Page of Dev</a>
@@ -24,7 +68,8 @@
       <div class="navbar-collapse collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto" id="navbarItems">
           <li id="navHome" class="nav-item">
-            <a class="nav-link" href="#home.html" onclick="LoadContent('home.html')">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#home.html" onclick="LoadContent('home.html')">Home <span
+                class="sr-only">(current)</span></a>
           </li>
           <li id="navContents" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -34,16 +79,22 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#toc.html" onclick="LoadContent('toc.html')">Contents</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#toc.html~s1" onclick="LoadContent('toc.html~s1')">&nbsp;&nbsp;Current Topics</a>
+              <a class="dropdown-item" href="#toc.html~s1" onclick="LoadContent('toc.html~s1')">&nbsp;&nbsp;Current
+                Topics</a>
               <a class="dropdown-item" href="#toc.html~s2" onclick="LoadContent('toc.html~s2')">&nbsp;&nbsp;Lectures</a>
               <a class="dropdown-item" href="#toc.html~s3" onclick="LoadContent('toc.html~s3')">&nbsp;&nbsp;Hands On</a>
-              <a class="dropdown-item" href="#toc.html~s4" onclick="LoadContent('toc.html~s4')">&nbsp;&nbsp;Bonus Content</a>
+              <a class="dropdown-item" href="#toc.html~s4" onclick="LoadContent('toc.html~s4')">&nbsp;&nbsp;Bonus
+                Content</a>
             </div>
           </li>
           <li id="navAbout" class="nav-item">
             <a class="nav-link" href="#about.html" onclick="LoadContent('about.html')">About</a>
           </li>
         </ul>
+        <span id="ctlSwitchTheme" onclick="clickTheme(this.title)" title="dark" class="my-2 my-lg-0"
+          style="cursor: pointer;">Theme:
+          <img src="img/lightsw_dark.png" style="height: 32px" ;>
+        </span>
       </div>
     </nav>
     <!--Breadcrumb-->

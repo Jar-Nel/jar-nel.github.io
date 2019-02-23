@@ -94,6 +94,7 @@ let colorI = 1;
 
 //This is the page load function
 const LoadContent = (hash) => {
+
   document.getElementById('pageContent').style.display = 'none'
 
   if (!hash) hash = window.location.hash;
@@ -128,7 +129,7 @@ const LoadContent = (hash) => {
       //navbarItems.innerHTML = '';
       $('.nav-item').removeClass('active');
       navObj.activeNavbaritems.forEach(element => {
-        $(element).addClass('active'); 
+        $(element).addClass('active');
       });
       //Content
       LoadContentPage(navObj.page).then((response) => {
@@ -151,12 +152,12 @@ const LoadContent = (hash) => {
                 break;
             }
           }
-          if (document.getElementById('spanColor')){
+          if (document.getElementById('spanColor')) {
             //Start the color change
-            objColorId=document.getElementById('spanColor');
+            objColorId = document.getElementById('spanColor');
             objColorId.innerHTML = generateRainbowText("Hello, world!");
-            setTimeout("changeColor()", 100);
-      
+            setTimeout("changeColor()", 150);
+
           }
         }
         else {
@@ -191,15 +192,17 @@ const LoadContentPage = async (page) => {
 function changeColor() {
   let text = "Jared Nelson";
   let objColorId = document.getElementById("spanColor");
-  let childNodes = objColorId.childNodes;
-  for (let i = 0; i < childNodes.length; i++) {
-    let hue = (360 * (i + colorI) / text.length);
-    if (hue > 359) hue = hue - 360;
-    childNodes[text.length-i].style = `color:hsl(${hue},80%,50%);`
+  if (objColorId) {
+    let childNodes = objColorId.childNodes;
+    for (let i = 0; i < childNodes.length; i++) {
+      let hue = (360 * (i + colorI) / text.length);
+      if (hue > 359) hue = hue - 360;
+      childNodes[text.length - i].style = `color:hsl(${hue},80%,50%);`
+    }
+    colorI++;
+    if (colorI > text.length) colorI = 1;
+    setTimeout("changeColor()", 150);
   }
-  colorI++;
-  if (colorI > text.length) colorI = 1;
-  setTimeout("changeColor()", 150);
 }
 function generateRainbowText(text) {
   let outText = "";
@@ -213,7 +216,57 @@ function generateRainbowText(text) {
   return outText;
 }
 
+const clickTheme = (oldTheme) => {
+  if (oldTheme === "dark") {
+    //console.log(`Current Theme: ${oldTheme}. Changing theme to: light`);
+    animateLight();
+    changeTheme("light");
+  } else {
+    //console.log(`Current Theme: ${oldTheme}. Changing theme to: dark`);
+    animateDark();
+    changeTheme("dark");
+  }
+}
 
+const changeTheme = (theme) => {
+  //Change theme
+  document.getElementsByName('cssLink').forEach(linkTag => {
+    //alert(`${linkTag.title}, ${theme}`);
+    if (linkTag.title === theme) linkTag.disabled = false;
+    else linkTag.disabled = true;
+  })
+  //update control
+  themeControl = document.getElementById('ctlSwitchTheme');
+  themeControl.title = theme;
+  themeControl.innerHTML = `Theme: <img src=\"img/lightsw_${theme}.png\" style=\"height: 32px\";>`;
+  $('#navbarColor01').collapse('hide');
+}
+
+const animateDark = () => {
+  divOverlay = document.getElementById('divOverlay');
+  divOverlay.style.opacity=1.0;
+  divOverlay.style.boxShadow="0px 0px 0px 50000px #000";
+  divOverlay.style.display = "block";
+  //fadeDiv('divOverlay', 1.0);
+}
+
+const animateLight = () => {
+  divOverlay = document.getElementById('divOverlay');
+  divOverlay.style.boxShadow="0px 0px 0px 50000px #FFF";
+  divOverlay.style.display = "block";
+  fadeDiv('divOverlay', 1.0);
+}
+
+const fadeDiv = (divObjID, opacit) => {
+  divObj=document.getElementById(divObjID);
+  opacit=opacit-0.1;
+  divObj.style.opacity = opacit;
+  //console.log(opacit);
+  if (opacit>0.1) {
+    setTimeout(`fadeDiv('${divObjID}', ${opacit})`, 50);
+  }
+  else divObj.style.display="none";
+}
 /*$(document).ready(function () {
 
   $('.collapse').on('shown.bs.collapse', function () {
