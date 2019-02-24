@@ -279,30 +279,27 @@ const animateDark = () => {
   divOverlay.style.minWidth = `${diameter}px`;
   divOverlay.style.minHeight = `${diameter}px`;
 
-  let bounceHeight = window.innerHeight - diameter;
-  let bounceWidth = window.innerWidth - diameter;
-  setInterval(frame, 3);
+  let bounceHeight = (window.innerHeight - diameter)-5;
+  let bounceWidth = (window.innerWidth - diameter)-5;
   let post = 0;
   let posl = 0;
-  let x = Math.round((Math.random() * 6) - 3)
-  let y = Math.round((Math.random() * 6) - 3)
+  let x = (Math.round((Math.random() * 4) - 2)*2)
+  let y = (Math.round((Math.random() * 4) - 2)*2)
+
+  setInterval(frame, 10);
   function frame() {
-    //console.log(window.innerHeight, post, posl);
     while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0)) {
-      x = Math.round((Math.random() * 6) - 3);
-      y = Math.round((Math.random() * 6) - 3);
+      x = (Math.round((Math.random() * 4) - 2)*2);
+      y = (Math.round((Math.random() * 4) - 2)*2);
       post = (post + y);
       posl = (posl + x);
-      //clearInterval(id);
     }
-    //console.log(posl, post, x, y);
     post = (post + y);
     posl = (posl + x);
     divOverlay.style.top = `${post}px`;
     divOverlay.style.left = `${posl}px`;
 
   }
-  //fadeDiv('divOverlay', 1.0);
 }
 
 const animateLight = () => {
