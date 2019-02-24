@@ -93,8 +93,9 @@ function includeHTML() {
 let colorI = 1;
 let animateColor = '';//setInterval(changeColor, 150)'';
 
-//This is to support dark animation
-let animateFlashlight='';
+//This is to support animation
+let bPlayDark=true;
+
 
 //This is the page load function
 const LoadContent = (hash) => {
@@ -245,19 +246,35 @@ function generateRainbowText(text) {
 }
 
 const clickTheme = (oldTheme) => {
+  document.getElementById('divMask').style.display = "block";
   if (oldTheme === "dark") {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: light`);
-    animateLight();
+    divOverlay = document.getElementById('divOverlay');
+    divOverlay.style.opacity = 1.0;
+    divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
+    divOverlay.style.display = "block";
     changeTheme("light");
-  } else {
+    fadeDiv('divOverlay', 1.0, .1, 70, console.log);
+} else {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: dark`);
-    animateDark();
-    changeTheme("dark");
+    if (bPlayDark){
+      animateDark();
+      bPlayDark=false;
+    }
+    else{
+      divOverlay = document.getElementById('divOverlay');
+      divOverlay.style.opacity = 1.0;
+      divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
+      divOverlay.style.display = "block";
+      changeTheme("dark");
+      fadeDiv('divOverlay', 1.0, .1, 70, console.log);
+    }
+    //changeTheme("dark");
   }
 }
 
 const changeTheme = (theme) => {
-  console.log(window.innerHeight);
+  document.getElementById('divMask').style.display = "block";
   //Change theme
   linkTags = document.getElementsByName('cssLink'); //.forEach(linkTag => {
   for (let i = 0; i < linkTags.length; i++) {
@@ -269,10 +286,58 @@ const changeTheme = (theme) => {
   themeControl.title = theme;
   themeControl.innerHTML = `Theme: <img src=\"img/lightsw_${theme}.png\" style=\"height: 32px\";>`;
   $('#navbarColor01').collapse('hide');
+  document.getElementById('divMask').style.display = "none";
 }
 
-const animateDark = () => {
-  clearInterval(animateFlashlight);
+const animateDialog = async (dialogTxt, callback) => {
+  /* #region AnimateDialog */
+  //Text at 4 per second.  _ is a one second pause, # is a <br>, ~ clears the box
+  let dialogObj = document.getElementById('dialogDiv');
+  if (dialogObj) {
+    dialogObj.style.display = "block";
+    //let dialogTxt = "Hey!#_Who turned out the lights?___~___Wait.#_I found a flashlight.____#Let's see if this helps._____"
+    let divTxt = '';
+    let dialogTxtPosition = 0;
+    let waitCount = 0;
+    dialogObj.innerHTML = "";
+    const dialogFrame = () => {
+      if (dialogTxtPosition < dialogTxt.length) {
+        let c = dialogTxt.substr(dialogTxtPosition, 1);
+        switch (c) {
+          case '_':
+            if (waitCount > 8) {
+              dialogTxtPosition++;
+              waitCount = 0;
+            } else {
+              waitCount++;
+            }
+            break;
+          case '#':
+            divTxt += '<br />';
+            dialogTxtPosition++;
+            break;
+          case '~':
+            divTxt = '';
+            dialogTxtPosition++;
+            break;
+          default:
+            divTxt += c;
+            dialogTxtPosition++;
+        }
+        dialogObj.innerHTML = divTxt;
+      } else {
+        clearInterval(animateDialogID);
+        dialogObj.style.display = "none";
+        callback("animateDialog done");
+      }
+    }
+    let animateDialogID = setInterval(dialogFrame, 63);
+  }
+  /* #endregion */
+}
+
+const animateFlashlight = async (seconds, callback) => {
+  /* #region AnimateFlashlight */
   divOverlay = document.getElementById('divOverlay');
   divOverlay.style.opacity = 1.0;
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
@@ -283,44 +348,134 @@ const animateDark = () => {
   divOverlay.style.minWidth = `${diameter}px`;
   divOverlay.style.minHeight = `${diameter}px`;
 
-  let bounceHeight = (window.innerHeight - diameter)-5;
-  let bounceWidth = (window.innerWidth - diameter)-5;
-  let post = 0;
-  let posl = 0;
-  let x = (Math.round((Math.random() * 4) - 2)*2)
-  let y = (Math.round((Math.random() * 4) - 2)*2)
+  let bounceHeight = (window.innerHeight - diameter) - 5;
+  let bounceWidth = (window.innerWidth - diameter) - 5;
+  let post = diameter;
+  let posl = diameter;
+  let x = (Math.round((Math.random() * 4) - 2) * 2)
+  let y = (Math.round((Math.random() * 4) - 2) * 2)
+  let frameCount = 0;
 
-  animateFlashlight = setInterval(frame, 10);
-  function frame() {
+  const flashlightFrame = () => {
+    if (frameCount < (seconds * 100)) {
+      while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0)) {
+        x = (Math.round((Math.random() * 4) - 2) * 2);
+        y = (Math.round((Math.random() * 4) - 2) * 2);
+        post = (post + y);
+        posl = (posl + x);
+      }
+      divOverlay.style.top = `${post}px`;
+      divOverlay.style.left = `${posl}px`;
+      post = (post + y);
+      posl = (posl + x);
+      frameCount++;
+      //if (!((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0))) {
+      //divOverlay.style.top = `${post}px`;
+      //divOverlay.style.left = `${posl}px`;
+      //}
+    } else {
+      diameter = 1;
+      divOverlay.style.minWidth = `${diameter}px`;
+      divOverlay.style.minHeight = `${diameter}px`;
+      divOverlay.style.top = '100%';
+      divOverlay.style.left = '100%';
+
+      clearInterval(animateFlashlightID);
+      callback("animateFlashlight done");
+    }
+  }
+  let = animateFlashlightID = setInterval(flashlightFrame, 10);
+
+  /* #endregion */
+}
+
+const animateDark = () => {
+  //clearInterval(animateFlashlight);
+  //clearInterval(animateDialog);
+  divOverlay = document.getElementById('divOverlay');
+  divOverlay.style.opacity = 1.0;
+  divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
+  divOverlay.style.display = "block";
+
+
+  /* #region AnimateDialog */
+  let dialogTxt = "Hey!#_Who turned out the lights?___~___Wait.#_I found a flashlight.____#Let's see if this helps._____";
+  animateDialog(dialogTxt, (result) => {
+    console.log(result);
+    animateFlashlight(5, (result) => {
+      console.log(result);
+      dialogTxt = "That didn't help!#__. _ . _ . _ #___We'll just have to wait for our eyes to adjust._______";
+      animateDialog(dialogTxt, (result) => {
+        console.log(result);
+        changeTheme("dark");
+        fadeDiv('divOverlay', 1.0, .02, 100, console.log);
+        dialogTxt = "There we go...___#That's better.____";
+        animateDialog(dialogTxt, console.log);
+      });
+    });
+  });
+  //Text at 4 per second.  _ is a one second pause, # is a <br>, ~ clears the box
+  /* #endregion */
+
+  /* #region AnimateFlashlight 
+  let diameter = 150;
+  if (window.innerWidth > 800) diameter = 200;
+  divOverlay.style.minWidth = `${diameter}px`;
+  divOverlay.style.minHeight = `${diameter}px`;
+
+  let bounceHeight = (window.innerHeight - diameter) - 5;
+  let bounceWidth = (window.innerWidth - diameter) - 5;
+  let post = diameter;
+  let posl = diameter;
+  let x = (Math.round((Math.random() * 4) - 2) * 2)
+  let y = (Math.round((Math.random() * 4) - 2) * 2)
+
+
+  //animateFlashlight = setInterval(frame, 10);
+  const frame = () => {
     while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0)) {
-      x = (Math.round((Math.random() * 4) - 2)*2);
-      y = (Math.round((Math.random() * 4) - 2)*2);
+      x = (Math.round((Math.random() * 4) - 2) * 2);
+      y = (Math.round((Math.random() * 4) - 2) * 2);
       post = (post + y);
       posl = (posl + x);
     }
-    post = (post + y);
-    posl = (posl + x);
     divOverlay.style.top = `${post}px`;
     divOverlay.style.left = `${posl}px`;
+    post = (post + y);
+    posl = (posl + x);
+    //if (!((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0))) {
+    //divOverlay.style.top = `${post}px`;
+    //divOverlay.style.left = `${posl}px`;
+    //}
   }
+  animateFlashlight = setInterval(frame, 10);
+   #endregion */
+
 }
 
 const animateLight = () => {
   divOverlay = document.getElementById('divOverlay');
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
   divOverlay.style.display = "block";
-  fadeDiv('divOverlay', 1.0);
+  fadeDiv('divOverlay', 1.0, 0.1, 70, console.log);
 }
 
-const fadeDiv = (divObjID, opacit) => {
+const fadeDiv = async (divObjID, startopacit, changeopacit, delay, callback) => {
   divObj = document.getElementById(divObjID);
-  opacit = opacit - 0.1;
-  divObj.style.opacity = opacit;
-  //console.log(opacit);
-  if (opacit > 0.1) {
-    setTimeout(`fadeDiv('${divObjID}', ${opacit})`, 70);
+  if (divObj){
+    let opacit=startopacit;
+    const fadeDivFrame = () =>{
+      opacit = opacit - changeopacit;
+      divObj.style.opacity = opacit;
+      //console.log(opacit);
+      if (opacit < changeopacit) {
+        divObj.style.display = "none";
+        clearInterval(fadeDivID);
+        callback("fadeDiv Done");
+      }
+    }
+    let = fadeDivID = setInterval(fadeDivFrame, delay);
   }
-  else divObj.style.display = "none";
 }
 /*$(document).ready(function () {
 
