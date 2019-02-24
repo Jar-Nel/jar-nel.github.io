@@ -273,34 +273,34 @@ const animateDark = () => {
   divOverlay.style.opacity = 1.0;
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
   divOverlay.style.display = "block";
-  
-  let diameter=100;
-  if (window.innerWidth>800) diameter=200;
-  divOverlay.style.minWidth=`${diameter}px`;
-  divOverlay.style.minHeight=`${diameter}px`;
 
-  let bounceHeight=window.innerHeight-diameter;
-  let bounceWidth=window.innerWidth-diameter;
+  let diameter = 100;
+  if (window.innerWidth > 800) diameter = 200;
+  divOverlay.style.minWidth = `${diameter}px`;
+  divOverlay.style.minHeight = `${diameter}px`;
+
+  let bounceHeight = window.innerHeight - diameter;
+  let bounceWidth = window.innerWidth - diameter;
   setInterval(frame, 3);
-  let post=0;
-  let posl=0;
-  let x= (Math.random()*6)-3;
-  let y= (Math.random()*6)-3;
-function frame() {
+  let post = 0;
+  let posl = 0;
+  let x = Math.round((Math.random() * 6) - 3)
+  let y = Math.round((Math.random() * 6) - 3)
+  function frame() {
     //console.log(window.innerHeight, post, posl);
-    while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl<0)) {
-      x= (Math.random()*6)-3;
-      y= (Math.random()*6)-3;
-      console.log(post, posl, x, y);
-      post=Math.round(post+y);
-      posl=Math.round(posl+x);
+    while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0)) {
+      x = Math.round((Math.random() * 6) - 3);
+      y = Math.round((Math.random() * 6) - 3);
+      post = (post + y);
+      posl = (posl + x);
       //clearInterval(id);
-    } 
-      post=Math.round(post+y);
-      posl=Math.round(posl+x);
-      divOverlay.style.top = `${post}px`;
-      divOverlay.style.left = `${posl}px`;
-    
+    }
+    //console.log(posl, post, x, y);
+    post = (post + y);
+    posl = (posl + x);
+    divOverlay.style.top = `${post}px`;
+    divOverlay.style.left = `${posl}px`;
+
   }
   //fadeDiv('divOverlay', 1.0);
 }
