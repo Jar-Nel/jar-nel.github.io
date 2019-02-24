@@ -278,7 +278,7 @@ const animateDark = () => {
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
   divOverlay.style.display = "block";
 
-  let diameter = 100;
+  let diameter = 150;
   if (window.innerWidth > 800) diameter = 200;
   divOverlay.style.minWidth = `${diameter}px`;
   divOverlay.style.minHeight = `${diameter}px`;
