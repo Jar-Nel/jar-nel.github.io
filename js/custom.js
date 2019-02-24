@@ -93,6 +93,9 @@ function includeHTML() {
 let colorI = 1;
 let animateColor = '';//setInterval(changeColor, 150)'';
 
+//This is to support dark animation
+let animateFlashlight='';
+
 //This is the page load function
 const LoadContent = (hash) => {
 
@@ -269,6 +272,7 @@ const changeTheme = (theme) => {
 }
 
 const animateDark = () => {
+  clearInterval(animateFlashlight);
   divOverlay = document.getElementById('divOverlay');
   divOverlay.style.opacity = 1.0;
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
@@ -286,7 +290,7 @@ const animateDark = () => {
   let x = (Math.round((Math.random() * 4) - 2)*2)
   let y = (Math.round((Math.random() * 4) - 2)*2)
 
-  setInterval(frame, 10);
+  animateFlashlight = setInterval(frame, 10);
   function frame() {
     while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0)) {
       x = (Math.round((Math.random() * 4) - 2)*2);
@@ -298,7 +302,6 @@ const animateDark = () => {
     posl = (posl + x);
     divOverlay.style.top = `${post}px`;
     divOverlay.style.left = `${posl}px`;
-
   }
 }
 
