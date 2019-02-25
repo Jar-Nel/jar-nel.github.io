@@ -102,7 +102,7 @@ let speedMultiplier = 3;
 const LoadContent = (hash) => {
   //Reload the last user selected theme
   let theme = getCookie('theme');
-  if (theme === "") theme = "light"; else bPlayDark=false;
+  if (theme === "") theme = "light"; else bPlayDark = false;
   changeTheme(theme);
 
   document.getElementById('pageContent').style.display = 'none'
@@ -127,8 +127,7 @@ const LoadContent = (hash) => {
   LoadJson('content/navigation.json').then((response) => {
     navObj = response.find((element) => { return element.hash === hash });
     if (!navObj) {
-      pageContent.innerHTML = "Unable to load content.  Unknown hash.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
-      document.getElementById('pageContent').style.display = 'block';
+      showError(`Unable to load content.  Unknown hash.`);
     }
     else {
       //Title
@@ -148,72 +147,83 @@ const LoadContent = (hash) => {
       LoadContentPage(`${navObj.path}${navObj.page}`).then((response) => {
         if (response) {
           /* #region Page Processing */
-          pageContent.innerHTML = response;
-          document.getElementById('pageContent').style.opacity = "0";
-          document.getElementById('pageContent').style.display = 'block';
-          fadeDiv('pageContent', 0.0, 1, .1, 50, console.log);
-          if (hash.toLowerCase() === 'toc.html') {
-            switch (optString.toLowerCase()) {
-              case 's1':
-                $('#collapse1').collapse('show');
-                break;
-              case 's2':
-                $('#collapse2').collapse('show');
-                break;
-              case 's3':
-                $('#collapse3').collapse('show');
-                break;
-              case 's4':
-                $('#collapse4').collapse('show');
-                break;
-            }
-          }
-          if (hash.toLowerCase() === 'ct.html') {
-            /* #region Current Topics */
-            LoadJson('content/currenttopics/ctcontent.json').then((responsect) => {
-              ctObj = responsect.find((ctElement) => { return ctElement.entry === optString });
-              if (!ctObj) {
-                pageContent.innerHTML = "Unable to load content.  Unknown Current Topics entry.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
-                document.getElementById('pageContent').style.display = 'block';
+          switch (hash.toLowerCase()) {
+            case "toc.html":
+              /* #region TOC */
+              pageContent.innerHTML = response;
+              switch (optString.toLowerCase()) {
+                case 's1':
+                  $('#collapse1').collapse('show');
+                  break;
+                case 's2':
+                  $('#collapse2').collapse('show');
+                  break;
+                case 's3':
+                  $('#collapse3').collapse('show');
+                  break;
+                case 's4':
+                  $('#collapse4').collapse('show');
+                  break;
               }
-              //Current Topic data loaded.
-              document.title = `JPoD:${ctObj.pagetitle}`;
-              breadCrumb.innerHTML += ctObj.breadcrumb;
-              response = response.replace(/##ctTitle##/g, ctObj.title);
-              response = response.replace(/##ctAuthor##/g, ctObj.author);
-              response = response.replace(/##ctDate##/g, ctObj.date);
-              response = response.replace(/##ctResponseTitle##/g, ctObj.responsetitle);
-
-              if (ctObj.assignment.indexOf('.html') < 0) {
-                response = response.replace(/##ctAssignment##/g, ctObj.assignment);
-                response = response.replace(/##ctResponse##/g, ctObj.response);
-                pageContent.innerHTML = response;
-              }
-              else {
-                LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.assignment}`).then((assignmentContent) => {
-                  response = response.replace(/##ctAssignment##/g, assignmentContent);
-                  LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.response}`).then((responseContent) => {
-                    response = response.replace(/##ctResponse##/g, responseContent);
-                    pageContent.innerHTML = response;
-                  }).catch((e) => {
-                    pageContent.innerHTML = `Content page ${navObj.path}${ctObj.entry}${ctObj.response} not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
-                    document.getElementById('pageContent').style.display = 'block';
-                  });
-                }).catch((e) => {
-                  pageContent.innerHTML = `Content page ${navObj.path}${ctObj.entry}${ctObj.assignment} not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
-                  document.getElementById('pageContent').style.display = 'block';
-                });
-              }
-            }).catch((e) => {
-              pageContent.innerHTML = `CT Content JSON not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
+              document.getElementById('pageContent').style.opacity = "0";
               document.getElementById('pageContent').style.display = 'block';
-            });
-            /* #endregion */
+              fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+              /* #endregion */
+              break;
+            case "ct.html":
+              /* #region Current Topics */
+              LoadJson('content/currenttopics/ctcontent.json').then((responsect) => {
+                ctObj = responsect.find((ctElement) => { return ctElement.entry === optString });
+                if (!ctObj) {
+                  showError(`Unable to load content.  Unknown Current Topics entry`);
+                } else {
+                  //Current Topic data loaded.
+                  document.title = `JPoD:${ctObj.pagetitle}`;
+                  breadCrumb.innerHTML += ctObj.breadcrumb;
+                  response = response.replace(/##ctTitle##/g, ctObj.title);
+                  response = response.replace(/##ctAuthor##/g, ctObj.author);
+                  response = response.replace(/##ctDate##/g, ctObj.date);
+                  response = response.replace(/##ctResponseTitle##/g, ctObj.responsetitle);
+
+                  if (ctObj.assignment.indexOf('.html') < 0) {
+                    response = response.replace(/##ctAssignment##/g, ctObj.assignment);
+                    response = response.replace(/##ctResponse##/g, ctObj.response);
+                    pageContent.innerHTML = response;
+                    document.getElementById('pageContent').style.opacity = "0";
+                    document.getElementById('pageContent').style.display = 'block';
+                    fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+                  }
+                  else {
+                    LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.assignment}`).then((assignmentContent) => {
+                      response = response.replace(/##ctAssignment##/g, assignmentContent);
+                      LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.response}`).then((responseContent) => {
+                        response = response.replace(/##ctResponse##/g, responseContent);
+                        pageContent.innerHTML = response;
+                        document.getElementById('pageContent').style.opacity = "0";
+                        document.getElementById('pageContent').style.display = 'block';
+                        fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+                      }).catch((e) => {
+                        showError(`Content page ${navObj.path}${ctObj.entry}${ctObj.response} not found.`);
+                      });
+                    }).catch((e) => {
+                      showError(`Content page ${navObj.path}${ctObj.entry}${ctObj.assignment} not found.`);
+                    });
+                  }
+                }
+              }).catch((e) => {
+                showError(`CT Content JSON not found.`);
+              });
+
+              /* #endregion */
+              break;
+            default:
+              pageContent.innerHTML = response;
+              document.getElementById('pageContent').style.opacity = "0";
+              document.getElementById('pageContent').style.display = 'block';
+              fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+              break;
           }
-
-
-
-          //Start rainbow animation of section is present.
+          //Start rainbow animation of section if present.
           if (document.getElementById('spanColor')) {
             //Start the color change
             objColorId = document.getElementById('spanColor');
@@ -225,17 +235,14 @@ const LoadContent = (hash) => {
           /* #endregion */
         }
         else {
-          pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
-          document.getElementById('pageContent').style.display = 'block';
+          showError("Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
         }
       }).catch((e) => {
-        pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
-        document.getElementById('pageContent').style.display = 'block';
+        showError("Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
       });
     }
   }).catch((e) => {
-    pageContent.innerHTML = "Unable to load content json.<br />" + e.message + "<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
-    document.getElementById('pageContent').style.display = 'block';
+    showError("Unable to load content json.<br />" + e.message + "<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
   });
   //freaking jQuery calls. 
   //$('.navbar-collapse').collapse('hide');
@@ -252,6 +259,12 @@ const LoadJson = async (locationJSon) => {
 const LoadContentPage = async (page) => {
   let response = await fetch(page);
   return await response.text();
+}
+
+const showError = (errMsg) => {
+  document.getElementById('breadcrumb').innerHTML='&nbsp;';
+  document.getElementById('pageContent').innerHTML = `<div>${errMsg}</div><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
+  document.getElementById('pageContent').style.display = 'block';
 }
 
 
