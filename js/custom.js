@@ -94,11 +94,15 @@ let colorI = 1;
 let animateColor = '';//setInterval(changeColor, 150)'';
 
 //This is to support animation
-let bPlayDark=true;
+let bPlayDark = true;
+let speedMultiplier = 3;
 
 
 //This is the page load function
 const LoadContent = (hash) => {
+  let theme = getCookie('theme');
+  if (theme === "") theme = "light";
+  changeTheme(theme);
 
   document.getElementById('pageContent').style.display = 'none'
 
@@ -245,6 +249,18 @@ function generateRainbowText(text) {
   return outText;
 }
 
+const changeSpeedMultiplier = (multiplier) => {
+  if (multiplier) {
+    speedMultiplier = multiplier;
+  } else {
+    if (speedMultiplier === 0) speedMultiplier = 3;
+    else speedMultiplier = 0;
+    //speedMultiplier = speedMultiplier + 1;
+    //if (speedMultiplier > 3) speedMultiplier = 1;
+  }
+  console.log(`Speed: ${speedMultiplier}x`)
+}
+
 const clickTheme = (oldTheme) => {
   document.getElementById('divMask').style.display = "block";
   if (oldTheme === "dark") {
@@ -255,13 +271,14 @@ const clickTheme = (oldTheme) => {
     divOverlay.style.display = "block";
     changeTheme("light");
     fadeDiv('divOverlay', 1.0, .1, 70, console.log);
-} else {
+    setCookie('theme', 'light', 1);
+  } else {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: dark`);
-    if (bPlayDark){
+    if (bPlayDark) {
       animateDark();
-      bPlayDark=false;
+      bPlayDark = false;
     }
-    else{
+    else {
       divOverlay = document.getElementById('divOverlay');
       divOverlay.style.opacity = 1.0;
       divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
@@ -269,6 +286,7 @@ const clickTheme = (oldTheme) => {
       changeTheme("dark");
       fadeDiv('divOverlay', 1.0, .1, 70, console.log);
     }
+    setCookie('theme', 'dark', 1);
     //changeTheme("dark");
   }
 }
@@ -289,49 +307,81 @@ const changeTheme = (theme) => {
   document.getElementById('divMask').style.display = "none";
 }
 
+const dialogControlClick = (action) => {
+  let dialogControlObj = document.getElementById('dialogControl');
+  if (dialogControlObj) {
+    if (action) dialogControlObj.title = action;
+    if (dialogControlObj.title.toLowerCase() === "pause") {
+      changeSpeedMultiplier(0);
+      dialogControlObj.title = "play";
+      //document.getElementById('dialogControlImage').src='../image/play_32.png';
+      dialogControlObj.innerHTML = "<img src='img/play_32.png' style='width:32px;'>";
+    } else {
+      changeSpeedMultiplier(3);
+      dialogControlObj.title = "pause";
+      dialogControlObj.innerHTML = "<img src='img/pause_32.png' style='width:32px;'>";
+    }
+  }
+}
+
 const animateDialog = async (dialogTxt, callback) => {
   /* #region AnimateDialog */
   //Text at 4 per second.  _ is a one second pause, # is a <br>, ~ clears the box
   let dialogObj = document.getElementById('dialogDiv');
-  if (dialogObj) {
+  let dialogContent = document.getElementById('dialogContent');
+  if (dialogObj && dialogContent) {
     dialogObj.style.display = "block";
     //let dialogTxt = "Hey!#_Who turned out the lights?___~___Wait.#_I found a flashlight.____#Let's see if this helps._____"
     let divTxt = '';
     let dialogTxtPosition = 0;
     let waitCount = 0;
-    dialogObj.innerHTML = "";
+    let frameCount = 0;
+    let bClearDialog=true;
+    dialogContent.innerHTML = "";
+  
     const dialogFrame = () => {
-      if (dialogTxtPosition < dialogTxt.length) {
-        let c = dialogTxt.substr(dialogTxtPosition, 1);
-        switch (c) {
-          case '_':
-            if (waitCount > 8) {
-              dialogTxtPosition++;
-              waitCount = 0;
-            } else {
-              waitCount++;
-            }
-            break;
-          case '#':
-            divTxt += '<br />';
-            dialogTxtPosition++;
-            break;
-          case '~':
-            divTxt = '';
-            dialogTxtPosition++;
-            break;
-          default:
-            divTxt += c;
-            dialogTxtPosition++;
+      if (frameCount > 3) {
+        frameCount = 1;
+        if (bClearDialog){
+          divTxt='';
+          bClearDialog=false;
         }
-        dialogObj.innerHTML = divTxt;
+        if (dialogTxtPosition < dialogTxt.length) {
+          let c = dialogTxt.substr(dialogTxtPosition, 1);
+          switch (c) {
+            case '_':
+              if (waitCount > 8) {
+                dialogTxtPosition++;
+                waitCount = 0;
+              } else {
+                waitCount++;
+              }
+              break;
+            case '#':
+              divTxt += '<br />';
+              dialogTxtPosition++;
+              break;
+            case '~':
+              dialogControlClick('pause');
+              dialogTxtPosition++;
+              bClearDialog=true;
+              //clearInterval(animateDialogID);
+              break;
+            default:
+              divTxt += c;
+              dialogTxtPosition++;
+          }
+          dialogContent.innerHTML = divTxt;
+        } else {
+          clearInterval(animateDialogID);
+          dialogObj.style.display = "none";
+          callback("animateDialog done");
+        }
       } else {
-        clearInterval(animateDialogID);
-        dialogObj.style.display = "none";
-        callback("animateDialog done");
+        frameCount = frameCount + (speedMultiplier * 1);
       }
     }
-    let animateDialogID = setInterval(dialogFrame, 63);
+    let animateDialogID = setInterval(dialogFrame, (22));
   }
   /* #endregion */
 }
@@ -384,7 +434,7 @@ const animateFlashlight = async (seconds, callback) => {
       callback("animateFlashlight done");
     }
   }
-  let = animateFlashlightID = setInterval(flashlightFrame, 10);
+  let = animateFlashlightID = setInterval(flashlightFrame, (10));
 
   /* #endregion */
 }
@@ -399,58 +449,21 @@ const animateDark = () => {
 
 
   /* #region AnimateDialog */
-  let dialogTxt = "Hey!#_Who turned out the lights?___~___Wait.#_I found a flashlight.____#Let's see if this helps._____";
+  let dialogTxt = "Hey!#_Who turned out the lights?_~___Wait.#_I found a flashlight.____#Let's see if this helps._~";
   animateDialog(dialogTxt, (result) => {
     console.log(result);
     animateFlashlight(5, (result) => {
       console.log(result);
-      dialogTxt = "That didn't help!#__. _ . _ . _ #___We'll just have to wait for our eyes to adjust._______";
+      dialogTxt = "That didn't help!#__. _ . _ . _ #___We'll just have to wait for our eyes to adjust._~";
       animateDialog(dialogTxt, (result) => {
         console.log(result);
         changeTheme("dark");
         fadeDiv('divOverlay', 1.0, .02, 100, console.log);
-        dialogTxt = "There we go...___#That's better.____";
+        dialogTxt = "There we go...___#That's better.________";
         animateDialog(dialogTxt, console.log);
       });
     });
   });
-  //Text at 4 per second.  _ is a one second pause, # is a <br>, ~ clears the box
-  /* #endregion */
-
-  /* #region AnimateFlashlight 
-  let diameter = 150;
-  if (window.innerWidth > 800) diameter = 200;
-  divOverlay.style.minWidth = `${diameter}px`;
-  divOverlay.style.minHeight = `${diameter}px`;
-
-  let bounceHeight = (window.innerHeight - diameter) - 5;
-  let bounceWidth = (window.innerWidth - diameter) - 5;
-  let post = diameter;
-  let posl = diameter;
-  let x = (Math.round((Math.random() * 4) - 2) * 2)
-  let y = (Math.round((Math.random() * 4) - 2) * 2)
-
-
-  //animateFlashlight = setInterval(frame, 10);
-  const frame = () => {
-    while ((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0)) {
-      x = (Math.round((Math.random() * 4) - 2) * 2);
-      y = (Math.round((Math.random() * 4) - 2) * 2);
-      post = (post + y);
-      posl = (posl + x);
-    }
-    divOverlay.style.top = `${post}px`;
-    divOverlay.style.left = `${posl}px`;
-    post = (post + y);
-    posl = (posl + x);
-    //if (!((post > bounceHeight) || (post < 0) || (posl > bounceWidth) || (posl < 0))) {
-    //divOverlay.style.top = `${post}px`;
-    //divOverlay.style.left = `${posl}px`;
-    //}
-  }
-  animateFlashlight = setInterval(frame, 10);
-   #endregion */
-
 }
 
 const animateLight = () => {
@@ -462,9 +475,9 @@ const animateLight = () => {
 
 const fadeDiv = async (divObjID, startopacit, changeopacit, delay, callback) => {
   divObj = document.getElementById(divObjID);
-  if (divObj){
-    let opacit=startopacit;
-    const fadeDivFrame = () =>{
+  if (divObj) {
+    let opacit = startopacit;
+    const fadeDivFrame = () => {
       opacit = opacit - changeopacit;
       divObj.style.opacity = opacit;
       //console.log(opacit);
@@ -477,6 +490,33 @@ const fadeDiv = async (divObjID, startopacit, changeopacit, delay, callback) => 
     let = fadeDivID = setInterval(fadeDivFrame, delay);
   }
 }
+
+/* #region cookies */
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+/* #endregion */
+
+
 /*$(document).ready(function () {
 
   $('.collapse').on('shown.bs.collapse', function () {
