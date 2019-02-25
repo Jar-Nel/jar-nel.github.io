@@ -149,7 +149,9 @@ const LoadContent = (hash) => {
         if (response) {
           /* #region Page Processing */
           pageContent.innerHTML = response;
+          document.getElementById('pageContent').style.opacity="0";
           document.getElementById('pageContent').style.display = 'block';
+          fadeDiv('pageContent', 0.0, 1, .1, 50, console.log);
           if (hash.toLowerCase() === 'toc.html') {
             switch (optString.toLowerCase()) {
               case 's1':
@@ -300,6 +302,8 @@ const changeSpeedMultiplier = (multiplier) => {
 }
 
 const clickTheme = (oldTheme) => {
+  $('#navbarColor01').collapse('hide');
+
   document.getElementById('divMask').style.display = "block";
   if (oldTheme === "dark") {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: light`);
@@ -308,7 +312,9 @@ const clickTheme = (oldTheme) => {
     divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
     divOverlay.style.display = "block";
     changeTheme("light");
-    fadeDiv('divOverlay', 1.0, .1, 70, console.log);
+    fadeDiv('divOverlay', 1.0, 0, .1, 70, (result)=> {
+      divObj.style.display = "none";
+    });
     setCookie('theme', 'light', 1);
   } else {
     //console.log(`Current Theme: ${oldTheme}. Changing theme to: dark`);
@@ -322,7 +328,9 @@ const clickTheme = (oldTheme) => {
       divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
       divOverlay.style.display = "block";
       changeTheme("dark");
-      fadeDiv('divOverlay', 1.0, .1, 70, console.log);
+      fadeDiv('divOverlay', 1.0, 0, .1, 70, (result)=> {
+        divObj.style.display = "none";
+      });
     }
     setCookie('theme', 'dark', 1);
     //changeTheme("dark");
@@ -495,7 +503,9 @@ const animateDark = () => {
       animateDialog(dialogTxt, (result) => {
         console.log(result);
         changeTheme("dark");
-        fadeDiv('divOverlay', 1.0, .02, 100, console.log);
+        fadeDiv('divOverlay', 1.0, 0, .02, 100, (result)=> {
+          divObj.style.display = "none";
+        });
         dialogTxt = "There we go...___#That's better.________";
         animateDialog(dialogTxt, console.log);
       });
@@ -507,19 +517,30 @@ const animateLight = () => {
   divOverlay = document.getElementById('divOverlay');
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
   divOverlay.style.display = "block";
-  fadeDiv('divOverlay', 1.0, 0.1, 70, console.log);
+  fadeDiv('divOverlay', 1.0, 0, 0.1, 70, (result)=> {
+    divObj.style.display = "none";
+  });
 }
 
-const fadeDiv = async (divObjID, startopacit, changeopacit, delay, callback) => {
+const fadeDiv = async (divObjID, startopacit, endopacit, changeopacit, delay, callback) => {
   divObj = document.getElementById(divObjID);
   if (divObj) {
     let opacit = startopacit;
     const fadeDivFrame = () => {
-      opacit = opacit - changeopacit;
+      let bDone=false;
+      if (startopacit<endopacit){
+        opacit = opacit + changeopacit;
+        if (!(opacit<endopacit)) bDone=true;
+      }
+      else { 
+        opacit = opacit - changeopacit;
+        if (!(opacit>endopacit)) bDone=true;
+      }
+      
       divObj.style.opacity = opacit;
-      //console.log(opacit);
-      if (opacit < changeopacit) {
-        divObj.style.display = "none";
+      //console.log(opacit, changeopacit);
+      
+      if (bDone) {
         clearInterval(fadeDivID);
         callback("fadeDiv Done");
       }
