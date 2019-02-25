@@ -27,5 +27,15 @@
             "<li class=\"breadcrumb-item active\">Contents</li>"
         ],
         "activeNavbaritems" : ["#navContents"]
+    },
+    {
+        "hash" : "ct.html",
+        "page" : "content/currenttopics/ct.html",
+        "title": "Current Topics",
+        "breadcrumb" : [
+            "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
+            "<li class=\"breadcrumb-item \"><a href=\"#toc.html~s1\" onclick=\"LoadContent('toc.html~s1')\">Current Topics</li>"
+        ],
+        "activeNavbaritems" : []
     }
 ]

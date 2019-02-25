@@ -1,0 +1,36 @@
+[
+    {
+        "entry" : "ct0",
+        "pagetitle": "CT:Template Test",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Template Test</li>",
+        "title": "Current Topics: Template Test",
+        "author": "Jared Nelson",
+        "date": "01/17/2019",
+        "assignment": "Testing Assignment area<br />Line 2",
+        "responsetitle": "Testing Response Title",
+        "response": "Testing Response area<br />Line 2"
+    },
+    {
+        "entry" : "ct1",
+        "pagetitle": "CT:Hello World",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Hello World</li>",
+        "title": "Current Topics: Hello World",
+        "author": "Jared Nelson",
+        "date": "01/17/2019",
+        "assignment": "<p>Submit the following into a reply</p><br /><ul><li>A Picture of you and a printscreen of the computer you are using for this course.</li><li>Tell about yourself and what OS you are using for the course</li></ul>",
+        "responsetitle": "About Me",
+        "response": "<img src='content/currenttopics/ct1_desktop.png' style='width:800px; max-width:90%;' /><p>I am attending FCC to get my associates degree and to transfer to CSUF for degree completion in the near future.  I have dabbled in some line of business web applications in a WISC stack.  I am interested in learning more about web design and creating responsive pages.  With LOB applications you generally have the benefit of knowing the target client environment which can make one lazy when it comes to fallback code and resolution targets. :)<br /><br />        I am running Windows 10 Enterprise 64-bit Version 1809 (Build 17763.288)</p>"
+    },
+    {
+        "entry" : "ct2",
+        "pagetitle": "CT:HTTPS",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">HTTPS</li>",
+        "title": "Current Topics: HTTPS",
+        "author": "Jared Nelson",
+        "date": "01/21/2019",
+        "assignment": "<p>Watch this video and consider the various topics covered and find additional research regarding the topics introduced here.  Write about your selected topics, provide links to your research finding.</p><iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/kBzbKUirOFk\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+        "responsetitle": "HTTPS Certificates / Let's Encrypt",
+        "response": "<p>HTTPS Certificates can still be prohibitively expensive for small and non-commercial websites.  There are a few places where free certificates are being made available, however.   One of those is Let's Encrypt, which provides free HTTPS certificates for websites.  Let's Encrypt itself has some barriers web developers and web hosts have to overcome to use, however, as certificate assignment and management isn't as simple as commercial certificate providers and might require the use of scripting to get set up.  Fortunately, several organizations are developing tools to make using Let's Encrypt simpler.  There are many tools available for popular web servers that help automate the process of requesting and binding certificates from Let's Encrypt.  As these certificates become less costly and easier to implement HTTPS usage will continue to rise.<br /><br />I was happy to find that there were several tools available for implementing Let's Encrypt with the IIS Web Server, for instance:<br /><br /><a href='https://weblog.west-wind.com/posts/2016/Feb/22/Using-Lets-Encrypt-with-IIS-on-Windows'>Using Let's Encrypt with IIS on Windows</a></p>"
+    }
+
+]

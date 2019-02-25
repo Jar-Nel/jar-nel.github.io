@@ -100,17 +100,20 @@ let speedMultiplier = 3;
 
 //This is the page load function
 const LoadContent = (hash) => {
+  //Reload the last user selected theme
   let theme = getCookie('theme');
   if (theme === "") theme = "light";
   changeTheme(theme);
 
   document.getElementById('pageContent').style.display = 'none'
 
+  //Load the home page if no page specified.
   if (!hash) hash = window.location.hash;
   if (hash.length < 1) hash = 'home.html';
   hash = hash.replace('#', '');
   window.location.hash = `#${hash}`;
 
+  //If there is other information we need to render the page it will be seperated by a ~. This splits the page from the information
   let optString = '';
   if (hash.indexOf('~') > 0) {
     optString = hash.split('~')[1];
@@ -120,10 +123,11 @@ const LoadContent = (hash) => {
   let pageContent = document.getElementById('pageContent');
   let breadCrumb = document.getElementById('breadcrumb');
   let navObj = undefined;
-  LoadNavJson().then((response) => {
+  //Load the navigation JSON and look at what we need to compose the page.
+  LoadJson('content/navigation.json').then((response) => {
     navObj = response.find((element) => { return element.hash === hash });
     if (!navObj) {
-      pageContent.innerHTML = "Unable to load content.  Unknown hash.<br /><img src='img/derpshrug.png' style='width:400px' />";
+      pageContent.innerHTML = "Unable to load content.  Unknown hash.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
       document.getElementById('pageContent').style.display = 'block';
     }
     else {
@@ -143,6 +147,7 @@ const LoadContent = (hash) => {
       //Content
       LoadContentPage(navObj.page).then((response) => {
         if (response) {
+          /* #region Page Processing */
           pageContent.innerHTML = response;
           document.getElementById('pageContent').style.display = 'block';
           if (hash.toLowerCase() === 'toc.html') {
@@ -161,6 +166,32 @@ const LoadContent = (hash) => {
                 break;
             }
           }
+          if (hash.toLowerCase() === 'ct.html') {
+            LoadJson('content/currenttopics/ctcontent.json').then((responsect) => {
+              ctObj = responsect.find((ctElement) => { return ctElement.entry === optString });
+              if (!ctObj) {
+                pageContent.innerHTML = "Unable to load content.  Unknown Current Topics entry.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
+                document.getElementById('pageContent').style.display = 'block';
+              }
+              //Current Topic data loaded.
+              document.title = `JPoD:${ctObj.pagetitle}`;
+              breadCrumb.innerHTML += ctObj.breadcrumb;
+              response=response.replace(/##ctTitle##/g, ctObj.title);
+              response=response.replace(/##ctAuthor##/g, ctObj.author);
+              response=response.replace(/##ctDate##/g, ctObj.date);
+              response=response.replace(/##ctAssignment##/g, ctObj.assignment);
+              response=response.replace(/##ctResponseTitle##/g, ctObj.responsetitle);
+              response=response.replace(/##ctResponse##/g, ctObj.response);
+              pageContent.innerHTML = response;
+            }).catch((e) => {
+              pageContent.innerHTML = `CT Content JSON not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
+              document.getElementById('pageContent').style.display = 'block';
+            });
+          }
+
+
+
+          //Start rainbow animation of section is present.
           if (document.getElementById('spanColor')) {
             //Start the color change
             objColorId = document.getElementById('spanColor');
@@ -169,18 +200,19 @@ const LoadContent = (hash) => {
             clearInterval(animateColor);
             animateColor = setInterval(changeColor, 150);
           }
+          /* #endregion */
         }
         else {
-          pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px' />";
+          pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
           document.getElementById('pageContent').style.display = 'block';
         }
       }).catch((e) => {
-        pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px' />";
+        pageContent.innerHTML = "Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
         document.getElementById('pageContent').style.display = 'block';
       });
     }
   }).catch((e) => {
-    pageContent.innerHTML = "Unable to load content json.<br />" + e.message + "<br /><img src='img/derpshrug.png' style='width:400px' />";
+    pageContent.innerHTML = "Unable to load content json.<br />" + e.message + "<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />";
     document.getElementById('pageContent').style.display = 'block';
   });
   //freaking jQuery calls. 
@@ -189,8 +221,9 @@ const LoadContent = (hash) => {
   //$('.collapse').collapse('show');
 }
 
-const LoadNavJson = async () => {
-  let response = await fetch('content/navigation.json');
+const LoadJson = async (locationJSon) => {
+  //let response = await fetch('content/navigation.json');
+  let response = await fetch(locationJSon);
   return await response.json();
 }
 
@@ -199,6 +232,8 @@ const LoadContentPage = async (page) => {
   return await response.text();
 }
 
+
+/* #region Rainbow Text */
 function changeColor() {
   try {
     let text = "Hello, world!";
@@ -249,6 +284,9 @@ function generateRainbowText(text) {
   return outText;
 }
 
+/* #endregion */
+
+/* #region Change Theme and Theme transition Animations */
 const changeSpeedMultiplier = (multiplier) => {
   if (multiplier) {
     speedMultiplier = multiplier;
@@ -336,15 +374,15 @@ const animateDialog = async (dialogTxt, callback) => {
     let dialogTxtPosition = 0;
     let waitCount = 0;
     let frameCount = 0;
-    let bClearDialog=true;
+    let bClearDialog = true;
     dialogContent.innerHTML = "";
-  
+
     const dialogFrame = () => {
       if (frameCount > 3) {
         frameCount = 1;
-        if (bClearDialog){
-          divTxt='';
-          bClearDialog=false;
+        if (bClearDialog) {
+          divTxt = '';
+          bClearDialog = false;
         }
         if (dialogTxtPosition < dialogTxt.length) {
           let c = dialogTxt.substr(dialogTxtPosition, 1);
@@ -364,7 +402,7 @@ const animateDialog = async (dialogTxt, callback) => {
             case '~':
               dialogControlClick('pause');
               dialogTxtPosition++;
-              bClearDialog=true;
+              bClearDialog = true;
               //clearInterval(animateDialogID);
               break;
             default:
@@ -448,11 +486,10 @@ const animateDark = () => {
   divOverlay.style.display = "block";
 
 
-  /* #region AnimateDialog */
   let dialogTxt = "Hey!#_Who turned out the lights?_~___Wait.#_I found a flashlight.____#Let's see if this helps._~";
   animateDialog(dialogTxt, (result) => {
     console.log(result);
-    animateFlashlight(5, (result) => {
+    animateFlashlight(6, (result) => {
       console.log(result);
       dialogTxt = "That didn't help!#__. _ . _ . _ #___We'll just have to wait for our eyes to adjust._~";
       animateDialog(dialogTxt, (result) => {
@@ -490,6 +527,8 @@ const fadeDiv = async (divObjID, startopacit, changeopacit, delay, callback) => 
     let = fadeDivID = setInterval(fadeDivFrame, delay);
   }
 }
+
+/* #endregion */
 
 /* #region cookies */
 function setCookie(cname, cvalue, exdays) {
