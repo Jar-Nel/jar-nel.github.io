@@ -1,14 +1,19 @@
-<div id="ctTitle"><h1>##ctTitle##</h1></div>
-
-<div id="ctAssignment">
-    Assignment:<br /><br />
-    ##ctAssignment##
-</div>
-
-<div id="ctResponse" style="margin-top:2rem;">
-    <div id="ctResponseTitle">
-        <h3>##ctResponseTitle##</h3>
-        <p>Response by: <b>##ctAuthor##</b> on <b>##ctDate##</b></p>
+<div class="row">
+    <div class="card mb-3">
+        <h3 class="card-header">##ctTitle##</h3>
+        <div class="card-body">
+            <h5 class="card-title">Assigment:</h5>
+            <div class="card-text">##ctAssignment##</div>
+        </div>
+        <div class="card-body border-top border-gray">
+            <h5 class="card-title">##ctResponseTitle##</h5>
+            <h6 class="card-subtitle text-muted">Response by: <b>##ctAuthor##</b> on <b>##ctDate##</b></h6>
+        </div>
+        <div class="card-body">
+            ##ctResponse##
+        </div>
+        <div class="card-footer text-muted">
+            Done on: <b>##ctDate##</b>
+        </div>
     </div>
-    ##ctResponse##
 </div>

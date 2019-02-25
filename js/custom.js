@@ -102,7 +102,7 @@ let speedMultiplier = 3;
 const LoadContent = (hash) => {
   //Reload the last user selected theme
   let theme = getCookie('theme');
-  if (theme === "") theme = "light";
+  if (theme === "") theme = "light"; else bPlayDark=false;
   changeTheme(theme);
 
   document.getElementById('pageContent').style.display = 'none'
@@ -145,11 +145,11 @@ const LoadContent = (hash) => {
         $(element).addClass('active');
       });
       //Content
-      LoadContentPage(navObj.page).then((response) => {
+      LoadContentPage(`${navObj.path}${navObj.page}`).then((response) => {
         if (response) {
           /* #region Page Processing */
           pageContent.innerHTML = response;
-          document.getElementById('pageContent').style.opacity="0";
+          document.getElementById('pageContent').style.opacity = "0";
           document.getElementById('pageContent').style.display = 'block';
           fadeDiv('pageContent', 0.0, 1, .1, 50, console.log);
           if (hash.toLowerCase() === 'toc.html') {
@@ -169,6 +169,7 @@ const LoadContent = (hash) => {
             }
           }
           if (hash.toLowerCase() === 'ct.html') {
+            /* #region Current Topics */
             LoadJson('content/currenttopics/ctcontent.json').then((responsect) => {
               ctObj = responsect.find((ctElement) => { return ctElement.entry === optString });
               if (!ctObj) {
@@ -178,17 +179,36 @@ const LoadContent = (hash) => {
               //Current Topic data loaded.
               document.title = `JPoD:${ctObj.pagetitle}`;
               breadCrumb.innerHTML += ctObj.breadcrumb;
-              response=response.replace(/##ctTitle##/g, ctObj.title);
-              response=response.replace(/##ctAuthor##/g, ctObj.author);
-              response=response.replace(/##ctDate##/g, ctObj.date);
-              response=response.replace(/##ctAssignment##/g, ctObj.assignment);
-              response=response.replace(/##ctResponseTitle##/g, ctObj.responsetitle);
-              response=response.replace(/##ctResponse##/g, ctObj.response);
-              pageContent.innerHTML = response;
+              response = response.replace(/##ctTitle##/g, ctObj.title);
+              response = response.replace(/##ctAuthor##/g, ctObj.author);
+              response = response.replace(/##ctDate##/g, ctObj.date);
+              response = response.replace(/##ctResponseTitle##/g, ctObj.responsetitle);
+
+              if (ctObj.assignment.indexOf('.html') < 0) {
+                response = response.replace(/##ctAssignment##/g, ctObj.assignment);
+                response = response.replace(/##ctResponse##/g, ctObj.response);
+                pageContent.innerHTML = response;
+              }
+              else {
+                LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.assignment}`).then((assignmentContent) => {
+                  response = response.replace(/##ctAssignment##/g, assignmentContent);
+                  LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.response}`).then((responseContent) => {
+                    response = response.replace(/##ctResponse##/g, responseContent);
+                    pageContent.innerHTML = response;
+                  }).catch((e) => {
+                    pageContent.innerHTML = `Content page ${navObj.path}${ctObj.entry}${ctObj.response} not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
+                    document.getElementById('pageContent').style.display = 'block';
+                  });
+                }).catch((e) => {
+                  pageContent.innerHTML = `Content page ${navObj.path}${ctObj.entry}${ctObj.assignment} not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
+                  document.getElementById('pageContent').style.display = 'block';
+                });
+              }
             }).catch((e) => {
               pageContent.innerHTML = `CT Content JSON not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
               document.getElementById('pageContent').style.display = 'block';
             });
+            /* #endregion */
           }
 
 
@@ -312,7 +332,7 @@ const clickTheme = (oldTheme) => {
     divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
     divOverlay.style.display = "block";
     changeTheme("light");
-    fadeDiv('divOverlay', 1.0, 0, .1, 70, (result)=> {
+    fadeDiv('divOverlay', 1.0, 0, .1, 70, (result) => {
       divObj.style.display = "none";
     });
     setCookie('theme', 'light', 1);
@@ -328,7 +348,7 @@ const clickTheme = (oldTheme) => {
       divOverlay.style.boxShadow = "0px 0px 0px 50000px #000";
       divOverlay.style.display = "block";
       changeTheme("dark");
-      fadeDiv('divOverlay', 1.0, 0, .1, 70, (result)=> {
+      fadeDiv('divOverlay', 1.0, 0, .1, 70, (result) => {
         divObj.style.display = "none";
       });
     }
@@ -503,7 +523,7 @@ const animateDark = () => {
       animateDialog(dialogTxt, (result) => {
         console.log(result);
         changeTheme("dark");
-        fadeDiv('divOverlay', 1.0, 0, .02, 100, (result)=> {
+        fadeDiv('divOverlay', 1.0, 0, .02, 100, (result) => {
           divObj.style.display = "none";
         });
         dialogTxt = "There we go...___#That's better.________";
@@ -517,7 +537,7 @@ const animateLight = () => {
   divOverlay = document.getElementById('divOverlay');
   divOverlay.style.boxShadow = "0px 0px 0px 50000px #FFF";
   divOverlay.style.display = "block";
-  fadeDiv('divOverlay', 1.0, 0, 0.1, 70, (result)=> {
+  fadeDiv('divOverlay', 1.0, 0, 0.1, 70, (result) => {
     divObj.style.display = "none";
   });
 }
@@ -527,19 +547,19 @@ const fadeDiv = async (divObjID, startopacit, endopacit, changeopacit, delay, ca
   if (divObj) {
     let opacit = startopacit;
     const fadeDivFrame = () => {
-      let bDone=false;
-      if (startopacit<endopacit){
+      let bDone = false;
+      if (startopacit < endopacit) {
         opacit = opacit + changeopacit;
-        if (!(opacit<endopacit)) bDone=true;
+        if (!(opacit < endopacit)) bDone = true;
       }
-      else { 
+      else {
         opacit = opacit - changeopacit;
-        if (!(opacit>endopacit)) bDone=true;
+        if (!(opacit > endopacit)) bDone = true;
       }
-      
+
       divObj.style.opacity = opacit;
       //console.log(opacit, changeopacit);
-      
+
       if (bDone) {
         clearInterval(fadeDivID);
         callback("fadeDiv Done");
