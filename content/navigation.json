@@ -1,45 +1,62 @@
 [
     {
         "hash": "home.html",
-        "path" : "content/",
+        "path": "content/",
         "page": "home.html",
         "title": "Home",
         "breadcrumb": [
             "<li class=\"breadcrumb-item active\">Home</li>"
         ],
-        "activeNavbaritems" : ["#navHome"]
+        "activeNavbaritems": [
+            "#navHome"
+        ]
     },
     {
         "hash": "about.html",
-        "path" : "content/",
+        "path": "content/",
         "page": "about.html",
         "title": "About",
         "breadcrumb": [
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
             "<li class=\"breadcrumb-item active\">About</li>"
         ],
-        "activeNavbaritems" : ["#navAbout"]
+        "activeNavbaritems": [
+            "#navAbout"
+        ]
     },
     {
         "hash": "toc.html",
-        "path" : "content/",
+        "path": "content/",
         "page": "toc.html",
         "title": "Contents",
         "breadcrumb": [
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
             "<li class=\"breadcrumb-item active\">Contents</li>"
         ],
-        "activeNavbaritems" : ["#navContents"]
+        "activeNavbaritems": [
+            "#navContents"
+        ]
     },
     {
-        "hash" : "ct.html",
-        "path" : "content/currenttopics/",
-        "page" : "ct.html",
+        "hash": "ct.html",
+        "path": "content/currenttopics/",
+        "page": "ct.html",
         "title": "Current Topics",
-        "breadcrumb" : [
+        "breadcrumb": [
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
             "<li class=\"breadcrumb-item \"><a href=\"#toc.html~s1\" onclick=\"LoadContent('toc.html~s1')\">Current Topics</li>"
         ],
-        "activeNavbaritems" : []
+        "activeNavbaritems": []
+    },
+    {
+        "hash": "lecture.html",
+        "path": "content/lectures/",
+        "page": "lecture.html",
+        "title": "Lectures",
+        "breadcrumb": [
+            "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
+            "<li class=\"breadcrumb-item \"><a href=\"#toc.html~s2\" onclick=\"LoadContent('toc.html~s2')\">Lectures</li>"
+        ],
+        "activeNavbaritems": []
     }
 ]

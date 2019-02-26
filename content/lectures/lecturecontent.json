@@ -1,0 +1,41 @@
+[
+    {
+        "entry" : "l0",
+        "pagetitle": "Lect:Template Test",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Template Test</li>",
+        "title": "Lecture: Template Test",
+        "assignment": "<p>Testing Assignment area<br />Line 2</p>",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/01/2019",
+        "notesauthor": "Jared Nelson",
+        "notesdate": "01/17/2019",
+        "notestitle": "Testing Notes Title",
+        "notes": "<p>Testing Notes area<br />Line 2</p>"
+    },
+    {
+        "entry" : "l1",
+        "pagetitle": "Lect:Lynda Web Tech",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Lynda Web Tech</li>",
+        "title": "Lecture: Lynda.com Web Technologies",
+        "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/21/2019",
+        "notesauthor": "Jared Nelson",
+        "notesdate": "01/21/2019",
+        "notestitle": "Notes on Lynda.com Web Technologies",
+        "notes": "webtech.md"
+    },
+    {
+        "entry" : "l1",
+        "pagetitle": "Lect:HTML Crash Course",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">HTML Crash Course</li>",
+        "title": "Lecture: HTML Crash Course for Absolute Beginners",
+        "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/28/2019",
+        "notesauthor": "Jared Nelson",
+        "notesdate": "01/17/2019",
+        "notestitle": "Notes on Lynda.com Web Technologies",
+        "notes": "webtech.md"
+    }
+]

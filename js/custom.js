@@ -216,6 +216,54 @@ const LoadContent = (hash) => {
 
               /* #endregion */
               break;
+            case "lecture.html":
+              /* #region Lectures */
+              LoadJson('content/lectures/lecturecontent.json').then((responseLect) => {
+                lectObj = responseLect.find((lectElement) => { return lectElement.entry === optString });
+                if (!lectObj) {
+                  showError(`Unable to load content.  Unknown Lecture entry`);
+                } else {
+                  //Lecture data loaded.
+                  document.title = `JPoD:${lectObj.pagetitle}`;
+                  breadCrumb.innerHTML += lectObj.breadcrumb;
+                  response = response.replace(/##lectTitle##/g, lectObj.title);
+                  response = response.replace(/##lectNotesAuthor##/g, lectObj.notesauthor);
+                  response = response.replace(/##lectNotesDate##/g, lectObj.notesdate);
+                  response = response.replace(/##lectNotesTitle##/g, lectObj.notestitle);
+                  if (lectObj.assignment.indexOf('.html') < 0) {
+                    response = response.replace(/##lectAssignment##/g, lectObj.assignment);
+                    response = response.replace(/##lectNotes##/g, lectObj.notes);
+                    pageContent.innerHTML = response;
+                    document.getElementById('pageContent').style.opacity = "0";
+                    document.getElementById('pageContent').style.display = 'block';
+                    fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+                  } else {
+                    LoadContentPage(`${navObj.path}${lectObj.entry}/${lectObj.assignment}`).then((assignmentContent) => {
+                      response = response.replace(/##lectAssignment##/g, assignmentContent);
+                      LoadContentPage(`${navObj.path}${lectObj.entry}/${lectObj.notes}`).then((notesContent) => {
+                        if (lectObj.notes.substr(lectObj.notes.length-3,3)===".md")
+                        {
+                          console.log('.md');
+                          notesContent=marked(notesContent);
+                        }
+                        response = response.replace(/##lectNotes##/g, notesContent);
+                        pageContent.innerHTML = response;
+                        document.getElementById('pageContent').style.opacity = "0";
+                        document.getElementById('pageContent').style.display = 'block';
+                        fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+                      }).catch((e) => {
+                        showError(`Content page ${navObj.path}${lectObj.entry}/${lectObj.notes} not found.<br />${e.message}`);
+                      });
+                    }).catch((e) => {
+                      showError(`Content page ${navObj.path}${lectObj.entry}${lectObj.assignment} not found.`);
+                    });
+                  }
+                }
+              }).catch((e) => {
+                showError(`Lecture JSON not found.`);
+              });
+              /* #endregion */
+              break;
             default:
               pageContent.innerHTML = response;
               document.getElementById('pageContent').style.opacity = "0";
@@ -262,7 +310,7 @@ const LoadContentPage = async (page) => {
 }
 
 const showError = (errMsg) => {
-  document.getElementById('breadcrumb').innerHTML='&nbsp;';
+  document.getElementById('breadcrumb').innerHTML = '&nbsp;';
   document.getElementById('pageContent').innerHTML = `<div>${errMsg}</div><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
   document.getElementById('pageContent').style.display = 'block';
 }
