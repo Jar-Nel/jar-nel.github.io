@@ -1,1 +1,23 @@
-Response
+<div style="position:relative">
+    <img src="content/currenttopics/ct5/semantic-version.png" style="width:100%;" />
+    <div style="position:absolute; bottom:0; right:0;">
+        <div class="customcaption caption badge-light" style="padding: 5px;">
+            Image by <a href="https://n8d.at/blog/how-to-version-new-sharepoint-framework-projects/semantic-version/">Stefan Bauer</a> on
+            <a href="https://n8d.at/">n8d.at</a>
+        </div>
+    </div>
+</div>
+<br />
+<p>Semantic versioning is useful in the way it conveys messages to developers and users of a software package or API by
+    having pre-defined meanings behind the version numbers and the number positions.&nbsp; I have some software I need
+    to interact with that does <strong>not</strong> use semantic versioning and I have to go through a whole battery of
+    tests and compatibility checks each time it is updated.&nbsp; If they used semantic versioning I would know when I
+    can get by with fewer tests (minor versions shouldn't break backward compatibility), and when I need to do more
+    (major versions break compatibility).&nbsp; If they signaled in their versioning (or at all) when an update is
+    potentially backward compatibility breaking it would influence how I approach my own testing and certification of
+    the software.</p>
+<p>I found an interesting FAQ on semantic versioning <a href="https://semver.org/">here </a>. </p>
+<p>Bootstrap
+    appears to use semantic versioning.&nbsp; They are currently on version 4.2.1.&nbsp; It's the 4th major release
+    of Bootstrap, it is not fully backward compatible with the 3rd release, there have been two feature updates, and
+    one patch since the last feature update.</p>

@@ -62,3 +62,10 @@ img {
     margin-left: -16.5px;
     margin-top: -33px;
   }
+
+  .customcaption {
+    opacity:0.8;
+  }
+  .customcaption:hover {
+    opacity:1.0;
+  }
