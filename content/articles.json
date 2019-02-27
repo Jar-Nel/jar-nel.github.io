@@ -39,6 +39,32 @@
         "footer" : "##articlesInCategory##"
     },
     {
+        "entry" : "a3",
+        "pagetitle": "CSS Intro",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">CSS Intro</li>",
+        "title": "Introduction to CSS",
+        "categoryid": "c2",
+        "categoryname" : "CSS",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a3/",
+        "article": "CSS_Intro.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a4",
+        "pagetitle": "CSS Media Queries",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">CSS Media Queries</li>",
+        "title": "CSS Media Queries",
+        "categoryid": "c2",
+        "categoryname" : "CSS",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a4/",
+        "article": "CSS_MediaQ.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
         "entry" : "a7",
         "pagetitle": "Raster Graphics",
         "breadcrumb" : "<li class=\"breadcrumb-item active\">Raster Graphics</li>",
