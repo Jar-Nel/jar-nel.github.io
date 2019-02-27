@@ -44,7 +44,7 @@
         "title": "Articles",
         "breadcrumb": [
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
-            "<li class=\"breadcrumb-item \"><a href=\"#toc.html\" onclick=\"LoadContent('toc.html')\">Articles</li>"
+            "<li class=\"breadcrumb-item \"><a href=\"#toc.html\" onclick=\"LoadContent('toc.html')\">Contents</li>"
         ],
         "activeNavbaritems": []
     }

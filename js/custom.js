@@ -97,6 +97,30 @@ let animateColor = '';//setInterval(changeColor, 150)'';
 let bPlayDark = true;
 let speedMultiplier = 3;
 
+//This is to support content categories
+let categories = [
+  {
+    id: 'c1',
+    name: 'HTML'
+  },
+  {
+    id: 'c2',
+    name: 'CSS'
+  },
+  {
+    id: 'c3',
+    name: 'Graphics'
+  },
+  {
+    id: 'c4',
+    name: 'Scripting'
+  },
+  {
+    id: 'c5',
+    name: 'This Site'
+  }
+]
+
 const LoadContent = (hash) => {
   document.getElementById('pageContent').style.display = 'none'
   frameResize();
@@ -121,7 +145,20 @@ const LoadContent = (hash) => {
 
   loadPageContent(hash, optString).then(content => {
 
+    //set the drop down categories on navbar
+    let navcatString = `<a class="dropdown-item" href="#toc.html" onclick="LoadContent('toc.html')">Contents</a><div class="dropdown-divider"></div>`; //<a class="dropdown-item" href="#toc.html~s2" onclick="LoadContent('toc.html~s2')">&nbsp;&nbsp;Lectures</a>
+    categories.forEach(category => {
+      navcatString += `<a class="dropdown-item" href="#toc.html~${category.id}" onclick="LoadContent('toc.html~${category.id}')">&nbsp;&nbsp;${category.name}</a>`;
+    });
+    document.getElementById('navTOC').innerHTML = navcatString;
+
     showContentDiv(content);
+
+    //Show the selected toc category on load
+    if (hash === 'toc.html' && optString.substr(0, 1) === 'c' && optString.length === 2) {
+      let Num = optString.substr(1, 1)
+      $(`#collapse${Num}`).collapse('show');
+    }
 
     //Start rainbow animation of section if present.
     if (document.getElementById('spanColor')) {
@@ -168,16 +205,16 @@ const loadPageContent = async (hash, optString) => {
 
   //Content page
   let pageContent = await LoadContentPage(`${navObj.path}${navObj.page}`);
+  let articleObjs = await LoadJson('content/articles.json');
 
   switch (hash.toLowerCase()) {
     case "article.html":
       /* #region Loading Article */
-      let articleObjs = await LoadJson('content/articles.json');
       let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
       if (!articleObj) throw new Error('Unable to load content.  Unknown article entry')
       document.title = `JPoD:${articleObj.pagetitle}`;
 
-      if (articleObj.categoryid!==""){
+      if (articleObj.categoryid !== "") {
         breadCrumb.innerHTML += `<li class=\"breadcrumb-item\"><a href=\"#toc.html~${articleObj.categoryid}\" onclick=\"LoadContent('toc.html~${articleObj.categoryid}')\">${articleObj.categoryname}</a></li>`;
       }
       breadCrumb.innerHTML += articleObj.breadcrumb;
@@ -185,14 +222,43 @@ const loadPageContent = async (hash, optString) => {
       pageContent = pageContent.replace(/##Title##/g, articleObj.title);
       pageContent = pageContent.replace(/##Author##/g, articleObj.author);
       pageContent = pageContent.replace(/##Date##/g, articleObj.date);
-      pageContent = pageContent.replace(/##Footer##/g, articleObj.footer);
-
+      
       let articleContent = await LoadContentPage(`${articleObj.path}${articleObj.article}`);
       pageContent = pageContent.replace(/##Article##/g, articleContent);
 
+      let restofCategory = articleObjs.filter((Element) => { return (Element.categoryid === articleObj.categoryid && Element.entry !== articleObj.entry) });
+      let footerString = `<a class='card-link' href='#toc.html' onclick=\"LoadContent('toc.html')\"> Content Categories</a>`;
+      if (restofCategory.length > 0) {
+        footerString+=`<br /><br />Explore other content in this category:`;
+        footerString+=`<ul class="list-group list-group-flush">`;
+        restofCategory.forEach(article => {
+          console.log(article.title);
+          footerString+=`<li class="list-group-item"><a class='card-link' href='#article.html~${article.entry}' onclick=\"LoadContent('article.html~${article.entry}')\">${article.title}</a></li>`;
+        });
+        footerString+=`</ul>`;
+      }
+      articleObj.footer=articleObj.footer.replace(/##articlesInCategory##/g, footerString);
+      pageContent = pageContent.replace(/##Footer##/g, articleObj.footer);
+      /* #endregion */
+      break;
+    case "toc.html":
+      /* #region Build TOC */
+      categories.forEach(category => {
+        let catContents = articleObjs.filter((Element) => { return Element.categoryid === category.id });
+        let contentString = '';
+        if (catContents.length > 0) {
+          catContents.forEach(catContent => {
+            contentString += `<li class="list-group-item"><a href="#article.html~${catContent.entry}" class="card-link" onclick="LoadContent('#article.html~${catContent.entry}')">${catContent.title}</a></li>`;
+          });
+        } else {
+          contentString = `<li class="list-group-item">No content for this category</li>`;
+        }
+        pageContent = pageContent.replace(`##cat${category.id}##`, contentString);
+      });
+      /* #endregion */
       break;
     default:
-      return pageContent;
+      //return pageContent;
       break;
   }
   return pageContent;
@@ -208,7 +274,7 @@ const showContentDiv = (content) => {
 
 const frameResize = () => {
   console.log(document.getElementById('breadcrumb').offsetTop);
-  let h1 = document.getElementById('breadcrumb').offsetTop+document.getElementById('breadcrumb').offsetHeight+20;
+  let h1 = document.getElementById('breadcrumb').offsetTop + document.getElementById('breadcrumb').offsetHeight + 20;
   //h1 = h1+document.getElementById('breadcrumb').offsetTop+80;
   document.getElementById('pageContent').style.marginTop = `${h1}px`;
   //console.log(document.getElementById('pageContent').style.marginTop);

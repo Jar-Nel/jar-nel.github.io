@@ -13,6 +13,32 @@
         "footer" : "Done"
     },
     {
+        "entry" : "a1",
+        "pagetitle": "HTML Elements",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">HTML Elements</li>",
+        "title": "HTML Elements and Tags",
+        "categoryid": "c1",
+        "categoryname" : "HTML",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a1/",
+        "article": "HTML_elements.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a2",
+        "pagetitle": "HTML Forms",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">HTML Forms</li>",
+        "title": "HTML Forms and Inputs",
+        "categoryid": "c1",
+        "categoryname" : "HTML",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a2/",
+        "article": "HTML_forms.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
         "entry" : "a7",
         "pagetitle": "Raster Graphics",
         "breadcrumb" : "<li class=\"breadcrumb-item active\">Raster Graphics</li>",
@@ -23,6 +49,46 @@
         "date": "02/26/2019",
         "path": "content/articles/a7/",
         "article": "graphics_raster.html",
-        "footer" : "<a class='card-link' href='#article.html~a8' onclick=\"LoadContent('article.html~a8')\"> Next (Vector Graphics) -></a>"
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a8",
+        "pagetitle": "Vector Graphics",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Vector Graphics</li>",
+        "title": "Vector Graphics",
+        "categoryid": "c3",
+        "categoryname" : "Graphics",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a8/",
+        "article": "graphics_vector.html",
+        "footer" : "<a class='card-link' href='#article.html~a9' onclick=\"LoadContent('article.html~a9')\"> Next (Stock Photography) -></a>"
+    },
+    {
+        "entry" : "a9",
+        "pagetitle": "Stock Photos",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Stock Photos</li>",
+        "title": "Stock Photography",
+        "categoryid": "c3",
+        "categoryname" : "Graphics",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a9/",
+        "article": "graphics_stock.html",
+        "footer" : "<a class='card-link' href='#article.html~a10' onclick=\"LoadContent('article.html~a10')\"> Next (paint.net) -></a>"
+    },
+    {
+        "entry" : "a10",
+        "pagetitle": "paint.NET",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">paint.NET</li>",
+        "title": "Editor: Paint.NET",
+        "categoryid": "c3",
+        "categoryname" : "Graphics",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a10/",
+        "article": "graphics_paint.html",
+        "footer" : "<a class='card-link' href='#article.html~a10' onclick=\"LoadContent('article.html~a10')\"> Next (paint.net) -></a>"
     }
+
 ]
