@@ -115,6 +115,18 @@
         "path": "content/articles/a10/",
         "article": "graphics_paint.html",
         "footer" : "<a class='card-link' href='#article.html~a10' onclick=\"LoadContent('article.html~a10')\"> Next (paint.net) -></a>"
+    },
+    {
+        "entry" : "a17",
+        "pagetitle": "Site Pages",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Site Pages</li>",
+        "title": "How Pages Are Built on This Site.",
+        "categoryid": "c5",
+        "categoryname" : "This Site",
+        "author": "Jared Nelson",
+        "date": "02/27/2019",
+        "path": "content/articles/a17/",
+        "article": "Site_PageModel.html",
+        "footer" : "##articlesInCategory##"
     }
-
 ]
