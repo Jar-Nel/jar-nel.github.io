@@ -97,15 +97,16 @@ let animateColor = '';//setInterval(changeColor, 150)'';
 let bPlayDark = true;
 let speedMultiplier = 3;
 
-const LoadContent = (hash) => {
-  document.getElementById('pageContent').style.display = 'none'
-  frameResize();
 
+//This is the page load function
+const LoadContent = (hash) => {
   //Reload the last user selected theme
   let theme = getCookie('theme');
   if (theme === "") theme = "light"; else bPlayDark = false;
   changeTheme(theme);
 
+  document.getElementById('pageContent').style.display = 'none'
+
   //Load the home page if no page specified.
   if (!hash) hash = window.location.hash;
   if (hash.length < 1) hash = 'home.html';
@@ -119,223 +120,11 @@ const LoadContent = (hash) => {
     hash = hash.split('~')[0];
   }
 
-  loadPageContent(hash, optString).then(content => {
-
-    showContentDiv(content);
-
-    //Start rainbow animation of section if present.
-    if (document.getElementById('spanColor')) {
-      //Start the color change
-      objColorId = document.getElementById('spanColor');
-      objColorId.innerHTML = generateRainbowText("Hello, world!");
-      //setTimeout("changeColor()", 150);
-      clearInterval(animateColor);
-      animateColor = setInterval(changeColor, 150);
-    }
-
-    //freaking jQuery calls. 
-    $('#navbarColor01').collapse('hide');
-  }).catch(e => {
-    showError(e.message);
-
-  });
-}
-
-//This is the page load function
-const loadPageContent = async (hash, optString) => {
-
-  let navJSON = await LoadJson('content/navigation.json');
-  let navObj = navJSON.find((element) => { return element.hash === hash });
-  if (!navObj) throw new Error('Hash not found');
-
-
-  let breadCrumb = document.getElementById('breadcrumb');
-
-  //Title
-  document.title = `JPoD:${navObj.title}`;
-
-  //Breadcrumb
-  breadCrumb.innerHTML = '';
-  navObj.breadcrumb.forEach(element => {
-    breadCrumb.innerHTML += element;
-  });
-
-  //NavBar
-  $('.nav-item').removeClass('active');
-  navObj.activeNavbaritems.forEach(element => {
-    $(element).addClass('active');
-  });
-
-  //Content page
-  let pageContent = await LoadContentPage(`${navObj.path}${navObj.page}`);
-
-  switch (hash.toLowerCase()) {
-    case "article.html":
-      /* #region Loading Article */
-      let articleObjs = await LoadJson('content/articles.json');
-      let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
-      if (!articleObj) throw new Error('Unable to load content.  Unknown article entry')
-      document.title = `JPoD:${articleObj.pagetitle}`;
-
-      if (articleObj.categoryid!==""){
-        breadCrumb.innerHTML += `<li class=\"breadcrumb-item\"><a href=\"#toc.html~${articleObj.categoryid}\" onclick=\"LoadContent('toc.html~${articleObj.categoryid}')\">${articleObj.categoryname}</a></li>`;
-      }
-      breadCrumb.innerHTML += articleObj.breadcrumb;
-
-      pageContent = pageContent.replace(/##Title##/g, articleObj.title);
-      pageContent = pageContent.replace(/##Author##/g, articleObj.author);
-      pageContent = pageContent.replace(/##Date##/g, articleObj.date);
-      pageContent = pageContent.replace(/##Footer##/g, articleObj.footer);
-
-      let articleContent = await LoadContentPage(`${articleObj.path}${articleObj.article}`);
-      pageContent = pageContent.replace(/##Article##/g, articleContent);
-
-      break;
-    default:
-      return pageContent;
-      break;
-  }
-  return pageContent;
-}
-
-const showContentDiv = (content) => {
-  let pageContent = document.getElementById('pageContent');
-  pageContent.innerHTML = content;
-  pageContent.style.opacity = "0";
-  pageContent.style.display = 'block';
-  fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-}
-
-const frameResize = () => {
-  console.log(document.getElementById('breadcrumb').offsetTop);
-  let h1 = document.getElementById('breadcrumb').offsetTop+document.getElementById('breadcrumb').offsetHeight+20;
-  //h1 = h1+document.getElementById('breadcrumb').offsetTop+80;
-  document.getElementById('pageContent').style.marginTop = `${h1}px`;
-  //console.log(document.getElementById('pageContent').style.marginTop);
-}
-const LoadContent2 = (hash, optString, navJSON) => {
-  console.log('c2');
-  let navObj = navJSON.find((element) => { return element.hash === hash });
-  if (navObj) {
-    //Title
-    document.title = `JPoD:${navObj.title}`;
-
-    //Breadcrumb
-    breadCrumb.innerHTML = '';
-    navObj.breadcrumb.forEach(element => {
-      breadCrumb.innerHTML += element;
-    });
-
-    //NavBar
-    $('.nav-item').removeClass('active');
-    navObj.activeNavbaritems.forEach(element => {
-      $(element).addClass('active');
-    });
-
-    LoadContentPage(`${navObj.path}${navObj.page}`, (page => { LoadContent3(hash, optString, page) }));
-  }
-}
-
-const LoadContent3 = (hash, optString, page) => {
-  console.log('c3');
-  if (page) {
-    /* #region Page Processing */
-    switch (hash.toLowerCase()) {
-      case "article.html":
-        /* #region Loading Article */
-        let articleObjs = LoadJson('content/articles.json');
-        let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
-        if (articleObj) {
-
-        } else {
-          showError(`Unable to load content.  Unknown article entry`);
-        }
-        /* #endregion */
-        break;
-      default:
-        pageContent.innerHTML = response;
-        document.getElementById('pageContent').style.opacity = "0";
-        document.getElementById('pageContent').style.display = 'block';
-        fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-        break;
-    }
-    /* #endregion */
-  } else {
-    showError("Content page not found.");
-  }
-}
-
-/*  else {
-    showError(`Unable to load content.  Unknown hash.`);
-  }
-}
- 
-  //Load the home page if no page specified.
-  if (!hash) hash = window.location.hash;
-  if (hash.length < 1) hash = 'home.html';
-  hash = hash.replace('#', '');
-  window.location.hash = `#${hash}`;
- 
-  //If there is other information we need to render the page it will be seperated by a ~. This splits the page from the information
-  let optString = '';
-  if (hash.indexOf('~') > 0) {
-    optString = hash.split('~')[1];
-    hash = hash.split('~')[0];
-  }
- 
   let pageContent = document.getElementById('pageContent');
   let breadCrumb = document.getElementById('breadcrumb');
-  let navObjt = undefined;
+  let navObj = undefined;
   //Load the navigation JSON and look at what we need to compose the page.
-  LoadJson('content/navigation.json', (json => {navObjt=json}));
-  alert(navObjt);
-  //alert(LoadJson('content/navigation.json'));
-  let response = LoadJson('content/navigation.json');
-  let navObj = response.find((element) => { return element.hash === hash });
-  console.log(navObj);
-  if (navObj) {
-    //Title
-    document.title = `JPoD:${navObj.title}`;
- 
-    //Breadcrumb
-    breadCrumb.innerHTML = '';
-    navObj.breadcrumb.forEach(element => {
-      breadCrumb.innerHTML += element;
-    });
- 
-    //NavBar
-    $('.nav-item').removeClass('active');
-    navObj.activeNavbaritems.forEach(element => {
-      $(element).addClass('active');
-    });
-    response = LoadContentPage(`${navObj.path}${navObj.page}`);
-    if (response) {
-      switch (hash.toLowerCase()) {
-        case "article.html":
-          let articleObjs = LoadJson('content/articles.json');
-          let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
-          if (articleObj) {
- 
-          } else {
-            showError(`Unable to load content.  Unknown article entry`);
-          }
-          break;
-        default:
-          pageContent.innerHTML = response;
-          document.getElementById('pageContent').style.opacity = "0";
-          document.getElementById('pageContent').style.display = 'block';
-          fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-          break;
-      }
-    } else {
-      showError("Content page not found.");
-    }
-  }
-  else {
-    showError(`Unable to load content.  Unknown hash.`);
-  }
- 
-  /*LoadJson('content/navigation.json').then((response) => {
+  LoadJson('content/navigation.json').then((response) => {
     navObj = response.find((element) => { return element.hash === hash });
     if (!navObj) {
       showError(`Unable to load content.  Unknown hash.`);
@@ -357,8 +146,10 @@ const LoadContent3 = (hash, optString, page) => {
       //Content
       LoadContentPage(`${navObj.path}${navObj.page}`).then((response) => {
         if (response) {
+          /* #region Page Processing */
           switch (hash.toLowerCase()) {
             case "toc.html":
+              /* #region TOC */
               pageContent.innerHTML = response;
               switch (optString.toLowerCase()) {
                 case 's1':
@@ -377,8 +168,10 @@ const LoadContent3 = (hash, optString, page) => {
               document.getElementById('pageContent').style.opacity = "0";
               document.getElementById('pageContent').style.display = 'block';
               fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+              /* #endregion */
               break;
-            case "article.html":
+            case "ct.html":
+              /* #region Current Topics */
               LoadJson('content/currenttopics/ctcontent.json').then((responsect) => {
                 ctObj = responsect.find((ctElement) => { return ctElement.entry === optString });
                 if (!ctObj) {
@@ -421,8 +214,11 @@ const LoadContent3 = (hash, optString, page) => {
               }).catch((e) => {
                 showError(`CT Content JSON not found.`);
               });
+
+              /* #endregion */
               break;
             case "lecture.html":
+              /* #region Lectures */
               LoadJson('content/lectures/lecturecontent.json').then((responseLect) => {
                 lectObj = responseLect.find((lectElement) => { return lectElement.entry === optString });
                 if (!lectObj) {
@@ -448,9 +244,10 @@ const LoadContent3 = (hash, optString, page) => {
                     LoadContentPage(`${navObj.path}${lectObj.entry}/${lectObj.assignment}`).then((assignmentContent) => {
                       response = response.replace(/##lectAssignment##/g, assignmentContent);
                       LoadContentPage(`${navObj.path}${lectObj.entry}/${lectObj.notes}`).then((notesContent) => {
-                        if (lectObj.notes.substr(lectObj.notes.length - 3, 3) === ".md") {
+                        if (lectObj.notes.substr(lectObj.notes.length-3,3)===".md")
+                        {
                           console.log('.md');
-                          notesContent = marked(notesContent);
+                          notesContent=marked(notesContent);
                         }
                         response = response.replace(/##lectNotes##/g, notesContent);
                         pageContent.innerHTML = response;
@@ -468,6 +265,7 @@ const LoadContent3 = (hash, optString, page) => {
               }).catch((e) => {
                 showError(`Lecture JSON not found.`);
               });
+              /* #endregion */
               break;
             default:
               pageContent.innerHTML = response;
@@ -485,6 +283,7 @@ const LoadContent3 = (hash, optString, page) => {
             clearInterval(animateColor);
             animateColor = setInterval(changeColor, 150);
           }
+          /* #endregion */
         }
         else {
           showError("Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
@@ -494,43 +293,23 @@ const LoadContent3 = (hash, optString, page) => {
       });
     }
   }).catch((e) => {
-    showError("Unable to load content json.<br />" + e.message + "<br />");
-  }); 
-
-//Start rainbow animation of section if present.
-if (document.getElementById('spanColor')) {
-  //Start the color change
-  objColorId = document.getElementById('spanColor');
-  objColorId.innerHTML = generateRainbowText("Hello, world!");
-  //setTimeout("changeColor()", 150);
-  clearInterval(animateColor);
-  animateColor = setInterval(changeColor, 150);
-}
-
-//freaking jQuery calls. 
-//$('.navbar-collapse').collapse('hide');
-$('#navbarColor01').collapse('hide');
+    showError("Unable to load content json.<br />" + e.message + "<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
+  });
+  //freaking jQuery calls. 
+  //$('.navbar-collapse').collapse('hide');
+  $('#navbarColor01').collapse('hide');
   //$('.collapse').collapse('show');
 }
-*/
+
 const LoadJson = async (locationJSon) => {
   //let response = await fetch('content/navigation.json');
-  return fetch(locationJSon).then((response) => {
-    return response.json();
-  })
-    .catch(e => {
-      throw new Error("Unable to load json.<br />" + e.message + "<br />");
-    });
+  let response = await fetch(locationJSon);
+  return await response.json();
 }
 
 const LoadContentPage = async (page) => {
-  //let response = await fetch(page);
-  return fetch(page).then((response) => {
-    return response.text();
-  })
-    .catch(e => {
-      throw new Error("Unable to load content.<br />" + e.message + "<br />");
-    });
+  let response = await fetch(page);
+  return await response.text();
 }
 
 const LoadContentHTML = () => {
@@ -538,7 +317,6 @@ const LoadContentHTML = () => {
 }
 
 const showError = (errMsg) => {
-  document.title = "JPoD: Error";
   document.getElementById('breadcrumb').innerHTML = '&nbsp;';
   document.getElementById('pageContent').innerHTML = `<div>${errMsg}</div><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />`;
   document.getElementById('pageContent').style.display = 'block';

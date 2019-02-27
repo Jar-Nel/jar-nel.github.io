@@ -7,6 +7,8 @@
         "author": "Jared Nelson",
         "date": "01/17/2019",
         "assignment": "<p>Testing Assignment area<br />Line 2</p>",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/01/2019",
         "responsetitle": "Testing Response Title",
         "response": "<p>Testing Response area<br />Line 2</p>"
     },
@@ -18,6 +20,8 @@
         "author": "Jared Nelson",
         "date": "01/17/2019",
         "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/17/2019",
         "responsetitle": "About Me",
         "response": "response.html"
     },
@@ -29,6 +33,8 @@
         "author": "Jared Nelson",
         "date": "01/21/2019",
         "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/24/2019",
         "responsetitle": "HTTPS Certificates / Let's Encrypt",
         "response": "response.html"
     },
@@ -40,6 +46,8 @@
         "author": "Jared Nelson",
         "date": "01/24/2019",
         "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "01/31/2019",
         "responsetitle": "What Microsoft Means for GitHub",
         "response": "response.html"
     },
@@ -51,6 +59,8 @@
         "author": "Jared Nelson",
         "date": "02/01/2019",
         "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "02/04/2019",
         "responsetitle": "UTF8 Explained",
         "response": "response.html"
     },
@@ -62,6 +72,8 @@
         "author": "Jared Nelson",
         "date": "02/07/2019",
         "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "02/11/2019",
         "responsetitle": "Semantic Versioning",
         "response": "response.html"
     },
@@ -73,6 +85,8 @@
         "author": "Jared Nelson",
         "date": "02/18/2019",
         "assignment": "assignment.html",
+        "assignmentauthor": "Rio Waller",
+        "assignmentdate": "02/21/2019",
         "responsetitle": "FTP and SFTP",
         "response": "response.html"
     }

@@ -38,13 +38,24 @@
         ]
     },
     {
-        "hash": "article.html",
-        "path": "content/",
-        "page": "article.html",
-        "title": "Articles",
+        "hash": "ct.html",
+        "path": "content/currenttopics/",
+        "page": "ct.html",
+        "title": "Current Topics",
         "breadcrumb": [
             "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
-            "<li class=\"breadcrumb-item \"><a href=\"#toc.html\" onclick=\"LoadContent('toc.html')\">Articles</li>"
+            "<li class=\"breadcrumb-item \"><a href=\"#toc.html~s1\" onclick=\"LoadContent('toc.html~s1')\">Current Topics</li>"
+        ],
+        "activeNavbaritems": []
+    },
+    {
+        "hash": "lecture.html",
+        "path": "content/lectures/",
+        "page": "lecture.html",
+        "title": "Lectures",
+        "breadcrumb": [
+            "<li class=\"breadcrumb-item\"><a href=\"#home.html\" onclick=\"LoadContent('home.html')\">Home</a></li>",
+            "<li class=\"breadcrumb-item \"><a href=\"#toc.html~s2\" onclick=\"LoadContent('toc.html~s2')\">Lectures</li>"
         ],
         "activeNavbaritems": []
     }

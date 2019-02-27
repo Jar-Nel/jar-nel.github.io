@@ -1,0 +1,28 @@
+[
+    {
+        "entry" : "a0",
+        "pagetitle": "Template Test",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Template Test</li>",
+        "title": "Template Test",
+        "categoryid": "",
+        "categoryname" : "",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a0/",
+        "article": "templatetest.html",
+        "footer" : "Done"
+    },
+    {
+        "entry" : "a7",
+        "pagetitle": "Raster Graphics",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Raster Graphics</li>",
+        "title": "Raster Graphics",
+        "categoryid": "c3",
+        "categoryname" : "Graphics",
+        "author": "Jared Nelson",
+        "date": "02/26/2019",
+        "path": "content/articles/a7/",
+        "article": "graphics_raster.html",
+        "footer" : "<a class='card-link' href='#article.html~a8' onclick=\"LoadContent('article.html~a8')\"> Next (Vector Graphics) -></a>"
+    }
+]
