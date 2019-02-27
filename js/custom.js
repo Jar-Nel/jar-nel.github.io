@@ -123,7 +123,7 @@ let categories = [
 
 const LoadContent = (hash) => {
   document.getElementById('pageContent').style.display = 'none'
-  frameResize();
+  //frameResize();
 
   //Reload the last user selected theme
   let theme = getCookie('theme');
