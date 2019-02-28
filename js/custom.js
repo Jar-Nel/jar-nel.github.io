@@ -123,7 +123,7 @@ let categories = [
 
 const pageOnLoad = () => {
   LoadContent();
-  frameResize();
+  setTimeout('frameResize()',500);
 }
 
 const LoadContent = (hash) => {
