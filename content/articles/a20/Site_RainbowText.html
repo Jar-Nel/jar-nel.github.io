@@ -145,7 +145,7 @@ function generateRainbowText(txtInput) {
             <p>To do this will require a little math. For our first letter we set <code
                     class="language-javascript">hue=0</code>, but for each additional letter we need to increment hue by
                 some amount. We can determine that amount by dividing 360 by the length of the string. <code
-                    class="language-javascript">hueAdd = 360 / txtInput.length;</code> If we multiply out hueAdd value
+                    class="language-javascript">hueAdd = 360 / txtInput.length;</code> If we multiply our hueAdd value
                 by the character index of our string we will get equally spaced hue values for each character.</p>
             <p>Once we have our hue value we need to add it to the <code class="language-markup">&lt;span&gt;</code> tag
                 using the style attribute.</p>
@@ -211,7 +211,7 @@ function generateRainbowText(txtInput) {
             </div>
         </div>
     </div>
-    <p>Now we can place a <code class="language-markup">&lt;span&gt;</code> element on our page and set it to display
+    <p>Putting it all together, now we can place a <code class="language-markup">&lt;span&gt;</code> element on our page and set it to display
         our generated text like this:</p>
     <pre>
         <code class="language-markup language-javascript">
@@ -220,6 +220,16 @@ function generateRainbowText(txtInput) {
         &lt;span id="spanRainbow"&gt;&lt;/span&gt;
         &lt;script&gt;
             document.getElementById('spanRainbow').innerHTML=generateRainbowText('Hello, World!');
+
+            function generateRainbowText(txtInput) {
+                let txtOutput="";
+                let hueAdd = 360 / txtInput.length;
+                for (let i = 0; i &lt; txtInput.length; i++) {
+                    let hue = i * hueAdd;
+                    txtOutput+=`&lt;span style='color:hsl(${hue},80%,50%);'&gt;${txtInput[i]}&lt;/span&gt;`;
+                }
+                return txtOutput;
+            }
         &lt;/script&gt;
     &lt;/body&gt;
 &lt;/html&gt;
