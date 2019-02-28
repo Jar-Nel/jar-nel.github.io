@@ -127,7 +127,7 @@ const LoadContent = (hash) => {
 
   //Reload the last user selected theme
   let theme = getCookie('theme');
-  if (theme === "") theme = "light"; //else bPlayDark = false;
+  if (theme === "") theme = "light"; else bPlayDark = false;
   changeTheme(theme);
 
   //Load the home page if no page specified.
