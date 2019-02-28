@@ -128,5 +128,18 @@
         "path": "content/articles/a17/",
         "article": "Site_PageModel.html",
         "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a18",
+        "pagetitle": "Site Tech",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Site Tech</li>",
+        "title": "Libraries Used to Build This Site",
+        "categoryid": "c5",
+        "categoryname" : "This Site",
+        "author": "Jared Nelson",
+        "date": "02/27/2019",
+        "path": "content/articles/a18/",
+        "article": "Site_Tech.html",
+        "footer" : "##articlesInCategory##"
     }
 ]

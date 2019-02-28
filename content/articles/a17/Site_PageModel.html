@@ -8,15 +8,19 @@
     </div>
 </div>
 <div class="card-body">
+    <h4>Overview of Nested HTML</h4>
     <p>If you were paying attention to the URL field in your browser as you navigate this site you may have noticed that
         the pages are requested a little differently. For example, the URL for this article includes the text
         PageLoader.html#article.html~a17. You might be wondering what this does and why it looks like this. On this page
         I will make an attempt to explain it.</p>
-    <p>The request <span class="text-info">PageLoader.html<span class="text-warning">#</span>article.html<span class="text-warning">~</span>a17</span> is broken into three pieces. The first part, PageLoader.html,
+    <p>The request <span class="text-info">PageLoader.html<span class="text-warning">#</span>article.html<span
+                class="text-warning">~</span>a17</span> is broken into three pieces. The first part, PageLoader.html,
         requests the page that has all the menu navigation, CSS themes, and JavaScript content for the site. Once the
         resources for PageLoader.html have been loaded into the browser, JavaScript takes over. The next part,
-        <span class="text-info">article.html<span class="text-warning">~</span>a17</span>, instructs the JavaScript that we want to load the <span class="text-info">article.html</span> content template and populate
-        it with the data for article <span class="text-info">a17</span>, which is the article you’re reading now. The hash symbol (<span class="text-warning">#</span>) is used to
+        <span class="text-info">article.html<span class="text-warning">~</span>a17</span>, instructs the JavaScript that
+        we want to load the <span class="text-info">article.html</span> content template and populate
+        it with the data for article <span class="text-info">a17</span>, which is the article you’re reading now. The
+        hash symbol (<span class="text-warning">#</span>) is used to
         separate the content from the request. I chose the hash instead of a more traditional query string because it
         can be modified without causing the browser to reload the page. This way I can support deep linking directly to
         the content but prevent reused assets from reloading and redrawing as the site is navigated after the initial
@@ -28,4 +32,168 @@
     <div class="text-muted"><i>For the article template, article meta-data and content are loaded into the template, and
             that template is loaded into the content area of the PageLoader.html file. Each piece nests within the other
             to create the final page that is displayed by the browser.</i></div>
+    <br /><br />
+    <h4>Technical Implementation</h4>
+    <p>PageLoader.html contains all of our CSS and Javascript links. It also scaffolds the common navigation items in
+        the navbar and breadcrumb at the top of the page.</p>
+    <pre><code class="language-markup">&lt;div class="container" id="pageContent"&gt;</code></pre>
+    <p>There is a div in the PageLoader.html with an id of <span class="text-info">pageContent</span> where the
+        JavaScript loaded content will go.</p>
+    <br /><br />
+    <h5>The LoadContent() Function</h5>
+    <p>Once PageLoader.html is loaded in the browser, an onload even triggers on the body to start the javascript for
+        the
+        next step.</p>
+    <pre><code class="language-markup">&lt;body onload="LoadContent();" style="height: 100%;"&gt;</code></pre>
+    <p>The first thing to do is set the style.display='none' on the content div in the page. This will allow the content
+        to be compiled without causing an excess of pop-in as elements are loaded.</p>
+    <pre><code class="language-javascript">
+const LoadContent = (hash) => {
+  //Hide the content area until everything is done loading
+  document.getElementById('pageContent').style.display = 'none'
+    </code></pre>
+    <p>Next, the previous user selected theme is loaded from the cookie. If the theme is not able to be loaded from the
+        cookie, the default light theme is selected.</p>
+    <pre><code class="language-javascript">
+  //Reload the last user selected theme
+  let theme = getCookie('theme');
+  if (theme === "") theme = "light"; else bPlayDark = false;
+  changeTheme(theme);
+    </code></pre>
+    <p>After that the hash is accessed and prepared for analysis. If there is an option string present, that is also
+        collected. If there is no hash the default page to load is home.html</p>
+    <pre><code class="language-javascript">
+  //Load the home page if no page specified.
+  if (!hash) hash = window.location.hash;
+  if (hash.length &lt; 1) hash = 'home.html';
+  hash = hash.replace('#', '');
+  //Save the hash back to window location to support deep linking to content.
+  window.location.hash = `#${hash}`;
+      
+  //If there is other information we need to render the page it will be seperated by a ~. This splits the page from the information
+  let optString = '';
+  if (hash.indexOf('~') > 0) {
+    optString = hash.split('~')[1];
+    hash = hash.split('~')[0];
+  }
+    </code></pre>
+    <p>Once we have our hash and optString, <span class="text-info">loadPageContent</span> is called to compile
+        everything together. Since <span class="text-info">loadPageContent</span> makes use of await with async
+        JavaScript fetch() functions, it is also an async function, the .then at the end of the call contains code that
+        will execute after the async function completes.</p>
+    <p>The navbar category dropdown is then built dynamically from a categories object.</p>
+    <p>Finally <span class="text-info">showContentDiv</span> is called to place the returned content into the pageContent
+        div and restore visibility.</p>
+    <pre><code class="language-javascript">
+  //loadPageContent is an async function that returns a promise
+  loadPageContent(hash, optString).then(content => {
+     
+    //set the drop down categories on navbar
+    let navcatString = `&lt;a class="dropdown-item" href="#toc.html" onclick="LoadContent('toc.html')"&gt;Contents&lt;/a&gt;&lt;div class="dropdown-divider"&gt;&lt;/div&gt;`;
+    categories.forEach(category => {
+      navcatString += `&lt;a class="dropdown-item" href="#toc.html~${category.id}" onclick="LoadContent('toc.html~${category.id}')"&gt;&nbsp;&nbsp;${category.name}&lt;/a&gt;`;
+    });
+    document.getElementById('navTOC').innerHTML = navcatString;
+     
+    showContentDiv(content);        
+    </code></pre>
+    <p>Here is a look at <span class="text-info">showContentDiv</span>.  It sets the pageContent div to contain the content supplied.  After that it makes the div transparent, but restores its display property to block (remember it was set to none when LoadContent was called).  Finally a fadeDiv function is called to fade the pageContent opacity back to full.  </p>
+    <pre><code class="language-javascript">
+const showContentDiv = (content) => {
+  let pageContent = document.getElementById('pageContent');
+  pageContent.innerHTML = content;
+  pageContent.style.opacity = "0";
+  pageContent.style.display = 'block';
+  fadeDiv('pageContent', 0, 1, .1, 50, console.log);
+}
+    </code></pre>
+    <br /><br />
+    <h5>The loadPageContent() Function</h5>
+    <p><span class="text-info">loadPageContent</span> is where all the fun happens.  Templates are loaded based on the hash and populated based on the optString.  If the hash is for the toc, it is dynamically generated from the loaded JSON.  Take a look at this crazy code:</p>
+    <pre><code class="language-javascript">
+const loadPageContent = async (hash, optString) => {
+  //Load the navigation json data, look up the meta-data for the supplied hash.
+  let navJSON = await LoadJson('content/navigation.json');
+  let navObj = navJSON.find((element) => { return element.hash === hash });
+  if (!navObj) throw new Error('Hash not found');
+             
+  //Set the document title form the JSON object
+  document.title = `JPoD:${navObj.title}`;
+              
+  //Breadcrumb
+  //Get the breadCrumb div element
+  let breadCrumb = document.getElementById('breadcrumb');
+  //New content, new breadcrumb.
+  breadCrumb.innerHTML = '';
+  navObj.breadcrumb.forEach(element => {
+    breadCrumb.innerHTML += element;
+  });
+          
+  //NavBar
+  $('.nav-item').removeClass('active');
+  navObj.activeNavbaritems.forEach(element => {
+    $(element).addClass('active');
+  });
+          
+  //Content page
+  let pageContent = await LoadContentPage(`${navObj.path}${navObj.page}`);
+  let articleObjs = await LoadJson('content/articles.json');
+          
+  switch (hash.toLowerCase()) {
+    case "article.html":  //The hash is for the article template.  load the template and meta data.
+      /* #region Loading Article */
+      let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
+      if (!articleObj) throw new Error('Unable to load content.  Unknown article entry')
+      document.title = `JPoD:${articleObj.pagetitle}`;
+          
+      if (articleObj.categoryid !== "") {
+        breadCrumb.innerHTML += `&lt;li class=\"breadcrumb-item\">&lt;a href=\"#toc.html~${articleObj.categoryid}\" onclick=\"LoadContent('toc.html~${articleObj.categoryid}')\">${articleObj.categoryname}&lt;/a>&lt;/li>`;
+      }
+      breadCrumb.innerHTML += articleObj.breadcrumb;
+          
+      //Fill in the pageContent meta-data
+      pageContent = pageContent.replace(/##Title##/g, articleObj.title);
+      pageContent = pageContent.replace(/##Author##/g, articleObj.author);
+      pageContent = pageContent.replace(/##Date##/g, articleObj.date);
+                
+      let articleContent = await LoadContentPage(`${articleObj.path}${articleObj.article}`);
+      pageContent = pageContent.replace(/##Article##/g, articleContent);
+          
+      //If the template contains a dynamic footer. :)
+      let restofCategory = articleObjs.filter((Element) => { return (Element.categoryid === articleObj.categoryid && Element.entry !== articleObj.entry) });
+      let footerString = `&lt;a class='card-link' href='#toc.html' onclick=\"LoadContent('toc.html')\"> Content Categories&lt;/a>`;
+      if (restofCategory.length > 0) {
+        footerString+=`&lt;br />&lt;br />Explore other content in this category:`;
+        footerString+=`&lt;ul class="list-group list-group-flush">`;
+        restofCategory.forEach(article => {
+          footerString+=`&lt;li class="list-group-item">&lt;a class='card-link' href='#article.html~${article.entry}' onclick=\"LoadContent('article.html~${article.entry}')\">${article.title}&lt;/a>&lt;/li>`;
+        });
+        footerString+=`&lt;/ul>`;
+      }
+      articleObj.footer=articleObj.footer.replace(/##articlesInCategory##/g, footerString);
+      pageContent = pageContent.replace(/##Footer##/g, articleObj.footer);
+      /* #endregion */
+      break;
+    case "toc.html":
+      /* #region Build TOC */
+      categories.forEach(category => {
+        let catContents = articleObjs.filter((Element) => { return Element.categoryid === category.id });
+        let contentString = '';
+        if (catContents.length > 0) {
+          catContents.forEach(catContent => {
+            contentString += `&lt;li class="list-group-item">&lt;a href="#article.html~${catContent.entry}" class="card-link" onclick="LoadContent('#article.html~${catContent.entry}')">${catContent.title}&lt;/a>&lt;/li>`;
+          });
+        } else {
+          contentString = `&lt;li class="list-group-item">No content for this category&lt;/li>`;
+        }
+        pageContent = pageContent.replace(`##cat${category.id}##`, contentString);
+      });
+      /* #endregion */
+      break;
+    default:
+      break;
+  }
+  return pageContent;
+}
+    </code></pre>
 </div>

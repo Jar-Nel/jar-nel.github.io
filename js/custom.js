@@ -122,8 +122,8 @@ let categories = [
 ]
 
 const LoadContent = (hash) => {
+  //Hide the content area until everything is done loading
   document.getElementById('pageContent').style.display = 'none'
-  //frameResize();
 
   //Reload the last user selected theme
   let theme = getCookie('theme');
@@ -143,6 +143,7 @@ const LoadContent = (hash) => {
     hash = hash.split('~')[0];
   }
 
+  //loadPageContent is an async function that returns a promise
   loadPageContent(hash, optString).then(content => {
 
     //set the drop down categories on navbar
@@ -170,11 +171,12 @@ const LoadContent = (hash) => {
       animateColor = setInterval(changeColor, 150);
     }
 
+    Prism.highlightAll();
+
     //freaking jQuery calls. 
     $('#navbarColor01').collapse('hide');
   }).catch(e => {
     showError(e.message);
-
   });
 }
 
@@ -279,6 +281,7 @@ const frameResize = () => {
   document.getElementById('pageContent').style.marginTop = `${h1}px`;
   //console.log(document.getElementById('pageContent').style.marginTop);
 }
+
 const LoadContent2 = (hash, optString, navJSON) => {
   console.log('c2');
   let navObj = navJSON.find((element) => { return element.hash === hash });
@@ -599,10 +602,6 @@ const LoadContentPage = async (page) => {
     });
 }
 
-const LoadContentHTML = () => {
-
-}
-
 const showError = (errMsg) => {
   document.title = "JPoD: Error";
   document.getElementById('breadcrumb').innerHTML = '&nbsp;';
@@ -717,6 +716,11 @@ const changeTheme = (theme) => {
   document.getElementById('divMask').style.display = "block";
   //Change theme
   linkTags = document.getElementsByName('cssLink'); //.forEach(linkTag => {
+  for (let i = 0; i < linkTags.length; i++) {
+    if (linkTags[i].title === theme) linkTags[i].disabled = false;
+    else linkTags[i].disabled = true;
+  }
+  linkTags = document.getElementsByName('prismLink'); //.forEach(linkTag => {
   for (let i = 0; i < linkTags.length; i++) {
     if (linkTags[i].title === theme) linkTags[i].disabled = false;
     else linkTags[i].disabled = true;
