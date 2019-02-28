@@ -171,7 +171,7 @@ const LoadContent = (hash) => {
     if (document.getElementById('spanColor')) {
       //Start the color change
       objColorId = document.getElementById('spanColor');
-      objColorId.innerHTML = generateRainbowText("Hello, world!");
+      objColorId.innerHTML = generateRainbowText(objColorId.innerHTML);
       //setTimeout("changeColor()", 150);
       clearInterval(animateColor);
       animateColor = setInterval(changeColor, 150);
@@ -230,22 +230,22 @@ const loadPageContent = async (hash, optString) => {
       pageContent = pageContent.replace(/##Title##/g, articleObj.title);
       pageContent = pageContent.replace(/##Author##/g, articleObj.author);
       pageContent = pageContent.replace(/##Date##/g, articleObj.date);
-      
+
       let articleContent = await LoadContentPage(`${articleObj.path}${articleObj.article}`);
       pageContent = pageContent.replace(/##Article##/g, articleContent);
 
       let restofCategory = articleObjs.filter((Element) => { return (Element.categoryid === articleObj.categoryid && Element.entry !== articleObj.entry) });
       let footerString = `<a class='card-link' href='#toc.html' onclick=\"LoadContent('toc.html')\"> Content Categories</a>`;
       if (restofCategory.length > 0) {
-        footerString+=`<br /><br />Explore other content in this category:`;
-        footerString+=`<ul class="list-group list-group-flush">`;
+        footerString += `<br /><br />Explore other content in this category:`;
+        footerString += `<ul class="list-group list-group-flush">`;
         restofCategory.forEach(article => {
           console.log(article.title);
-          footerString+=`<li class="list-group-item"><a class='card-link' href='#article.html~${article.entry}' onclick=\"LoadContent('article.html~${article.entry}')\">${article.title}</a></li>`;
+          footerString += `<li class="list-group-item"><a class='card-link' href='#article.html~${article.entry}' onclick=\"LoadContent('article.html~${article.entry}')\">${article.title}</a></li>`;
         });
-        footerString+=`</ul>`;
+        footerString += `</ul>`;
       }
-      articleObj.footer=articleObj.footer.replace(/##articlesInCategory##/g, footerString);
+      articleObj.footer = articleObj.footer.replace(/##articlesInCategory##/g, footerString);
       pageContent = pageContent.replace(/##Footer##/g, articleObj.footer);
       /* #endregion */
       break;
@@ -617,19 +617,19 @@ const showError = (errMsg) => {
 
 
 /* #region Rainbow Text */
-function changeColor() {
+function changeColor1() {
   try {
     let text = "Hello, world!";
+    let hueAdd = 360 / text.length;
     let objColorId = document.getElementById("spanColor");
     if (objColorId) {
       let childNodes = objColorId.childNodes;
       for (let i = 0; i < childNodes.length; i++) {
-        let hue = (360 * (i + colorI) / text.length);
-        if (hue > 359) hue = hue - 360;
+        let hue = (i + colorI) * hueAdd;
         childNodes[(text.length - 1) - i].style = `color:hsl(${hue},80%,50%);`
       }
       colorI++;
-      if (colorI > text.length) colorI = 1;
+      if (colorI >= text.length) colorI = 0;
     }
     else clearInterval(animateColor);
   }
@@ -639,31 +639,43 @@ function changeColor() {
   }
 }
 
-function changeColor2() {
-  let text = "Hello, World";
+function changeColor(offset) {
+  clearInterval(animateColor);
+  if (!offset) offset = 0;
+  //console.log(offset);
   let objColorId = document.getElementById("spanColor");
   if (objColorId) {
     let childNodes = objColorId.childNodes;
+    let hueAdd = 360 / childNodes.length;
     for (let i = 0; i < childNodes.length; i++) {
-      let hue = (360 * (i + colorI) / text.length);
-      if (hue > 359) hue = hue - 360;
-      childNodes[text.length - i].style = `color:hsl(${hue},80%,50%);`
+      let hue = (i + offset) * hueAdd;
+      childNodes[(childNodes.length - 1) - i].style = `color:hsl(${hue},80%,50%);`
     }
-    colorI++;
-    if (colorI > text.length) colorI = 1;
-    setTimeout("changeColor()", 150);
+    offset++;
+    if (offset >= childNodes.length) offset = 0;
+    setTimeout(`changeColor(${offset})`, 150);
   }
 }
 
-function generateRainbowText(text) {
+function generateRainbowText(txtInput) {
   let outText = "";
-  for (let i = 0; i < text.length; i++) {
-    let hue = (360 * (i + colorI) / text.length);
-    if (hue > 359) hue = hue - 360;
-    let charText = "<span id=\"sc_" + i.toString() + "\" style=\"color:hsl(" + hue + ",80%,50%);\">";
-    outText += charText + text[i] + "</span>";
+  let hueAdd = 360 / txtInput.length;
+  for (let i = 0; i < txtInput.length; i++) {
+    let hue = i * hueAdd;
+    //if (hue > 359) hue = hue - 360;
+    //    let charText = `<span id=\"sc_${i.toString()}\" style=\"color:hsl(${hue},80%,50%);\">`;
+    outText += `<span id=\"sc_${i.toString()}\" style=\"color:hsl(${hue},80%,50%);\">${txtInput[i]}</span>`;
   }
-  //document.getElementById("output").value="colorI: "+colorI+"\r\n"+outText;
+  return outText;
+}
+
+function generateRainbowTextEx(txtInput) {
+  let outText = "";
+  let hueAdd = 360 / txtInput.length;
+  for (let i = 0; i < txtInput.length; i++) {
+    let hue = i * hueAdd;
+    outText += `<span style='color:hsl(${hue},80%,50%);'>${txtInput[i]}</span>`;
+  }
   return outText;
 }
 

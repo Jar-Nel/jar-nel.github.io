@@ -2,11 +2,279 @@
     <h1 class="display-3"><span id="spanColor" style="color:#FFF;">Hello, world!</span></h1>
     <p class="lead">Welcome to my CIT-82 development pages</p>
     <hr class="my-4">
-    <p>If you have seen the home page for the site you might have noticed the animated rainbow text and wondered just how that was done.  On this page, I’ll show you.</p>
+    <p>If you have seen the home page for the site you might have noticed the animated rainbow text and wondered just
+        how that was done. On this page, I’ll show you.</p>
 
 </div>
 <div class="card-body">
-    <h4>Spanning the Rainbow</h4>
-    <p>HTML content can be colorized with CSS styles by adding a <span class="text-info">style</span> attribute to the tag.  Inline text can be altered with a <code class="language-markup">&lt;span&gt;</code> element, which makes it well suited for our purposes.</code></p>
-    <p>To change the color of the text, Hello World, we could wrap it in a <code class="language-markup">&lt;span&gt;</code> element and give it a style.   To make <span style="color: red">Hello World</span> appear <span style="color:red">red</span></p>
+    <h4><span style='color:hsl(0,80%,50%);'>S</span><span style='color:hsl(18,80%,50%);'>p</span><span
+            style='color:hsl(36,80%,50%);'>a</span><span style='color:hsl(54,80%,50%);'>n</span><span
+            style='color:hsl(72,80%,50%);'>n</span><span style='color:hsl(90,80%,50%);'>i</span><span
+            style='color:hsl(108,80%,50%);'>n</span><span style='color:hsl(126,80%,50%);'>g</span><span
+            style='color:hsl(144,80%,50%);'> </span><span style='color:hsl(162,80%,50%);'>t</span><span
+            style='color:hsl(180,80%,50%);'>h</span><span style='color:hsl(198,80%,50%);'>e</span><span
+            style='color:hsl(216,80%,50%);'> </span><span style='color:hsl(234,80%,50%);'>R</span><span
+            style='color:hsl(252,80%,50%);'>a</span><span style='color:hsl(270,80%,50%);'>i</span><span
+            style='color:hsl(288,80%,50%);'>n</span><span style='color:hsl(306,80%,50%);'>b</span><span
+            style='color:hsl(324,80%,50%);'>o</span><span style='color:hsl(342,80%,50%);'>w</span></h4>
+    <p>HTML content can be colorized with CSS styles by adding a <span class="text-info">style</span> attribute to the
+        tag. Inline text can be altered with a <code class="language-markup">&lt;span&gt;</code> element, which makes it
+        well suited for our purposes.</code></p>
+    <p>To change the color of the text, Hello World, we could wrap it in a <code
+            class="language-markup">&lt;span&gt;</code> element and give it a style. To make <span
+            style="color: red">Hello World</span> appear <span style="color:red">red</span> the code would be: <code
+            class="language-markup">&lt;span style="color:red"&gt;Hello World&lt;/span&gt;</code>.</p>
+    <p>That works for the phrase, but we want every letter a different color. If you're thinking we would need to wrap
+        each letter in a <code class="language-markup">&lt;span&gt;</code> element, you would be correct. </p>
+    <p>So the word 'Hello' now looks something like this: </p>
+    <pre>
+    <code class="language-markup">
+&lt;span style="color:red"&gt;H&lt;/span&gt;
+&lt;span style="color:orange"&gt;e&lt;/span&gt;
+&lt;span style="color:yellow"&gt;l&lt;/span&gt;
+&lt;span style="color:green"&gt;l&lt;/span&gt;
+&lt;span style="color:blue"&gt;o&lt;/span&gt;
+    </code>
+    </pre>
+    <p>It's tedious, but it does give us the result we're looking for:
+        <span style="color:red">H</span><span style="color:orange">e</span><span style="color:yellow">l</span><span
+            style="color:green">l</span><span style="color:blue">o</span>
+    </p>
+    <p>But it doesn't yet give us our animation, and it is impractical to use for longer phrases. We'll need to use some
+        JavaScript.</p>
+    <br /><br />
+    <h4><span style='color:hsl(0,80%,50%);'>S</span><span style='color:hsl(17.142857142857142,80%,50%);'>c</span><span
+            style='color:hsl(34.285714285714285,80%,50%);'>r</span><span
+            style='color:hsl(51.42857142857143,80%,50%);'>i</span><span
+            style='color:hsl(68.57142857142857,80%,50%);'>p</span><span
+            style='color:hsl(85.71428571428571,80%,50%);'>t</span><span
+            style='color:hsl(102.85714285714286,80%,50%);'>i</span><span style='color:hsl(120,80%,50%);'>n</span><span
+            style='color:hsl(137.14285714285714,80%,50%);'>g</span><span style='color:hsl(154.28571428571428,80%,50%);'>
+        </span><span style='color:hsl(171.42857142857142,80%,50%);'>t</span><span
+            style='color:hsl(188.57142857142856,80%,50%);'>h</span><span
+            style='color:hsl(205.71428571428572,80%,50%);'>e</span><span style='color:hsl(222.85714285714286,80%,50%);'>
+        </span><span style='color:hsl(240,80%,50%);'>R</span><span
+            style='color:hsl(257.1428571428571,80%,50%);'>a</span><span
+            style='color:hsl(274.2857142857143,80%,50%);'>i</span><span
+            style='color:hsl(291.42857142857144,80%,50%);'>n</span><span
+            style='color:hsl(308.57142857142856,80%,50%);'>b</span><span
+            style='color:hsl(325.7142857142857,80%,50%);'>o</span><span
+            style='color:hsl(342.85714285714283,80%,50%);'>w</span></h4>
+    <p>So we know we'll need a <code class="language-markup">&lt;span&gt;</code> element wrapped around every letter in
+        a phrase if we want each letter a different color. But typing all that code for each letter is tedious and we
+        don't want to do it if we don't have to. Thanks to some JavaScript, we don't have to.</p>
+    <p>Let's think about what we need. We need a function that: </p>
+    <ul>
+        <li>Takes a string of text as input and</li>
+        <li>Wraps a <code class="language-markup">&lt;span&gt;</code> element around each letter in the string and </li>
+        <li>Assigns a color to each <code class="language-markup">&lt;span&gt;</code></li>
+        <li>Outputs the modified string, spans and all, for use on our page.</li>
+    </ul>
+    <p>Inside our <code class="language-markup">&lt;script&gt;</code> block we would need a function that did this.
+        Let's call it <span class="text-info">generateRainbowText</span> and use a variable called txtInput as its
+        input.</p>
+    <pre>
+        <code class="language-javascript">
+&lt;script>
+function generateRainbowText(txtInput) {
+    let txtOutput="";
+    return txtOutput;
+}
+&lt;/script>        
+        </code>
+    </pre>
+    <p>So now we have a function that meets our first criteria. It takes an input. Right now it outputs a blank string,
+        not very exciting. Let's see what it takes to wrap each letter in a <code
+            class="language-markup">&lt;span&gt;</code>.</p>
+    <p>To wrap each letter in a <code class="language-markup">&lt;span&gt;</code> we will need to iterate through each
+        letter of our input string. We can use a JavaScript for loop to help accomplish this.</p>
+    <pre>
+        <code class="language-javascript">
+&lt;script>
+function generateRainbowText(txtInput) {
+    let txtOutput="";
+    for (let i = 0; i &lt; txtInput.length; i++) {
+        txtOutput+=txtInput[i];
+    }
+    return txtOutput;
+}
+&lt;/script>        
+        </code>
+    </pre>
+    <p>At this point the function takes an input, iterates through each letter, and adds it to the output string, one
+        letter at a time. If we run it, we will get an output that is exactly what was input. It's still pretty boring,
+        but at least it isn't blank, and we know the for loop is doing what we want it to do.</p>
+    <p>Now that we can iterate through the letters of our input, let's add some <code
+            class="language-markup">&lt;span&gt;</code> tags.</p>
+    <pre>
+        <code class="language-javascript">
+&lt;script>
+function generateRainbowText(txtInput) {
+    let txtOutput="";
+    for (let i = 0; i &lt; txtInput.length; i++) {
+        txtOutput+=`&lt;span&gt;${txtInput[i]}&lt;/span&gt;`;
+    }
+    return txtOutput;
+}
+&lt;/script>        
+        </code>
+    </pre>
+    <p>Now the output has every letter wrapped in a <code class="language-markup">&lt;span&gt;</code>! We have completed
+        the second requirement.</p>
+    <p>Of course this still looks like our boring string when output to a browser, but we're getting somewhere. Let's
+        see about adding some color.</p>
+    <p>As mentioned earlier we will be using the style attribute in the <code
+            class="language-markup">&lt;span&gt;</code> element to set the color. But unlike our example with Hello, the
+        string going into the JavaScript function can be of any length. Assigning pre-set colors limits our options.
+        Let's take advantage of the CSS ability to define a color using HSL (Hue, Saturation, Lightness) Hue is a value
+        that represents the color, Saturation determines the intensity of the color, Lightness determines the brightness
+        of the color. For this function we are only going to be concerned with hue. The saturation and lightness values
+        will be hard coded at 80% and 50%.</p>
+    <div class="row">
+        <div class="col-12">
+            <div class="float-md-right"
+                style="position:relative; padding-left:10%; padding-right:10%; padding-bottom:1rem; box-sizing:border-box;">
+                <img class="border border-dark rounded" src="content/articles/a20/hue_degrees_compliments.jpg"
+                    style="width:100%; max-width:250px;" />
+                <div class="text-muted" style="font-style: italic;">Example of color wheel</div>
+            </div>
+            <p>With the saturation and lightness values hard coded, we can picture hue as a circle of color. Hue values
+                are specified as degrees on this circle and range from 0 to 360. For the input string we want to start
+                at zero and end on or near 360, making one revolution around the color circle. This will give all of our
+                letters a different color without repeating colors (for strings of 360 chars or less).</p>
+            <p>To do this will require a little math. For our first letter we set <code
+                    class="language-javascript">hue=0</code>, but for each additional letter we need to increment hue by
+                some amount. We can determine that amount by dividing 360 by the length of the string. <code
+                    class="language-javascript">hueAdd = 360 / txtInput.length;</code> If we multiply out hueAdd value
+                by the character index of our string we will get equally spaced hue values for each character.</p>
+            <p>Once we have our hue value we need to add it to the <code class="language-markup">&lt;span&gt;</code> tag
+                using the style attribute.</p>
+            <p>Now we have a function that meets all of our requirements! Click the <span class="text-info">Run
+                    Code</span> button in the code box to try it out!</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div style="position: relative; width:100%; height:auto;">
+        <pre style="width:100%;">
+            <code class="language-javascript" style="z-index: 100">
+&lt;script>
+function generateRainbowText(txtInput) {
+    let txtOutput="";
+    let hueAdd = 360 / txtInput.length;
+    for (let i = 0; i &lt; txtInput.length; i++) {
+        let hue = i * hueAdd;
+        txtOutput+=`&lt;span style='color:hsl(${hue},80%,50%);'&gt;${txtInput[i]}&lt;/span&gt;`;
+    }
+    return txtOutput;
+}
+&lt;/script>        
+            </code>
+        </pre>
+        <div style="position: absolute; bottom:0; right:0; padding: 0.25rem; display:block; z-index: 80;"><input
+                class="btn btn-primary " type="button" value="Run Code" onclick="{
+                    if (document.getElementById('rnbwForm').style.display==='none')
+                    {
+                        document.getElementById('rnbwForm').style.display='block';
+                        document.getElementById('rnbwMask').style.display='block';
+                        this.value='Close Form';
+                        document.getElementById('txtInput').focus();
+                    } else {
+                        document.getElementById('rnbwForm').style.display='none';
+                        document.getElementById('rnbwMask').style.display='none';
+                        this.value='Run Code';
+                    }
+                    }" /></div>
+        <div id="rnbwMask"
+            style="position: absolute; top:0; right:0; width:100%; height: 100%; box-sizing: border-box; border:1px solid red; background-color: #aaa; opacity: .5; z-index: 20; display:none;">
+            test</div>
+        <div id="rnbwForm"
+            style="z-index: 50; position: absolute; top:0; right:0; width:100%; height: 100%; padding: 0rem 1rem; box-sizing: border-box; display:none;">
+            <div class="form-group" style="padding: 5%;">
+                <div class="row">
+                    <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
+                        style="background-color: #ccc; color: black;" for="txtInput">txtInput: </label>
+                    <input class="col-md-10 form-control form-control-sm" placeholder="txtInput" id="txtInput"
+                        type="text"
+                        onkeyup="document.getElementById('txtOutput').innerHTML=generateRainbowTextEx(this.value);document.getElementById('browserView').innerHTML=generateRainbowTextEx(this.value);">
+                </div>
+                <div class="row">
+                    <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
+                        style="background-color: #ccc; color: black;" for="txtOutput">txtOutput: </label>
+                    <textarea class="col-md-10 form-control form-control-sm" id="txtOutput" rows="3"
+                        readonly></textarea>
+                </div>
+                <div class="row">
+                    <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
+                        style="background-color: #ccc; color: black;" for="browserView">Rendered: </label>
+                    <div class="col-md-10 form-control form-control-sm" id="browserView" readonly>&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>Now we can place a <code class="language-markup">&lt;span&gt;</code> element on our page and set it to display
+        our generated text like this:</p>
+    <pre>
+        <code class="language-markup language-javascript">
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;span id="spanRainbow"&gt;&lt;/span&gt;
+        &lt;script&gt;
+            document.getElementById('spanRainbow').innerHTML=generateRainbowText('Hello, World!');
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+        </code>
+    </pre>
+
+    <br /><br />
+    <h4><span style='color:hsl(0,80%,50%);'>A</span><span style='color:hsl(17.142857142857142,80%,50%);'>n</span><span
+            style='color:hsl(34.285714285714285,80%,50%);'>i</span><span
+            style='color:hsl(51.42857142857143,80%,50%);'>m</span><span
+            style='color:hsl(68.57142857142857,80%,50%);'>a</span><span
+            style='color:hsl(85.71428571428571,80%,50%);'>t</span><span
+            style='color:hsl(102.85714285714286,80%,50%);'>i</span><span style='color:hsl(120,80%,50%);'>n</span><span
+            style='color:hsl(137.14285714285714,80%,50%);'>g</span><span style='color:hsl(154.28571428571428,80%,50%);'>
+        </span><span style='color:hsl(171.42857142857142,80%,50%);'>t</span><span
+            style='color:hsl(188.57142857142856,80%,50%);'>h</span><span
+            style='color:hsl(205.71428571428572,80%,50%);'>e</span><span style='color:hsl(222.85714285714286,80%,50%);'>
+        </span><span style='color:hsl(240,80%,50%);'>R</span><span
+            style='color:hsl(257.1428571428571,80%,50%);'>a</span><span
+            style='color:hsl(274.2857142857143,80%,50%);'>i</span><span
+            style='color:hsl(291.42857142857144,80%,50%);'>n</span><span
+            style='color:hsl(308.57142857142856,80%,50%);'>b</span><span
+            style='color:hsl(325.7142857142857,80%,50%);'>o</span><span
+            style='color:hsl(342.85714285714283,80%,50%);'>w</span></h4>
+    <p>That's great and all, but what about the animation?</p>
+    <p>The animation is accomplished by changing the color values of the style attribute of the <code
+            class="language-markup">&lt;span&gt;</code> elements we wrapped around each letter. To do this we need to be
+        able to access those <code class="language-markup">&lt;span&gt;</code> elements. Let's take a look at the
+        animation requirements:</p>
+    <ul>
+        <li>Get a collection of <code class="language-markup">&lt;span&gt;</code> elements we want to access</li>
+        <li>Iterate through our collection and change the color style</li>
+        <li>Wait a certain amount of time, and do it again (continous animnation)</li>
+    </ul>
+    <p>Such a function would look something like this:</p>
+    <pre>
+        <code class="language-javascript">
+function changeColor(offset) {
+    if (!offset) offset = 0;
+    let objColorId = document.getElementById("spanRainbow");
+    if (objColorId) {
+        //Get a collection of elements we want to access
+        let childNodes = objColorId.childNodes;
+        let hueAdd = 360 / childNodes.length;
+        //Iterate through our collection and change the color style
+        for (let i = 0; i < childNodes.length; i++) {
+            let hue = (i + offset) * hueAdd;
+            childNodes[(childNodes.length - 1) - i].style = `color:hsl(${hue},80%,50%);`
+        }
+        offset++;
+        if (offset >= childNodes.length) offset = 0;
+        //Wait a certain amount of time and do it again
+        setTimeout(`changeColor(${offset})`, 150);
+    }
+}
+        </code>
+    </pre>
 </div>
