@@ -122,8 +122,9 @@ let categories = [
 ]
 
 const pageOnLoad = () => {
+  frameResize();
   LoadContent();
-  setTimeout('frameResize()',200);
+  //setTimeout('frameResize()',200);
 }
 
 const LoadContent = (hash) => {
