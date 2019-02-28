@@ -121,6 +121,11 @@ let categories = [
   }
 ]
 
+const pageOnLoad = () => {
+  LoadContent();
+  frameResize();
+}
+
 const LoadContent = (hash) => {
   //Hide the content area until everything is done loading
   document.getElementById('pageContent').style.display = 'none'
