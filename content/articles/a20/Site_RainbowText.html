@@ -190,20 +190,20 @@ function generateRainbowText(txtInput) {
             <div class="form-group" style="padding: 5%;">
                 <div class="row">
                     <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
-                        style="background-color: #ccc; color: black;" for="txtInput">txtInput: </label>
+                        style="background-color: #ccc; color: black; opacity: .8;" for="txtInput">txtInput: </label>
                     <input class="col-md-10 form-control form-control-sm" placeholder="txtInput" id="txtInput"
                         type="text"
                         onkeyup="document.getElementById('txtOutput').innerHTML=generateRainbowTextEx(this.value);document.getElementById('browserView').innerHTML=generateRainbowTextEx(this.value);document.getElementById('txtInput').focus();">
                 </div>
                 <div class="row">
                     <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
-                        style="background-color: #ccc; color: black;" for="txtOutput">txtOutput: </label>
+                        style="background-color: #ccc; color: black; opacity: .8;" for="txtOutput">txtOutput: </label>
                     <textarea class="col-md-10 form-control form-control-sm" id="txtOutput" rows="3"
                         readonly></textarea>
                 </div>
                 <div class="row">
                     <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
-                        style="background-color: #ccc; color: black;" for="browserView">Rendered: </label>
+                        style="background-color: #ccc; color: black; opacity: .8;" for="browserView">Rendered: </label>
                     <div class="col-md-10 form-control form-control-sm" id="browserView" readonly>&nbsp;</div>
                 </div>
             </div>

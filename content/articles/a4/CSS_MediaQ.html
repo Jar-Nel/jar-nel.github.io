@@ -24,15 +24,19 @@
             class="text-info">resolution</span>. Range features have a min and max version available.</p>
     <p>In the following simple example, the body background color is black, but screen devices with a width that is
         650px or less wil have a background color of blue instead:</p>
-    <p><code>body {<br />
-            &nbsp;&nbsp;&nbsp;background: black;<br />
-            }<br />
-              <br />
-            @media screen and (max-width: 650px) {<br />
-                &nbsp;&nbsp;&nbsp;body {<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;background: blue;<br />
-                    &nbsp;&nbsp;&nbsp;}<br />
-              }</code></p>
+    <pre>
+        <code class="language-css">
+body {
+    background: black;
+}
+
+@media screen and (max-width: 650px) {
+    body {
+        background: blue;
+    }
+}
+        </code>
+    </pre>
     <div class="row" style="margin-top:1.5em;">
         <div class="col-lg-2 col-md-0"></div>
         <div class="col-lg-8 col-md-12 ">

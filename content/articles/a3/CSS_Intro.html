@@ -14,12 +14,15 @@
     <p>A set of CSS rules contained within a document called a <span class="text-info">stylesheet</span> is used to determine how a web page should look.</p>
     <p>It can be difficult to visualize, so lets try an example that was found on Mozilla's dev site:</p>
     <p></p>
-    <p><code>.example {
-                    <br />&nbsp;&nbsp;&nbsp;color: blue;
-                    <br />&nbsp;&nbsp;&nbsp;background-color: yellow;
-                    <br />&nbsp;&nbsp;&nbsp;border: 1px solid black;
-            <br />}
-                </code></p>
+    <pre>
+        <code class="language-css">
+.example {
+    color: blue;
+    background-color: yellow;
+    border: 1px solid black;
+}
+                </code>
+            </pre>
     <p>Here we are specifying a <span class="text-info">class</span> we are calling <span class="text-info">example</span>.  It contains three properties and their values.  Each property and value pair is called a declaration.</p>
     <p>The declarations in the example class do the following:</p>
     <ol>
@@ -28,7 +31,7 @@
         <li>The third puts a black border around the element that is one pixel wide and solid.</li>
     </ol>
     <p>A CSS class is assigned to an HTML tag with the <span class="text-info">class</span> attribute, like this:</p>
-    <p><code>&lt;span class="example"&gt;This is blue text on a yellow background.&lt;/span&gt;</code></p>
+    <p><code class="language-markup">&lt;span class="example"&gt;This is blue text on a yellow background.&lt;/span&gt;</code></p>
     <p>When rendered by the browser the code will end up looking like this:</p>
     <p><span style="color: blue; background-color: yellow; border: 1px solid black;">This is blue text on a yellow background.</span></p>
     <p>For more information on CSS, how to use it, and what you can do with it, see <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/How_CSS_works" target="_blank">How CSS works</a> on Mozilla's developer network.</p>

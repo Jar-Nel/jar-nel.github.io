@@ -13,21 +13,24 @@
     <p>HTML Forms are the main means of allowing users to send data to a web site.</p>
     <p>HTML Forms are made up of form controls such as text fields, select boxes, buttons, checkboxes, and radio
         buttons.</p>
-    <p>Forms are specified in HTML with the <code>&lt;form&gt;&lt;/form&gt;</code> element. This element formally
+    <p>Forms are specified in HTML with the <code class="language-markup">&lt;form&gt;&lt;/form&gt;</code> element. This element formally
         defines a form on a web page. It is a container element that supports some specific attributes to determine how
         a form behaves.</p>
     <p>The code for a form with a name and an email input field looks like this:</p>
-    <p><code>&lt;form method="post"&gt;
-                <br />&nbsp;&nbsp;&nbsp;&lt;div&gt;
-                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="name"&gt;Name: &lt;/label&gt;
-                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="text" id="name" name="user_name"&gt;
-                <br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;
-                <br />&nbsp;&nbsp;&nbsp;&lt;div&gt;
-                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;label for="email"&gt;email: &lt;/label&gt;
-                <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type="email" id="email" name="user_email"&gt;
-                <br />&nbsp;&nbsp;&nbsp;&lt;/div&gt;
-                <br />&lt;/form&gt;
-            </code></p>
-    <p>Here, we can see the form code wrapped by the &lt;form&gt; element.  The <span class="text-info">for</span> attribute in the <code>&lt;label&gt;</code> tag contains the <span class="text-info">id</span> of the <code>&lt;input&gt;</code> tag to which it is associated.</p>
+    <pre>
+        <code class="language-markup">
+&lt;form method="post"&gt;
+    &lt;div&gt;
+        &lt;label for="name"&gt;Name: &lt;/label&gt;
+        &lt;input type="text" id="name" name="user_name"&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;label for="email"&gt;email: &lt;/label&gt;
+        &lt;input type="email" id="email" name="user_email"&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+        </code>
+    </pre>
+    <p>Here, we can see the form code wrapped by the <code class="language-markup">&lt;form&gt;</code> element.  The <span class="text-info">for</span> attribute in the <code class="language-markup">&lt;label&gt;</code> tag contains the <span class="text-info">id</span> of the <code class="language-markup">&lt;input&gt;</code> tag to which it is associated.</p>
     <p>A good introduction to HTML forms is Mozilla's <a href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form" target="_blank">Your first HTML form</a> tutorial.</p>
 </div>

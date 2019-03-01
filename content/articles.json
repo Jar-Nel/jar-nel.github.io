@@ -65,6 +65,19 @@
         "footer" : "##articlesInCategory##"
     },
     {
+        "entry" : "a5",
+        "pagetitle": "CSS Frameworks",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">CSS Frameworks</li>",
+        "title": "CSS Frameworks",
+        "categoryid": "c2",
+        "categoryname" : "CSS",
+        "author": "Jared Nelson",
+        "date": "02/28/2019",
+        "path": "content/articles/a5/",
+        "article": "CSS_Framework.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
         "entry" : "a7",
         "pagetitle": "Raster Graphics",
         "breadcrumb" : "<li class=\"breadcrumb-item active\">Raster Graphics</li>",
