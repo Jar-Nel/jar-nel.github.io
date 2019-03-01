@@ -149,8 +149,6 @@ function generateRainbowText(txtInput) {
                 by the character index of our string we will get equally spaced hue values for each character.</p>
             <p>Once we have our hue value we need to add it to the <code class="language-markup">&lt;span&gt;</code> tag
                 using the style attribute.</p>
-            <p>Now we have a function that meets all of our requirements! Click the <span class="text-info">Run
-                    Code</span> button in the code box to try it out!</p>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -195,7 +193,7 @@ function generateRainbowText(txtInput) {
                         style="background-color: #ccc; color: black;" for="txtInput">txtInput: </label>
                     <input class="col-md-10 form-control form-control-sm" placeholder="txtInput" id="txtInput"
                         type="text"
-                        onkeyup="document.getElementById('txtOutput').innerHTML=generateRainbowTextEx(this.value);document.getElementById('browserView').innerHTML=generateRainbowTextEx(this.value);">
+                        onkeyup="document.getElementById('txtOutput').innerHTML=generateRainbowTextEx(this.value);document.getElementById('browserView').innerHTML=generateRainbowTextEx(this.value);document.getElementById('txtInput').focus();">
                 </div>
                 <div class="row">
                     <label class="col-md-2 col-form-label col-form-label-sm text-md-right text-sm-center"
@@ -211,6 +209,8 @@ function generateRainbowText(txtInput) {
             </div>
         </div>
     </div>
+    <p>Now we have a function that meets all of our requirements! Click the <span class="text-info">Run
+            Code</span> button in the code box to try it out!</p>
     <p>Putting it all together, now we can place a <code class="language-markup">&lt;span&gt;</code> element on our page and set it to display
         our generated text like this:</p>
     <pre>
