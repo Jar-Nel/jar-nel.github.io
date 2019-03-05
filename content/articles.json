@@ -78,6 +78,19 @@
         "footer" : "##articlesInCategory##"
     },
     {
+        "entry" : "a6",
+        "pagetitle": "CSS Themes",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">CSS Themes</li>",
+        "title": "CSS Themes",
+        "categoryid": "c2",
+        "categoryname" : "CSS",
+        "author": "Jared Nelson",
+        "date": "02/28/2019",
+        "path": "content/articles/a6/",
+        "article": "CSS_Themes.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
         "entry" : "a7",
         "pagetitle": "Raster Graphics",
         "breadcrumb" : "<li class=\"breadcrumb-item active\">Raster Graphics</li>",
@@ -98,10 +111,10 @@
         "categoryid": "c3",
         "categoryname" : "Graphics",
         "author": "Jared Nelson",
-        "date": "02/26/2019",
+        "date": "03/01/2019",
         "path": "content/articles/a8/",
         "article": "graphics_vector.html",
-        "footer" : "<a class='card-link' href='#article.html~a9' onclick=\"LoadContent('article.html~a9')\"> Next (Stock Photography) -></a>"
+        "footer" : "##articlesInCategory##"
     },
     {
         "entry" : "a9",
@@ -111,10 +124,10 @@
         "categoryid": "c3",
         "categoryname" : "Graphics",
         "author": "Jared Nelson",
-        "date": "02/26/2019",
+        "date": "03/01/2019",
         "path": "content/articles/a9/",
         "article": "graphics_stock.html",
-        "footer" : "<a class='card-link' href='#article.html~a10' onclick=\"LoadContent('article.html~a10')\"> Next (paint.net) -></a>"
+        "footer" : "##articlesInCategory##"
     },
     {
         "entry" : "a10",
@@ -127,6 +140,58 @@
         "date": "02/26/2019",
         "path": "content/articles/a10/",
         "article": "graphics_paint.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a11",
+        "pagetitle": "UTF-8",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">UFT-8</li>",
+        "title": "UTF-8",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/02/2019",
+        "path": "content/articles/a11/",
+        "article": "scripting_UTF8.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a12",
+        "pagetitle": "GitHub",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">GitHub</li>",
+        "title": "GitHub",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/02/2019",
+        "path": "content/articles/a12/",
+        "article": "scripting_github.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a13",
+        "pagetitle": "Markdown",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Markdown</li>",
+        "title": "Markdown",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/03/2019",
+        "path": "content/articles/a13/",
+        "article": "scripting_markdown.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a14",
+        "pagetitle": "JavaScript",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">JavaScript</li>",
+        "title": "JavaScript",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/04/2019",
+        "path": "content/articles/a14/",
+        "article": "scripting_javascript.html",
         "footer" : "##articlesInCategory##"
     },
     {

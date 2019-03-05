@@ -1,0 +1,77 @@
+<div style="position:relative;">
+    <img src="content/articles/a13/1920x920_markdown.jpg" style="width:100%;" />
+    <div style="position:absolute; bottom:0; right:0;">
+        <div class="customcaption caption badge-light" style="padding: 5px;">
+            Markdown Logo: Dustin Curtis [CC0]<br/>
+            Paper and pencil image: rawpixel on Unsplash
+        </div>
+    </div>
+</div>
+<span class="text-muted"><em>The Markdown logo on a piece of paper.</em></span>
+<div class="card-body">
+    <h4>Markdown for your Markup</h4>
+    <p>Markdown was created as a simple way for non-programmers to write in a readable format that could be easily
+        coneverted into HTML.</p>
+    <p>Markdown uses a simple formatting syntax. To format text, Markdown uses punctuation and characters most people
+        are already familiar with.</p>
+    <p>Many GitHub users make use of Markdown for their documentation. It's ability for quick and simple formatting
+        along with a human readibility of the raw text makes it well suited for this purpose.</p>
+    <p>Here are some common Markdown styles</p>
+    <ul>
+        <li>Headers
+            <ul>
+                <li># H1</li>
+                <li>## H2</li>
+                <li>### H3</li>
+                <li>#### H4</li>
+            </ul>
+        </li>
+        <li>Emphasis
+            <ul>
+                <li><em>Italics:</em> *italics* or _italics_</li>
+                <li><b>Bold:</b> **bold** __bold__</li>
+                <li><strike>Strikethrough</strike>: ~~Strikethrough~~</li>
+            </ul>
+        </li>
+        <li>Lists
+            <ul>
+                <li>Ordered lists just use numbers 1., 2., 3. </li>
+                <li>Unordered lists use *, -, or +</li>
+            </ul>
+        </li>
+        <li>Images
+            <ul>
+                <li>Inline: ![alt text](https://urlofimage "Image alt text")</li>
+                <li>Reference: ![alt text][image_1]<br />[image_1]: https://urlofimage "Image alt text"</li>
+            </ul>
+        </li>
+    </ul>
+    <br />
+    <p>Try it yourself. In the boxes below is some example markdown, along with the HTML output. The HTML output will
+        change as the markup is changed. Experiment a little and see what happens.</p>
+    <div class="row" style="margin-top:1.5em;">
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-lg-5 col-md-5" style="text-align: center;">Markdown<textarea id="markdownTxt"
+                style="width:100%; height:300px; overflow-x: scroll; white-space:pre;" rows="10"
+                onkeyup="{
+                    document.getElementById('mdOutput').innerHTML=marked(this.value);
+                    this.focus();
+                }">
+# This is Header 1
+## This is Header 2
+_This is in italics_
+**This is bold**
+**_This is bold and italic_**
+~This is strikethrough~
+1. List Item 1
+2. List Item 2
+* Another List Item
+  * A list sub item.
+* Yet another list item
+                </textarea></div>
+        <div class="col-lg-5 col-md-5" style="text-align: center;">Output<div id="mdOutput"
+                style="border: 1px solid black; width:100%; height:300px; min-height:100px; overflow: scroll; text-align: left; white-space:pre;"></div>
+            <div class="col-lg-1 col-md-1"></div>
+        </div>
+    </div>
+    <p><br />For more information on Markdown see the <em>Lifehacker</em> article: <em><a href='https://lifehacker.com/what-is-markdown-and-why-is-it-better-for-my-to-do-lis-5943320 ' target='_blank'>What is Markdown, and Why is it Better for My To-Do lists and Notes</a></em>.

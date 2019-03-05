@@ -1,0 +1,99 @@
+<div style="position:relative;">
+    <img src="content/articles/a11/fantasy-3208206_1766_1080.jpg" style="width:100%;" />
+    <div style="position:absolute; bottom:0; right:0;">
+        <div class="customcaption caption badge-light" style="padding: 5px;">
+            Image by <a href="https://pixabay.com/users/DarkWorkX-1664300/">DarkWorkX </a> on
+            <a href="https://pixabay.com">Pixabay</a>
+        </div>
+    </div>
+</div>
+<span class="text-muted"><em>Old computers only understood ASCII, and that just wasn't good enough.</em></span>
+<div class="card-body">
+    <h4>Encoding good enough for everyone: UTF-8</h4><br />
+    <p>In the beginning, there was ASCII (at least in English speaking regions of the world).&nbsp;</p>
+    <p>This worked well enough as documents that were shared with other areas of the world were generally printed and
+        mailed, or later faxed.&nbsp; But the rise of the internet and the World Wide Web brought a growing need for
+        electronic document exchange, something that was problematic with the different and incompatible encoding
+        methods
+        used throughout the world.&nbsp; A standard called Unicode (Universal Coded Character Set) was developed that
+        had
+        room for all the different characters used throughout the world.</p>
+    <p>&nbsp;</p>
+    <p>UTF-8 (Unicode Transformation Format) was developed to solve compatibility problems with ASCII systems that
+        couldn't
+        understand Unicode.&nbsp; It is an ingenious encoding method that allows for all the address space of Unicode
+        but
+        stores it in a compact, efficient, format that saves on space and doesn't break compatibility with older
+        systems.
+    </p>
+    <p>&nbsp;</p>
+    <p>The UTF8-file is made up of 8-bit blocks.&nbsp; The existing 7-bit ASCII character set was added to UTF8 with a
+        leading zero bit.&nbsp; Characters outside of ASCII had a leading bit of 1, with an additional 1 for each byte
+        block
+        used.</p>
+    <table style="font-size: 12px;">
+        <tbody>
+            <tr>
+                <th style="border: 1px solid #ccc;">Number<br />of bytes</th>
+                <th style="border: 1px solid #ccc;">Bits for<br />code point</th>
+                <th style="border: 1px solid #ccc;">First<br />code point</th>
+                <th style="border: 1px solid #ccc;">Last<br />code point</th>
+                <th style="border: 1px solid #ccc;">Byte 1</th>
+                <th style="border: 1px solid #ccc;">Byte 2</th>
+                <th style="border: 1px solid #ccc;">Byte 3</th>
+                <th style="border: 1px solid #ccc;">Byte 4</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;">1</td>
+                <td style="text-align: center;">7</td>
+                <td style="text-align: right;">U+0000</td>
+                <td style="text-align: right;">U+007F</td>
+                <td><code>0xxxxxxx</code></td>
+                <td style="background: darkgray;"></td>
+                <td style="background: darkgray;"></td>
+                <td style="background: darkgray;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">2</td>
+                <td style="text-align: center;">11</td>
+                <td style="text-align: right;">U+0080</td>
+                <td style="text-align: right;">U+07FF</td>
+                <td><code>110xxxxx</code></td>
+                <td><code>10xxxxxx</code></td>
+                <td style="background: darkgray;"></td>
+                <td style="background: darkgray;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">3</td>
+                <td style="text-align: center;">16</td>
+                <td style="text-align: right;">U+0800</td>
+                <td style="text-align: right;">U+FFFF</td>
+                <td><code>1110xxxx</code></td>
+                <td><code>10xxxxxx</code></td>
+                <td><code>10xxxxxx</code></td>
+                <td style="background: darkgray;"></td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">4</td>
+                <td style="text-align: center;">21</td>
+                <td style="text-align: right;">U+10000</td>
+                <td style="text-align: right;">U+10FFFF</td>
+                <td><code>11110xxx</code></td>
+                <td><code>10xxxxxx</code></td>
+                <td><code>10xxxxxx</code></td>
+                <td><code>10xxxxxx</code></td>
+            </tr>
+        </tbody>
+    </table>
+    <p>&nbsp;</p>
+    <p>1 byte contains the entirety of US-ASCII.</p>
+    <p>2 bytes added an additional 1,920 characters, enough to encode all Latin-script alphabets, Greek, Cryllic,
+        Coptic,
+        Armenian, Hebrew, Arabic, Syriac, Thaana, and N'ko, as well as combining Diacritical marks.</p>
+    <p>3 bytes covers the rest of the Basic Multilingual Plane, including Chinese, Japanese, and Korean characters.</p>
+    <p>4 bytes covers historic scripts, mathematical symbols, and emoji characters.</p>
+    <p>For more information on UTF-8 see Johannes Sasongko's excellent article: <a
+            href="https://sjohannes.wordpress.com/2009/05/18/utf-8-explained/" target="_blank">UTF-8 explained
+        </a> </p>
+    <p>&nbsp;</p>
+</div>

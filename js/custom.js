@@ -125,6 +125,7 @@ const pageOnLoad = () => {
   frameResize();
   LoadContent();
   //setTimeout('frameResize()',200);
+
 }
 
 const LoadContent = (hash) => {
@@ -247,6 +248,29 @@ const loadPageContent = async (hash, optString) => {
       }
       articleObj.footer = articleObj.footer.replace(/##articlesInCategory##/g, footerString);
       pageContent = pageContent.replace(/##Footer##/g, articleObj.footer);
+
+      /* #region MarkDown */
+      var markdownTxt = `
+# This is Header 1
+## This is Header 2
+_This is in italics_
+**This is bold**
+**_This is bold and italic_**
+~This is strikethrough~
+1. List Item 1
+2. List Item 2
+* Another List Item
+  * A list sub item.
+* Yet another list item
+`;
+      setTimeout(() => {
+        if (document.getElementById('mdOutput')) {
+          document.getElementById('markdownTxt').value=markdownTxt;
+          document.getElementById('mdOutput').innerHTML = marked(markdownTxt);
+        }
+
+      }, 300);
+      /* #endregion */
       /* #endregion */
       break;
     case "toc.html":
@@ -340,254 +364,7 @@ const LoadContent3 = (hash, optString, page) => {
   }
 }
 
-/*  else {
-    showError(`Unable to load content.  Unknown hash.`);
-  }
-}
- 
-  //Load the home page if no page specified.
-  if (!hash) hash = window.location.hash;
-  if (hash.length < 1) hash = 'home.html';
-  hash = hash.replace('#', '');
-  window.location.hash = `#${hash}`;
- 
-  //If there is other information we need to render the page it will be seperated by a ~. This splits the page from the information
-  let optString = '';
-  if (hash.indexOf('~') > 0) {
-    optString = hash.split('~')[1];
-    hash = hash.split('~')[0];
-  }
- 
-  let pageContent = document.getElementById('pageContent');
-  let breadCrumb = document.getElementById('breadcrumb');
-  let navObjt = undefined;
-  //Load the navigation JSON and look at what we need to compose the page.
-  LoadJson('content/navigation.json', (json => {navObjt=json}));
-  alert(navObjt);
-  //alert(LoadJson('content/navigation.json'));
-  let response = LoadJson('content/navigation.json');
-  let navObj = response.find((element) => { return element.hash === hash });
-  console.log(navObj);
-  if (navObj) {
-    //Title
-    document.title = `JPoD:${navObj.title}`;
- 
-    //Breadcrumb
-    breadCrumb.innerHTML = '';
-    navObj.breadcrumb.forEach(element => {
-      breadCrumb.innerHTML += element;
-    });
- 
-    //NavBar
-    $('.nav-item').removeClass('active');
-    navObj.activeNavbaritems.forEach(element => {
-      $(element).addClass('active');
-    });
-    response = LoadContentPage(`${navObj.path}${navObj.page}`);
-    if (response) {
-      switch (hash.toLowerCase()) {
-        case "article.html":
-          let articleObjs = LoadJson('content/articles.json');
-          let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
-          if (articleObj) {
- 
-          } else {
-            showError(`Unable to load content.  Unknown article entry`);
-          }
-          break;
-        default:
-          pageContent.innerHTML = response;
-          document.getElementById('pageContent').style.opacity = "0";
-          document.getElementById('pageContent').style.display = 'block';
-          fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-          break;
-      }
-    } else {
-      showError("Content page not found.");
-    }
-  }
-  else {
-    showError(`Unable to load content.  Unknown hash.`);
-  }
- 
-  /*LoadJson('content/navigation.json').then((response) => {
-    navObj = response.find((element) => { return element.hash === hash });
-    if (!navObj) {
-      showError(`Unable to load content.  Unknown hash.`);
-    }
-    else {
-      //Title
-      document.title = `JPoD:${navObj.title}`;
-      //Breadcrumb
-      breadCrumb.innerHTML = '';
-      navObj.breadcrumb.forEach(element => {
-        breadCrumb.innerHTML += element;
-      });
-      //NavBar
-      //navbarItems.innerHTML = '';
-      $('.nav-item').removeClass('active');
-      navObj.activeNavbaritems.forEach(element => {
-        $(element).addClass('active');
-      });
-      //Content
-      LoadContentPage(`${navObj.path}${navObj.page}`).then((response) => {
-        if (response) {
-          switch (hash.toLowerCase()) {
-            case "toc.html":
-              pageContent.innerHTML = response;
-              switch (optString.toLowerCase()) {
-                case 's1':
-                  $('#collapse1').collapse('show');
-                  break;
-                case 's2':
-                  $('#collapse2').collapse('show');
-                  break;
-                case 's3':
-                  $('#collapse3').collapse('show');
-                  break;
-                case 's4':
-                  $('#collapse4').collapse('show');
-                  break;
-              }
-              document.getElementById('pageContent').style.opacity = "0";
-              document.getElementById('pageContent').style.display = 'block';
-              fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-              break;
-            case "article.html":
-              LoadJson('content/currenttopics/ctcontent.json').then((responsect) => {
-                ctObj = responsect.find((ctElement) => { return ctElement.entry === optString });
-                if (!ctObj) {
-                  showError(`Unable to load content.  Unknown Current Topics entry`);
-                } else {
-                  //Current Topic data loaded.
-                  document.title = `JPoD:${ctObj.pagetitle}`;
-                  breadCrumb.innerHTML += ctObj.breadcrumb;
-                  response = response.replace(/##ctTitle##/g, ctObj.title);
-                  response = response.replace(/##ctAuthor##/g, ctObj.author);
-                  response = response.replace(/##ctDate##/g, ctObj.date);
-                  response = response.replace(/##ctResponseTitle##/g, ctObj.responsetitle);
-                  response = response.replace(/##ctAssignmentAuthor##/g, ctObj.assignmentauthor);
-                  response = response.replace(/##ctAssignmentDate##/g, ctObj.assignmentdate);
-                  if (ctObj.assignment.indexOf('.html') < 0) {
-                    response = response.replace(/##ctAssignment##/g, ctObj.assignment);
-                    response = response.replace(/##ctResponse##/g, ctObj.response);
-                    pageContent.innerHTML = response;
-                    document.getElementById('pageContent').style.opacity = "0";
-                    document.getElementById('pageContent').style.display = 'block';
-                    fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-                  }
-                  else {
-                    LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.assignment}`).then((assignmentContent) => {
-                      response = response.replace(/##ctAssignment##/g, assignmentContent);
-                      LoadContentPage(`${navObj.path}${ctObj.entry}/${ctObj.response}`).then((responseContent) => {
-                        response = response.replace(/##ctResponse##/g, responseContent);
-                        pageContent.innerHTML = response;
-                        document.getElementById('pageContent').style.opacity = "0";
-                        document.getElementById('pageContent').style.display = 'block';
-                        fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-                      }).catch((e) => {
-                        showError(`Content page ${navObj.path}${ctObj.entry}${ctObj.response} not found.`);
-                      });
-                    }).catch((e) => {
-                      showError(`Content page ${navObj.path}${ctObj.entry}${ctObj.assignment} not found.`);
-                    });
-                  }
-                }
-              }).catch((e) => {
-                showError(`CT Content JSON not found.`);
-              });
-              break;
-            case "lecture.html":
-              LoadJson('content/lectures/lecturecontent.json').then((responseLect) => {
-                lectObj = responseLect.find((lectElement) => { return lectElement.entry === optString });
-                if (!lectObj) {
-                  showError(`Unable to load content.  Unknown Lecture entry`);
-                } else {
-                  //Lecture data loaded.
-                  document.title = `JPoD:${lectObj.pagetitle}`;
-                  breadCrumb.innerHTML += lectObj.breadcrumb;
-                  response = response.replace(/##lectTitle##/g, lectObj.title);
-                  response = response.replace(/##lectNotesAuthor##/g, lectObj.notesauthor);
-                  response = response.replace(/##lectNotesDate##/g, lectObj.notesdate);
-                  response = response.replace(/##lectNotesTitle##/g, lectObj.notestitle);
-                  response = response.replace(/##lectAssignmentAuthor##/g, lectObj.assignmentauthor);
-                  response = response.replace(/##lectAssignmentDate##/g, lectObj.assignmentdate);
-                  if (lectObj.assignment.indexOf('.html') < 0) {
-                    response = response.replace(/##lectAssignment##/g, lectObj.assignment);
-                    response = response.replace(/##lectNotes##/g, lectObj.notes);
-                    pageContent.innerHTML = response;
-                    document.getElementById('pageContent').style.opacity = "0";
-                    document.getElementById('pageContent').style.display = 'block';
-                    fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-                  } else {
-                    LoadContentPage(`${navObj.path}${lectObj.entry}/${lectObj.assignment}`).then((assignmentContent) => {
-                      response = response.replace(/##lectAssignment##/g, assignmentContent);
-                      LoadContentPage(`${navObj.path}${lectObj.entry}/${lectObj.notes}`).then((notesContent) => {
-                        if (lectObj.notes.substr(lectObj.notes.length - 3, 3) === ".md") {
-                          console.log('.md');
-                          notesContent = marked(notesContent);
-                        }
-                        response = response.replace(/##lectNotes##/g, notesContent);
-                        pageContent.innerHTML = response;
-                        document.getElementById('pageContent').style.opacity = "0";
-                        document.getElementById('pageContent').style.display = 'block';
-                        fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-                      }).catch((e) => {
-                        showError(`Content page ${navObj.path}${lectObj.entry}/${lectObj.notes} not found.<br />${e.message}`);
-                      });
-                    }).catch((e) => {
-                      showError(`Content page ${navObj.path}${lectObj.entry}${lectObj.assignment} not found.`);
-                    });
-                  }
-                }
-              }).catch((e) => {
-                showError(`Lecture JSON not found.`);
-              });
-              break;
-            default:
-              pageContent.innerHTML = response;
-              document.getElementById('pageContent').style.opacity = "0";
-              document.getElementById('pageContent').style.display = 'block';
-              fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-              break;
-          }
-          //Start rainbow animation of section if present.
-          if (document.getElementById('spanColor')) {
-            //Start the color change
-            objColorId = document.getElementById('spanColor');
-            objColorId.innerHTML = generateRainbowText("Hello, world!");
-            //setTimeout("changeColor()", 150);
-            clearInterval(animateColor);
-            animateColor = setInterval(changeColor, 150);
-          }
-        }
-        else {
-          showError("Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
-        }
-      }).catch((e) => {
-        showError("Content page not found.<br /><img src='img/derpshrug.png' style='width:400px; max-width:100%;' />");
-      });
-    }
-  }).catch((e) => {
-    showError("Unable to load content json.<br />" + e.message + "<br />");
-  }); 
 
-//Start rainbow animation of section if present.
-if (document.getElementById('spanColor')) {
-  //Start the color change
-  objColorId = document.getElementById('spanColor');
-  objColorId.innerHTML = generateRainbowText("Hello, world!");
-  //setTimeout("changeColor()", 150);
-  clearInterval(animateColor);
-  animateColor = setInterval(changeColor, 150);
-}
-
-//freaking jQuery calls. 
-//$('.navbar-collapse').collapse('hide');
-$('#navbarColor01').collapse('hide');
-  //$('.collapse').collapse('show');
-}
-*/
 const LoadJson = async (locationJSon) => {
   //let response = await fetch('content/navigation.json');
   return fetch(locationJSon).then((response) => {
