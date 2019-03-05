@@ -195,6 +195,19 @@
         "footer" : "##articlesInCategory##"
     },
     {
+        "entry" : "a15",
+        "pagetitle": "JSON",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">JSON</li>",
+        "title": "JSON",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/04/2019",
+        "path": "content/articles/a15/",
+        "article": "scripting_JSON.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
         "entry" : "a18",
         "pagetitle": "Site Pages",
         "breadcrumb" : "<li class=\"breadcrumb-item active\">Site Pages</li>",
