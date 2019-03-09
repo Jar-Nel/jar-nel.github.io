@@ -173,9 +173,7 @@ const LoadContent = (hash) => {
       //Start the color change
       objColorId = document.getElementById('spanColor');
       objColorId.innerHTML = generateRainbowText(objColorId.innerHTML);
-      //setTimeout("changeColor()", 150);
-      clearInterval(animateColor);
-      animateColor = setInterval(changeColor, 150);
+      changeColor();
     }
 
     Prism.highlightAll();
@@ -241,7 +239,6 @@ const loadPageContent = async (hash, optString) => {
         footerString += `<br /><br />Explore other content in this category:`;
         footerString += `<ul class="list-group list-group-flush">`;
         restofCategory.forEach(article => {
-          console.log(article.title);
           footerString += `<li class="list-group-item"><a class='card-link' href='#article.html~${article.entry}' onclick=\"LoadContent('article.html~${article.entry}')\">${article.title}</a></li>`;
         });
         footerString += `</ul>`;
@@ -311,59 +308,6 @@ const frameResize = () => {
   document.getElementById('pageContent').style.marginTop = `${h1}px`;
   //console.log(document.getElementById('pageContent').style.marginTop);
 }
-
-const LoadContent2 = (hash, optString, navJSON) => {
-  console.log('c2');
-  let navObj = navJSON.find((element) => { return element.hash === hash });
-  if (navObj) {
-    //Title
-    document.title = `JPoD:${navObj.title}`;
-
-    //Breadcrumb
-    breadCrumb.innerHTML = '';
-    navObj.breadcrumb.forEach(element => {
-      breadCrumb.innerHTML += element;
-    });
-
-    //NavBar
-    $('.nav-item').removeClass('active');
-    navObj.activeNavbaritems.forEach(element => {
-      $(element).addClass('active');
-    });
-
-    LoadContentPage(`${navObj.path}${navObj.page}`, (page => { LoadContent3(hash, optString, page) }));
-  }
-}
-
-const LoadContent3 = (hash, optString, page) => {
-  console.log('c3');
-  if (page) {
-    /* #region Page Processing */
-    switch (hash.toLowerCase()) {
-      case "article.html":
-        /* #region Loading Article */
-        let articleObjs = LoadJson('content/articles.json');
-        let articleObj = articleObjs.find((Element) => { return Element.entry === optString });
-        if (articleObj) {
-
-        } else {
-          showError(`Unable to load content.  Unknown article entry`);
-        }
-        /* #endregion */
-        break;
-      default:
-        pageContent.innerHTML = response;
-        document.getElementById('pageContent').style.opacity = "0";
-        document.getElementById('pageContent').style.display = 'block';
-        fadeDiv('pageContent', 0, 1, .1, 50, console.log);
-        break;
-    }
-    /* #endregion */
-  } else {
-    showError("Content page not found.");
-  }
-}
-
 
 const LoadJson = async (locationJSon) => {
   //let response = await fetch('content/navigation.json');
@@ -750,16 +694,3 @@ function getCookie(cname) {
   return "";
 }
 /* #endregion */
-
-
-/*$(document).ready(function () {
-
-  $('.collapse').on('shown.bs.collapse', function () {
-    $(this).parent().addClass('active');
-  });
-
-  $('.collapse').on('hidden.bs.collapse', function () {
-    $(this).parent().removeClass('active');
-  });
-
-});*/
