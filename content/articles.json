@@ -208,6 +208,32 @@
         "footer" : "##articlesInCategory##"
     },
     {
+        "entry" : "a16",
+        "pagetitle": "SemanticV",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">Semantic V</li>",
+        "title": "Semantic Versioning",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/09/2019",
+        "path": "content/articles/a16/",
+        "article": "scripting_semanticv.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
+        "entry" : "a17",
+        "pagetitle": "PHP",
+        "breadcrumb" : "<li class=\"breadcrumb-item active\">PHP</li>",
+        "title": "PHP: A Fractal of Bad Design",
+        "categoryid": "c4",
+        "categoryname" : "Scripting",
+        "author": "Jared Nelson",
+        "date": "03/09/2019",
+        "path": "content/articles/a17/",
+        "article": "scripting_php.html",
+        "footer" : "##articlesInCategory##"
+    },
+    {
         "entry" : "a18",
         "pagetitle": "Site Pages",
         "breadcrumb" : "<li class=\"breadcrumb-item active\">Site Pages</li>",
