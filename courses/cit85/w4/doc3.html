@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>W4 #2 Semantic HTML 3</title>
+    <style>
+        body {
+            height: 100%;
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+        .docImage {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            opacity: .4;
+            width: 200px;
+        }
+
+        .docImage:hover {
+            opacity: 1;
+        }
+
+        .container {
+            margin: auto;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 6px 6px 6px #5D535C;
+            padding: .5vh .5vw;
+            color: white;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        header {
+            width: 100%;
+            background-color: #DA1124;
+            border: 2px solid #A83F3C;
+            text-align: center;
+            height: 12vh;
+            line-height: 12vh;
+            margin-bottom: 1vh;
+            box-sizing: border-box;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #F18429;
+            border: 2px solid #BE8C45;
+            text-align: center;
+            height: 12vh;
+            line-height: 12vh;
+            margin-bottom: 1vh;
+            box-sizing: border-box;
+        }
+
+        section {
+            background-color: #FDB707;
+            border: 2px solid #BD8C3F;
+            text-align: center;
+            height: 50vh;
+            line-height: 14.5vh;
+            width: 66%;
+            padding: 1.5vw;
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .article {
+            margin-top: 1vh;
+            background-color: #70B838;
+            border: 2px solid #6F8808;
+            text-align: center;
+            height: 15vh;
+            line-height: 15vh;
+            box-sizing: border-box;
+        }
+
+        aside {
+            background-color: #0065AD;
+            border: 2px solid #216991;
+            float: right;
+            margin-left: 2%;
+            width: 32%;
+            height: 100%;
+            line-height: 49vh;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .clr {
+            clear: both;
+        }
+
+        footer {
+            background-color: #852680;
+            border: 2px solid #68316A;
+            margin-top: 1vh;
+            width: 100%;
+            text-align: center;
+            height: 12vh;
+            line-height: 12vh;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="docImage" src="img_doc3.jpg" />
+    <div class="container">
+        <header>header</header>
+        <nav>nav</nav>
+        <div>
+            <section>
+                <div>section</div>
+                <article class="article">
+                    <div>article</div>
+                </article>
+                <article class="article">
+                    <div>article</div>
+                </article>
+            </section>
+            <aside>aside</aside>
+            <div class="clr"></div>
+        </div>
+        <footer>footer</footer>
+    </div>
+</body>
+
+</html>

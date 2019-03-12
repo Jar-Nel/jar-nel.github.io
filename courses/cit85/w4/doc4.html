@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>W4 #2 Semantic HTML 3</title>
+    <style>
+        body {
+            height: 100%;
+            background-color: #D0D3DC;
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+        .docImage {
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            opacity: .4;
+            width: 200px;
+        }
+
+        .docImage:hover {
+            opacity: 1;
+        }
+
+        .container {
+            margin: auto;
+            width: 90%;
+            max-width: 800px;
+            padding: .5vh .5vw;
+            color: #000;
+            font-weight: bold;
+            font-size: 32px;
+        }
+
+        .pageHeader {
+            width: 100%;
+            background-color: #68CACB;
+            text-align: left;
+            height: 12vh;
+            line-height: 12vh;
+            margin-bottom: 1vh;
+            padding: 0 1%;
+            box-sizing: border-box;
+        }
+
+        .row:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        nav {
+            width: 25%;
+            margin-right: 1%;
+            background-color: #E5E549;
+            text-align: center;
+            height: 50vh;
+            box-sizing: border-box;
+            float: left;
+            padding: 0 1%;
+        }
+
+        nav header {
+            width: 100%;
+            text-align: left;
+            box-sizing: border-box;
+            font-size: 70%;
+        }
+
+        article {
+            width: 49%;
+            margin-right: 1%;
+            background-color: #88D94E;
+            text-align: center;
+            height: 50vh;
+            box-sizing: border-box;
+            float: left;
+            padding: 0 1%;
+        }
+
+        article header {
+            text-align: left;
+            font-size: 70%;
+        }
+
+        article section {
+            padding: 3vh 6vw;
+            text-align: left;
+            background-color: #C278A9;
+            margin: 1vh 0;
+            font-size: 70%;
+        }
+
+        article footer {
+            text-align: left;
+            font-size: 70%;
+        }
+
+        aside {
+            background-color: #EEA839;
+            float: left;
+            width: 24%;
+            height: 50vh;
+            padding: 0 1vw;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        aside section {
+            background-color: #F74000;
+            margin: 3vh 0;
+            padding: 2vh 2vw;
+            text-align: center;
+            font-size: 70%;
+        }
+
+
+
+        .pageFooter {
+            background-color: #68CACB;
+            margin-top: 1vh;
+            width: 100%;
+            padding: 0 1%;
+            text-align: left;
+            height: 12vh;
+            line-height: 12vh;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="docImage" src="img_doc4.jpg" />
+    <div class="container">
+        <header class="pageHeader">&lt;header&gt;</header>
+        <div class="row">
+            <nav>&lt;nav&gt;
+                <header>&lt;header&gt;</header>
+            </nav>
+            <article>
+                &lt;article&gt;
+                <header>&lt;header&gt;</header>
+                <section>&lt;section&gt;</section>
+                <section>&lt;section&gt;</section>
+                <footer>&lt;footer&gt;</footer>
+            </article>
+            <aside>
+                &lt;aside&gt;
+                <section>&lt;section&gt;</section>
+                <section>&lt;section&gt;</section>
+                <section>&lt;section&gt;</section>
+            </aside>
+        </div>
+        <footer class="pageFooter">&lt;footer&gt;</footer>
+    </div>
+</body>
+
+</html>
