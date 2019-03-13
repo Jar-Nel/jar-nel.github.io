@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FB Page 12</title>
+    <style>
+        body>div {
+            border: 2px solid blue;
+            height: 70vh;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+            align-items: flex-end;
+            align-content: flex-end;
+        }
+
+        div>div {
+            height: 10vh;
+            width: 10vw;
+            margin: 1vh 1vw;
+            border: 2px solid orange;
+            background-color: yellow;
+        }
+
+        /* #region nav */
+        nav {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        nav div {
+            width: 200px;
+            text-align: center;
+        }
+
+        nav ul {
+            display: block;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        nav li {
+            display: inline-block;
+            list-style-type: none;
+            margin: 2px 2px;
+            width: 40px;
+            padding: 2px 2px;
+        }
+
+        a {
+            padding: 10px;
+            width: 20px;
+            text-align: center;
+            border: 2px solid blue;
+            color: blue;
+            background-color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a:hover {
+            color: white;
+            background-color: blue;
+        }
+
+        .a-selected {
+            color: white;
+            background-color: blue;
+        }
+
+        /* #endregion */
+    </style>
+</head>
+
+<body>
+    <!-- #region nav -->
+    <nav>
+        <div>
+            flex-direction: row
+            <ul>
+                <li><a href="fb_page1.html">1</a></li>
+                <li><a href="fb_page2.html">2</a></li>
+                <li><a href="fb_page3.html">3</a></li>
+            </ul>
+            <ul>
+                <li><a href="fb_page4.html">4</a></li>
+                <li><a href="fb_page5.html">5</a></li>
+                <li><a href="fb_page6.html">6</a></li>
+            </ul>
+            <ul>
+                <li><a href="fb_page7.html">7</a></li>
+                <li><a href="fb_page8.html">8</a></li>
+                <li><a href="fb_page9.html">9</a></li>
+            </ul>
+        </div>
+        <div>
+            flex-direction: column
+            <ul>
+                <li><a href="fb_page10.html">10</a></li>
+                <li><a href="fb_page11.html">11</a></li>
+                <li><a class="a-selected" href="fb_page12.html">12</a></li>
+            </ul>
+            <ul>
+                <li><a href="fb_page13.html">13</a></li>
+                <li><a href="fb_page14.html">14</a></li>
+                <li><a href="fb_page15.html">15</a></li>
+            </ul>
+            <ul>
+                <li><a href="fb_page16.html">16</a></li>
+                <li><a href="fb_page17.html">17</a></li>
+                <li><a href="fb_page18.html">18</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- #endregion -->
+    <div>
+        <div>001</div>
+        <div>002</div>
+        <div>003</div>
+    </div>
+</body>
+
+</html>
