@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ConColor</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        .flexRow {
+            display:flex;
+            flex-flow: row nowrap;
+        }
+        .flexRow input{
+            border:1px solid black;
+            width:30px;
+            max-width:30px;
+            height:30px;
+            max-height:30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="pageLoad()">
+    <div class="container">
+        <div id="grid">
+            <div class="flexRow">
+                <input type="text">
+                <input type="text">
+                <input type="text">
+                <input type="text">
+                <input type="text">
+            </div>
+        </div>
+        <br />
+        <textarea id="json" style="width:300px;" rows="5"></textarea>
+        <button onclick="fillGrid()">Fill</button>
+    </div>
+    <script>
+        let col = 19;
+        let row = 20;
+        let html = '';
+        const pageLoad = () => {
+            for (let r = 0; r < row; r++) {
+                html+=`<div class="flexRow">`;
+                for (let c = 0; c < col; c++) {
+                    html+=`<input type="text" onchange="setBackground(this)">`;
+                }
+                html+=`</div>`;
+            }
+            document.getElementById("grid").innerHTML=html;
+        }
+        const getBgColor = (v) => {
+            v= parseInt(v);
+            let color='white';
+            let fgcolor='black';
+            if (v===0) color='yellow';
+            if (v>0 && v<21 ) color='red';
+            if (v>20 && v<41 ) {color='blue'; fgcolor='white'}
+            if (v>40 && v<61) {color='gray'; fgcolor='white'}
+            if (v>60 && v<101) {color='black'; fgcolor='white'}
+            return { bg: color, fg: fgcolor};
+        }
+        const setBackground = (obj) => {
+            let v= parseInt(obj.value);
+            let colorObj=getBgColor(v);
+            obj.style.background=colorObj.bg;
+            obj.style.color=colorObj.fg;
+            document.getElementById('json').innerHTML=txtData();
+        }
+
+        const txtData = (data) =>
+        {
+            if (data){
+                let values=data.split(",");
+                let inputs=document.getElementById('grid').getElementsByTagName('input');
+                for (let i=0; i<values.length; i++){
+                    if (inputs[i]) {
+                        inputs[i].value=values[i];
+                        let colorObj=getBgColor(values[i]);
+                        inputs[i].style.background=colorObj.bg;
+                        inputs[i].style.color=colorObj.fg;
+                    }
+                }
+            }
+            else {
+                data=''
+                let inputs=document.getElementById('grid').getElementsByTagName('input');
+                for(i=0; i<inputs.length; i++){
+                    if (inputs[i].value)
+                        data+=inputs[i].value+',';
+                }
+                console.log(data);
+                //get
+            }
+            return data;
+        }
+
+        const fillGrid = () =>{
+            let data=document.getElementById('json').value;
+            txtData(data);
+        }
+    </script>
+</body>
+
+</html>
