@@ -21,11 +21,19 @@ body * {
     box-shadow: 0px 5px 6px #FFF;
     height: 46px;
     z-index: 250;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
 }
 
 .pgHeaderTitle {
     text-shadow: 0 0 10px yellow;
 
+}
+.pgHeaderVersion {
+    font-size: 12px;
 }
 
 .pushdown {
