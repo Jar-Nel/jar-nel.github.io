@@ -1,0 +1,13 @@
+From:	Jared Nelson <jared_nelson@hotmail.com>
+Sent:	Tuesday, September 3, 2019 10:42 PM
+To:	Jared Nelson
+Subject:	The body event listeners look useful
+
+Follow Up Flag:	Follow up
+Flag Status:	Flagged
+
+See link.
+http://bencentra.com/code/2014/12/05/html5-canvas-touch-events.html
+
+Sent from my Windows 10 device
+

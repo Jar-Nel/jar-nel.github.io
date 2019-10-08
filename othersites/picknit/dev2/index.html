@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+    <link rel="stylesheet" type="text/css" href="css/picknit.css">
+    <title>PicKnit</title>
+    <style>
+        @media screen and (max-width: 400px){
+            .pictureContainer {
+                margin-left: 0;
+
+            }
+        }
+    </style>
+</head>
+
+<body onload="onLoad()">
+    <div id="pgHeader"><span class="pgHeaderTitle">PicKnit</span><span class="pgHeaderVersion">CIT-93 Dev2</span></div>
+    <div class="container">
+        <div class="pushdown" id="top"></div>
+        <noscript>Javascript is required to use this page.</noscript>
+        <div id="UserPanel"></div>
+        <div id="ControlsPanel"></div>
+        <div id="ContentPanel"></div>
+    </div>
+    <script src="js/uuidv4.js"></script>
+    <script src="js/moment-min.js"></script>
+    <script src="js/imagedata.js"></script>
+    <script src="js/picknit_main.js"></script>
+    <script src="js/picknit_objects.js"></script>
+    <script src="js/picknit_functions.js"></script>
+</body>
+
+</html>

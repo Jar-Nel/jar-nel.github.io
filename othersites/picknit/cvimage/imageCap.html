@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image Capture: PicKnit</title>
+    <style>
+        body {
+            margin:0;
+            padding:0;
+        }
+        #vid{
+            display:none;
+            border:1px solid black;
+        }
+        #c_vid{
+            border:1px solid blue;
+            width:98vw;
+        }
+    </style>
+</head>
+
+<body onload="onLoad()">
+    <video id="vid" autoplay></video>
+    <canvas id="c_vid"></canvas>
+    <script src="imageCap.js"></script>
+</body>
+
+</html>
