@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/skeleton.css">
+    <link rel="stylesheet" type="text/css" href="css/picknit.css">
+    <title>View Image - PicKnit</title>
+    <style>
+        body {
+            background-color: #333;
+        }
+        .container {
+            width:90vw;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+        #ImageContainer{
+            border-radius: 10px;
+            background-color: #ccc;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+        }
+        #ImagePanel>img {
+            max-width: 80vw;
+            border-radius: 10px 10px 0px 0px;
+        }
+        #ImageMeta{
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body onload="viewImage()">
+    <div class="container">
+        <noscript>Javascript is required to use this page.</noscript>
+        <div id="ImageContainer">
+            <div id="ImagePanel"></div>
+            <div id="ImageMeta"></div>
+        </div>
+    </div>
+
+    <script src="js/uuidv4.js"></script>
+    <script src="js/moment-min.js"></script>
+    <script src="js/picknit_objects.js"></script>
+    <script src="js/picknit_functions.js"></script>
+    <script src="js/picknit_imageViewer.js"></script>
+</body>
+
+</html>
